@@ -1,0 +1,85 @@
+﻿@using CI_Entities1.Models.ViewModel
+@model StoryShareVM
+
+<partial name="Navbar1" />
+   
+
+<head>
+    <title>Share Story</title>
+    <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/StoryShare.css" asp-append-version="true">
+</head>
+
+<body>
+    <hr />
+    <div class="container">
+        <form method="post" asp-action="Storyshare" asp-controller="Home" enctype="multipart/form-data" >
+            <div class="mt-2 fs-2">
+                Share Your Story
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-4">
+                    <div>Select Mission</div>
+                    <div class="mb-3">
+                        <select asp-for="MissionId" class="form-select col-11 heigh shadow-none">
+                            @foreach (var mission in Model.missionApplications)
+                            {
+                                <option value="@mission.MissionId">@mission.MissionId@mission.Mission.Title</option>
+                            }
+                        </select>
+                    </div>q
+                </div>
+
+                <div class="col-4">
+                    <div>My Story Title</div>
+                    <div><input asp-for="Title" class="col-11 heigh" type="text" placeholder="Enter Story Title"></div>
+                </div>
+
+                <div class="col-4">
+                    <div>Date</div>
+                    <div><input asp-for="CreatedAt" class="col-11 heigh" type="date" placeholder="Select Date"></div>
+                </div>
+            </div>
+
+            <div>My Story</div>
+            <div class="col-12 mt-2">
+                <textarea asp-for="editor1" class="col-12" name="editor1"></textarea>
+            </div>
+
+            <div class="mt-3">Enter Video Url</div>
+            <div>
+                <input type="text" class="col-12 heigh" placeholder="Enter Your url">
+            </div>
+
+
+            <label class=" fs-5 mt-2 "> Upload Your Photos</label>
+            <div class="input-div" >
+                <p>Drag & drop photos here or <strong>Browse</strong></p>
+                <input type="file" asp-for="attachment" class="file-input file" multiple="multiple"  accept="image/jpeg, image/PNG, image/jpg">
+            </div>
+
+            <output class="d-flex"></output>
+
+            <div class="d-flex bd-highlight mb-3">
+                <div class="me-auto p-2">
+                    <button type="submit" name="action" value="cancel" class="btn btn-outline-secondary px-3 me-auto shadow-none"  style="border-radius: 22px;">
+                        Cancel
+                    </button>
+                </div>
+                <div class="p-2">
+                    <button type="submit" name="action" value="save" class="btn cardbtn px-3 shadow-none">
+                        Save
+                    </button>
+                </div>
+                <div class="p-2">
+                    <button type="submit" name="action" value="submit" class="btn cardbtn px-3 shadow-none">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="~/js/StoryShare.js" asp-append-version="true"></script>
+</body>
+

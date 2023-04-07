@@ -1,0 +1,76 @@
+﻿<head>
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="~/css/Nav1.css">
+</head>
+
+<body>
+    @{
+            var userid = Context.Session.GetString("userID");
+    }
+    @*------------NAVBAR---- 1*@
+
+    <div class="row">
+        <header class=" mb-lg-3">
+            <div class="container ">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-start">
+                    <div class="d-lg-block d-xl-block  d-none">
+                        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none ">
+                            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                                <use xlink:href="#bootstrap"></use>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <ul class="nav d-flex col-6  col-lg-auto   col-md-auto  col-sm-auto  me-auto mb-2 justify-content-center mb-md-0 mt-2">
+                        <li><a asp-controller="Home" asp-action="Storylisting" class="nav-link px-2 text-dark">Stories</a></li>
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle shadow-none" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Policy
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Volunteering</a></li>
+                                    <li><a class="dropdown-item" href="#">Sponsered</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+
+
+                    @if (userid != null)
+                    {
+                        <div class="dropdown text-end ms-auto col-6">
+                            <img src="~/Images/user-img.png" alt="mdo" width="30" height="30"
+                             class="rounded-circle profile">
+
+                            <button class="btn dropdown-toggle shadow-none" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                @{
+                                    var firstname = Context.Session.GetString("Firstname");
+                                }
+                                @firstname
+
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" asp-action="LandingPage" asp-controller="Home">Dashboard</a></li>
+                                <li><a class="dropdown-item" asp-action="Timesheet" asp-controller="Home">Volunteering Timesheet</a></li>
+                                <li><a class="dropdown-item" asp-action="EditProfile" asp-controller="Home">Profile</a></li>
+                                <li><a class="dropdown-item" asp-action="Draft" asp-controller="Home">Draft</a></li>
+                                <li><a class="dropdown-item" asp-action="Login" asp-controller="Home"> Logout</a></li>
+                            </ul>
+                        </div>
+                    }
+
+                    else
+                    {
+                        <a asp-action="Login" asp-controller="Home" class="btn btn-success shadow-none">Login</a>
+
+                    }
+                </div>
+            </div>
+        </header>
+    </div>
+
+</body>
+</html>

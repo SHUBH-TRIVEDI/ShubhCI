@@ -1,0 +1,47 @@
+﻿@model CI_Platform1.Models.ForgetModel
+<head>
+    <link rel="stylesheet" href="~/css/Style.css" asp-append-version="true" />
+</head>
+
+<div class="container-fluid pl-0">
+    <div class="row ms-0">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12" data-bs-ride="carousel" data-bs-interval="4000">
+            <partial name="carousel" />
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-10
+                justify-content-center align-self-center">
+            <form asp-action="Forget" asp-controller="Home">
+                <h4 class="text-center forget">Forgot Password</h4>
+                <div class="text-center mt-2 text-dark">
+                    Enter your email address you've using for your account below and we will send you a password reset link
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="exampleInputEmail1" class="form-label">
+                        Email
+                        address
+                    </label>
+                    <input type="email" placeholder="Enter Your e-mail"
+                           class="form-control shadow-none" id="exampleInputEmail1"
+                           aria-describedby="emailHelp" asp-for="Email" required>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+
+
+                    <button type="submit" value="login" class="btn
+                            btn-outline-success mt-3 shadow-none">
+                        Reset My Password
+                    </button>
+
+                    <div class="text-center mt-2">
+                        <a asp-action="Login" asp-controller="Home" class="text-black text-decoration-none">Login</a>
+                    </div>
+
+                    <div class="text-secondary text-center policy">
+                        Privacy
+                        Policy
+                    </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+﻿@using CI_Entities1.Models.ViewModel
+@model StoryShareVM
+
+@{
+    Pager pager = new Pager();
+    int pageNo = 0;
+    //int jpg = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<partial name="Navbar1" />
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Storylisting.css" asp-append-version="true">
+</head>
+
+<body>
+
+    <div class="addstorybg mt-3" style="height: 390px;">
+        <div class="text-center ">
+            <div class="mx-auto mt-5 vertical" style="width: 50vw;">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, numquam. Optio quasi tenetur natus, ut
+                in sit eum veritatis quas sapiente,
+                sint modi voluptatem eius ius officia quam tenetur.
+            </div>
+            <div class="text-center mt-3   verticalimg">
+                <a asp-controller="Home" asp-action="Storyshare" class="btn cardbtn mx-auto shadow-none"><span style="color: white;">Share Your Story</span><i
+                        class="bi bi-arrow-right ms-2 mt-3 " style="color: white;"></i> </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="storyList">
+        
+    </div>
+
+
+
+
+<script>
+    function pagination( jpg){
+        $.ajax({
+            url: '/Home/_StoryList',
+            type: 'GET',
+            data: {'jpg' : jpg },
+            success: function (res) {
+                $("#storyList").html(res);
+            },
+
+            error: function (res) {
+                alert("error");
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        pagination(jpg=1);
+        console.log("hello shubh");
+    });
+
+
+</script>
+</body>
