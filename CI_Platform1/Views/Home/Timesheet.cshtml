@@ -1,4 +1,5 @@
-﻿
+﻿@using CI_Entities1.Models.ViewModel
+@model StoryShareVM
 
 <div class="container">
     <div class="mt-5 fs-3">
@@ -27,45 +28,56 @@
                                 <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <div>
-                                    <label for="mission">Mission</label>
-                                    <select class="col-12">
-                                        <option value="">Missions</option>
-                                    </select>
-                                </div>
+                            <form asp-action="Timesheet" asp-controller="Home" method="post">
+                                <div class="modal-body">
+                                    <div>
+                                        <label for="mission">Mission</label>
+                                        <select class="col-12" asp-for="MissionId">
+                                            @foreach (var mission in Model.missionApplications)
+                                            {
+                                                @if (@mission.Mission.MissionType == "Time")
+                                                {
+                                                    <option value="@mission.Mission.MissionId">@mission.Mission.MissionId @mission.Mission.Title</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
 
-                                <label class="mt-4">Date Volunteered</label>
-                                <div>
-                                    <input class="col-12 " type="date" placeholder="Enter Date" />
-                                </div>
+                                    <label class="mt-4">Date Volunteered</label>
+                                    <div>
+                                        <input asp-for="DateVolunteered" class="col-12 " type="date" placeholder="Enter Date" />
+                                    </div>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="Action" class="mt-4">Hours</label>
-                                        <div>
-                                            <input class="col-12" type="text" placeholder="Enter Spent Hours" />
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="Action" class="mt-4">Hours</label>
+                                            <div>
+                                                <input asp-for="hour" class="col-12" type="number" min="0" max="23" placeholder="Enter Spent Hours" />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="Action" class="mt-4">Minutes</label>
+                                            <div>
+                                                <input asp-for="minute" class="col-12" type="number" min="0" max="59" placeholder="Enter Spent Minutes" />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <label for="Action" class="mt-4">Minutes</label>
-                                        <div>
-                                            <input class="col-12" type="text" placeholder="Enter Spent Minutes" />
-                                        </div>
+                                    <label class="mt-4">Message</label>
+                                    <div>
+                                        <textarea asp-for="Notes" class="col-12" rows="5" placeholder="Enter Your Message"></textarea>
                                     </div>
                                 </div>
-                                <label class="mt-4">Message</label>
-                                <div>
-                                    <textarea class="col-12" rows="5" placeholder="Enter Your Message"></textarea>
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn border-secondary rounded-pill shadow-none"
+                                            data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn oran shadow-none">Submit</button>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn border-secondary rounded-pill shadow-none"
-                                        data-bs-dismiss="modal">
-                                    Cancel
-                                </button>
-                                <button type="button" class="btn oran shadow-none">Submit</button>
-                            </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -84,14 +96,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>xyz</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    @if (Model.timesheets != null)
+                    {
+                        @foreach (var sheet in @Model.timesheets)
+                        {
+                            if (sheet.Mission.MissionType == "Time")
+                            {
+
+                                <tr>
+                                    <td>@sheet.Mission.Title</td>
+                                    <td>@sheet.DateVolunteered</td>
+                                    <td>@sheet.TimesheetTime.ToString().Split(":")[0]</td>
+                                    <td>@sheet.TimesheetTime.ToString().Split(":")[1]</td>
+                                    <td><i class="bi bi-pencil-square"></i></td>
+                                    <td><img src=~/images/bin.png /></td>
+                                </tr>
+                            }
+                        }
+
+                    }
                 </tbody>
             </table>
 
@@ -103,11 +126,11 @@
 
                 <!-- <div class="mt-1 text-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change Password</div> -->
                 <button type="button" class="btn rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">
+                        data-bs-target="#staticBackdrop2">
                     <i class="bi bi-plus-lg me-2 "></i>ADD
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
                      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl modal-dialog-centered">
                         <div class="modal-content">
@@ -119,36 +142,44 @@
                                 <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <div>
-                                    <label for="mission">Mission</label>
-                                    <select class="col-12">
-                                        <option value="">Missions</option>
-                                    </select>
-                                </div>
+                            <form asp-action="Timesheet" asp-controller="Home" method="post">
+                                <div class="modal-body">
+                                    <div>
+                                        <label for="mission">Mission</label>
+                                        <select class="col-12" asp-for="MissionId">
+                                            @foreach (var mission in Model.missionApplications)
+                                            {
+                                                if (mission.Mission.MissionType == "Goal")
+                                                {
+                                                    <option value="@mission.Mission.MissionId">@mission.Mission.Title</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
 
-                                <label for="Action" class="mt-4">Actions</label>
-                                <div>
-                                    <input class="col-12" type="text" placeholder="Enter Actions" />
-                                </div>
+                                    <label for="Action" class="mt-4">Actions</label>
+                                    <div>
+                                        <input asp-for="Action" class="col-12" type="text" placeholder="Enter Actions" />
+                                    </div>
 
-                                <label class="mt-4">Date Volunteered</label>
-                                <div>
-                                    <input class="col-12 " type="date" placeholder="Enter Date" />
-                                </div>
+                                    <label class="mt-4">Date Volunteered</label>
+                                    <div>
+                                        <input asp-for="DateVolunteered" class="col-12 " type="date" placeholder="Enter Date" />
+                                    </div>
 
-                                <label class="mt-4">Message</label>
-                                <div>
-                                    <textarea class="col-12" rows="20" placeholder="Enter Your Message"></textarea>
+                                    <label class="mt-4">Message</label>
+                                    <div>
+                                        <textarea asp-for="Notes" class="col-12" rows="5" placeholder="Enter Your Message"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn border-secondary rounded-pill shadow-none"
-                                        data-bs-dismiss="modal">
-                                    Cancel
-                                </button>
-                                <button type="button" class="btn oran shadow-none">Submit</button>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn border-secondary rounded-pill shadow-none"
+                                            data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn oran shadow-none">Submit</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -165,13 +196,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    @if (Model.timesheets != null)
+                    {
+                        @foreach (var sheet in Model.timesheets)
+                        {
+                            if (sheet.Mission.MissionType == "Goal")
+                            {
+                                <tr>
+                                    <th scope="row">@sheet.Mission.Title</th>
+                                    <td>@sheet.DateVolunteered</td>
+                                    <td>@sheet.Action</td>
+                                    <td><i class="bi bi-pencil-square"></i></td>
+                                    <td><img src=~/images/bin.png /></td>
+                                </tr>
+                            }
+
+                        }
+                    }
+
                 </tbody>
             </table>
 

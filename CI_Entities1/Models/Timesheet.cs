@@ -11,7 +11,7 @@ public partial class Timesheet
 
     public long? UserId { get; set; }
 
-    public TimeSpan? TimesheetTime { get; set; }
+    public string? TimesheetTime { get; set; }
 
     public int? Action { get; set; }
 

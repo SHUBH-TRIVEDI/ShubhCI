@@ -60,12 +60,12 @@ function addToFav(missonid) {
         data: { 'missonid': missonid },
         success: function (res) {
             $('.addFav').html($(res).find('.addFav').html());
-         
+
         },
         error: function () {
             alert("please login first.");
         }
-        
+
     });
 }
 
@@ -109,19 +109,28 @@ function addRating(starId, missionId, Id) {
 function PostComment() {
     var textBox = document.getElementById("commentarea");
     var commentVal = textBox.value;
-    console.log(commentVal);
     const params = new URLSearchParams(window.location.search);
     const query = params.get('missionid');
-    $.ajax({
-        url: "/Home/PostComment",
-        data: { missionId: query, Content: commentVal },
-        success: function (result) {
-            $('.commentdiv').html($(result).find('.commentdiv').html());
-        },
-        error: function () {
-            alert("Error : Comment has not been posted");
-        }
-    });
+
+    if (commentVal == "") {
+        $('#cmtErr').removeClass('d-none');
+    }
+    else {
+
+        $.ajax({
+            url: "/Home/PostComment",
+            data: { missionId: query, Content: commentVal },
+            success: function (result) {
+                $('.commentdiv').html($(result).find('.commentdiv').html());
+            },
+            error: function () {
+                alert("Error : Comment has not been posted");
+            }
+        });
+    }
+}
+function Entercmt() {
+    $('#cmtErr').addClass('d-none');
 }
 
 //coworker

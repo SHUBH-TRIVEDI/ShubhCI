@@ -151,8 +151,6 @@
                     <li><a class="dropdown-item" onclick="mysearch(order=4)">Availbility</a></li>
                     <li><a class="dropdown-item" onclick="mysearch(order=5)">Theme</a></li>
                     <li><a class="dropdown-item" onclick="mysearch(order=6)">Favrouite</a></li>
-
-
                 </ul>
             </div>
 
@@ -165,7 +163,7 @@
 
                 <a class="btn-list ms-lg-3 ms-md-3 ms-sm-3 listbuton" href="">
                     <img src="~/images/list.png" />
-                    @*<i class="bi bi-list"></i>*@
+  @*<i class="bi bi-list"></i>*@
                 </a>
             </div>
         </div>
@@ -236,8 +234,8 @@
                                             }
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" id="sendmail" onclick="sendmail(@category.MissionId)">Send Mission</button>
+                                            <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn oran" id="sendmail" onclick="sendmail(@category.MissionId)">Send Mission</button>
                                         </div>
                                     </div>
                                 </div>
@@ -371,25 +369,25 @@
         @if (pager.CurrentPage > 1)
         {
             <li class="mx-1">
-                <a class="page-link text-muted" onclick="mysearch(order=1,jpg=1)"><span aria-hidden="true">&laquo;</span></a>
+                <a class="page-link back" onclick="mysearch(order=1,jpg=1)"><span aria-hidden="true">&laquo;</span></a>
             </li>
             <li class="page-item mx-1">
-                <a class="page-link text-muted" onclick="mysearch(order=1,jpg=@(pager.CurrentPage-1))"><span aria-hidden="true">&lsaquo;</span></a>
+                <a class="page-link back" onclick="mysearch(order=1,jpg=@(pager.CurrentPage-1))"><span aria-hidden="true">&lsaquo;</span></a>
             </li>
         }
         @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
         {
             <li class="page-item mx-1 @(pge==pager.CurrentPage ? "active":"")">
-                <a class="page-link text-muted" onclick="mysearch(order=1,jpg=@pge)">@pge</a>
+                <a class="page-link back"  onclick="mysearch(order=1,jpg=@pge)">@pge</a>
             </li>
         }
         @if (pager.CurrentPage < pager.TotalPages)
         {
             <li class="page-item mx-1">
-                <a class="page-link text-muted" onclick="mysearch(order=1,jpg=@(pager.CurrentPage+1))"><span aria-hidden="true">&rsaquo;</span></a>
+                <a class="page-link back" onclick="mysearch(order=1,jpg=@(pager.CurrentPage+1))"><span aria-hidden="true">&rsaquo;</span></a>
             </li>
             <li class="mx-1">
-                <a class="page-link text-muted" onclick="mysearch(order=1,jpg=@(pager.TotalPages))"><span aria-hidden="true">&raquo;</span></a>
+                <a class="page-link back" onclick="mysearch(order=1,jpg=@(pager.TotalPages))"><span aria-hidden="true">&raquo;</span></a>
             </li>
         }
 
@@ -433,56 +431,6 @@
 
     $(document).on('click', '.btn-grid', gridlist);
     $(document).on('click', '.btn-list', showlist);
-
-
-
-    //--------------------------add to favroite mission--------------------------------------------
-    function addtofav1(missionid, id) {
-    $.ajax({
-    url: '/home/addfav',
-    type: 'post',
-    data: { missionid: missionid, id: id },
-    success: function (result) {
-    if (result.favmission == "0") {
-    var favbtn = document.getelementbyid("favmissiondiv");
-    var heartbtn = document.getelementbyid("heart");
-    heartbtn.style.color = "#f88634";
-    favbtn.style.color = "orange"
-    }
-    else {
-    var favbtn = document.getelementbyid("favmissiondiv");
-    var heartbtn = document.getelementbyid("heart");
-    heartbtn.style.color = "black";
-    favbtn.style.color = "black"
-    }
-    }
-    });
-    }
-
-    //reccomend to coworker
-    function sendmail(id) {
-    const mail = array.from(document.queryselectorall('input[name="mail"]:checked')).map(el => el.id);
-    var send = document.getelementbyid("sendmail");
-    send.innerhtml = "sending"
-    $.ajax({
-    url: '/home/sendmail',
-    type: 'post',
-    data: { userid: mail, id: id },
-    success: function (result) {
-    alert("recomendations sent successfully!");
-    const checkboxes = document.queryselectorall('input[name="mail"]:checked');
-    checkboxes.foreach((checkbox) => {
-    checkbox.checked = false;
-    });
-    send.innerhtml = "sent"
-    },
-    error: function () {
-    // handle error response from the server, e.g. show an error message to the user
-    alert('error: could not recommend mission.');
-    }
-    });
-
-    }
     </script>
 
 *@

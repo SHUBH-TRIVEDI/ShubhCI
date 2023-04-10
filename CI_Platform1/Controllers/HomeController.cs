@@ -388,7 +388,7 @@ namespace CI_Platform1.Controllers
             }
             else
             {
-            volunteeringVM.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.MissionId == missionId && u.UserId!=Convert.ToInt32(userid)    ).ToList();
+            volunteeringVM.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.MissionId == missionId && u.UserId!=Convert.ToInt32(userid)).ToList();
 
             }
 
@@ -429,10 +429,6 @@ namespace CI_Platform1.Controllers
             volunteeringVM.GoalObjectiveText = themeobjective.GoalObjectiveText;
             volunteeringVM.comments = _CiPlatformContext.Comments.Where(m => m.MissionId == missionid).ToList();
 
-            //volunteeringVM.missionApplications= _CiPlatformContext.MissionApplications.ToList();
-
-
-
             //Average Rating
             int finalrating = 0;
             var ratinglist = _Interface.missionRatings().Where(m => m.MissionId == volmission.MissionId).ToList();
@@ -448,8 +444,6 @@ namespace CI_Platform1.Controllers
             ViewBag.finalrating = finalrating;
             ViewBag.totalvol = ratinglist.Count();
             ViewBag.Missiondetail = volunteeringVM;
-
-            //Recent Volunteers
 
             //Related Missions
             var relatedmission = lp.missions.Where(m => m.ThemeId == volmission.ThemeId && m.MissionId != missionid).ToList();
@@ -487,10 +481,8 @@ namespace CI_Platform1.Controllers
         public IActionResult Applied(int missonid)
         {
             var userid = HttpContext.Session.GetString("userID");
-            ViewBag.UserId = int.Parse(userid);
 
             _Interface.ApplyMission(missonid, Convert.ToInt32(userid));
-            //return View();
             return RedirectToAction("volunteering", new { id = Convert.ToInt64(HttpContext.Session.GetString("userID")), missionid = missonid });
         }
 
@@ -562,7 +554,6 @@ namespace CI_Platform1.Controllers
         public IActionResult Storyshare(long StoryId)
         {
             var userid = HttpContext.Session.GetString("userID");
-            ViewBag.UserId = int.Parse(userid);
             StoryShareVM sl = new StoryShareVM();
             sl.missions = _Landing.missions();
             sl.missionApplications = _CiPlatformContext.MissionApplications.ToList();
@@ -768,6 +759,58 @@ namespace CI_Platform1.Controllers
             return View();
         }
 
+        //Timesheet
+        public IActionResult Timesheet()
+        {
+            StoryShareVM ss = new StoryShareVM();
+            var userid = HttpContext.Session.GetString("userID");
+            ss.missions = _CiPlatformContext.Missions.ToList();
+            ss.missionApplications = _CiPlatformContext.MissionApplications.Where(e => e.UserId == Convert.ToInt64(userid)).ToList();
+            ss.timesheets = _CiPlatformContext.Timesheets.ToList();
+            //var sheet=_CiPlatformContext.Timesheets.Where(u=> u.UserId== Convert.ToInt32(userid)).ToList();
+
+            //var vm = ss.timesheets.ToList();
+
+            return View(ss);
+        }
+
+        [HttpPost]
+        public IActionResult Timesheet(StoryShareVM ss)
+        {
+            var userid = HttpContext.Session.GetString("userID");
+            var user = Convert.ToInt32(userid);
+
+            //var sheet=_CiPlatformContext.Timesheets.Where(u=> u.UserId== Convert.ToInt32(userid)).FirstOrDefault();
+
+                Timesheet sheet = new Timesheet();
+            if(ss.hour !=0 && ss.minute != 0)
+            {
+                sheet.UserId = user;
+                sheet.MissionId = ss.MissionId;
+                sheet.TimesheetTime = ss.hour + ":" + ss.minute;
+                ss.DateVolunteered = ss.DateVolunteered;
+                sheet.DateVolunteered = ss.DateVolunteered;
+                sheet.Notes = ss.Notes;
+
+            }
+            else
+            {
+
+                sheet.UserId = user;
+                sheet.MissionId = ss.MissionId;
+                ss.DateVolunteered = ss.DateVolunteered;
+                sheet.DateVolunteered = ss.DateVolunteered;
+                sheet.Notes = ss.Notes;
+                sheet.Action = ss.Action;
+
+            }
+
+            _CiPlatformContext.Timesheets.Add(sheet);
+            _CiPlatformContext.SaveChanges();
+
+            return RedirectToAction("Timesheet","Home");
+        }
+
         [HttpPost]
         public async Task<IActionResult> SaveUserSkills(long[] selectedSkills)
         {
@@ -831,10 +874,7 @@ namespace CI_Platform1.Controllers
             return View();
         }
 
-        public IActionResult Timesheet()
-        {
-            return View();
-        }
+
 
         //---------------------Comments---------------------------
         public IActionResult PostComment(int missionId, string Content)

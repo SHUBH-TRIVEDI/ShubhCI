@@ -107,7 +107,6 @@ namespace CI_Project.Repository.Repository
                     UserId = userId,
                 };
                 _CiPlatformContext.Add(fav);
-
             }
             else
             {

@@ -78,5 +78,27 @@ namespace CI_Entities1.Models.ViewModel
 
         public virtual Story Story { get; set; } = null!;
 
+        //Timesheet
+        public List<Timesheet> timesheets { get; set; }
+
+        public long TimesheetId { get; set; }
+
+        public string TimesheetTime { get; set; }
+
+
+        public int? Action { get; set; }
+
+        public DateTime DateVolunteered { get; set; }
+
+        public string? Notes { get; set; }
+
+        public int hour { get; set; }
+
+        public int minute { get; set; }
+
+        public virtual Mission? Mission { get; set; }
+
+        public virtual User? User { get; set; }
+
     }
 }

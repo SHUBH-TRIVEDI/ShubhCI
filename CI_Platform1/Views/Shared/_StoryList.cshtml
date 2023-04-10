@@ -75,25 +75,25 @@
         @if (pager.CurrentPage > 1)
         {
             <li class="mx-1">
-                <a class="page-link text-muted" onclick="pagination(jpg=1)"><span aria-hidden="true">&laquo;</span></a>
+                <a class="page-link back" onclick="pagination(jpg=1)"><span aria-hidden="true">&laquo;</span></a>
             </li>
             <li class="page-item mx-1">
-                <a class="page-link text-muted" onclick="pagination(jpg=@(pager.CurrentPage-1))"><span aria-hidden="true">&lsaquo;</span></a>
+                <a class="page-link back" onclick="pagination(jpg=@(pager.CurrentPage-1))"><span aria-hidden="true">&lsaquo;</span></a>
             </li>
         }
         @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
         {
             <li class="page-item mx-1 @(pge==pager.CurrentPage ? "active":"")">
-                <a class="page-link text-muted" onclick="pagination(jpg=@pge)">@pge</a>
+                <a class="page-link back" onclick="pagination(jpg=@pge)">@pge</a>
             </li>
         }
         @if (pager.CurrentPage < pager.TotalPages)
         {
             <li class="page-item mx-1">
-                <a class="page-link text-muted" onclick="pagination(jpg=@(pager.CurrentPage+1))"><span aria-hidden="true">&rsaquo;</span></a>
+                <a class="page-link back" onclick="pagination(jpg=@(pager.CurrentPage+1))"><span aria-hidden="true">&rsaquo;</span></a>
             </li>
             <li class="mx-1">
-                <a class="page-link text-muted" onclick="pagination(jpg=@(pager.TotalPages))"><span aria-hidden="true">&raquo;</span></a>
+                <a class="page-link back" onclick="pagination(jpg=@(pager.TotalPages))"><span aria-hidden="true">&raquo;</span></a>
             </li>
         }
 

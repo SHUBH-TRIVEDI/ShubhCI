@@ -830,7 +830,10 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('pending')")
                 .HasColumnName("status");
-            entity.Property(e => e.TimesheetTime).HasColumnName("timesheet_time");
+            entity.Property(e => e.TimesheetTime)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("timesheet_time");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
@@ -853,8 +856,7 @@ public partial class CiPlatformContext : DbContext
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.Avatar)
-                .HasMaxLength(2048)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("avatar");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");

@@ -102,14 +102,14 @@
                     @if (ViewBag.fav == null)
                     {
                         <button class="btn col ton me-3 Addfavourite shadow-none" onclick="addToFav(@ViewBag.Missiondetail.MissionId)">
-                            <i class="bi bi-heart" id="heart"></i>
+                            <i class="bi bi-heart fs-6" id="heart"></i>
                             <label class="ms-2" id="favmissiondiv">ADD to Favourite</label>
                         </button>
                     }
                     else
                     {
                         <button class="btn col ton me-3 Addfavourite shadow-none" onclick="addToFav(@ViewBag.Missiondetail.MissionId)">
-                            <span id="boot-icon" class="bi bi-heart-fill" style="font-size: 20px; color: rgb(255, 0, 0);"></span>
+                            <span id="boot-icon" class="bi bi-heart-fill fs-6" style="color: rgb(255, 0, 0);"></span>
                             <label class="ms-2" id="favmissiondiv" style="color:red;">Remove From Favourite</label>
                         </button>
                     }
@@ -142,8 +142,8 @@
                                     }
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary shadow-none" id="sendmail" onclick="sendmail(@ViewBag.Missiondetail.MissionId)">Send Mission</button>
+                                    <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn oran shadow-none" id="sendmail" onclick="sendmail(@ViewBag.Missiondetail.MissionId)">Send Mission</button>
                                 </div>
                             </div>
                         </div>
@@ -168,32 +168,32 @@
 
                                 @for (var i = 1; i <= @ViewBag.Missiondetail.Rating; i++)
                                 {
-                                    <i class="bi bi-star-fill" style="color:orange" id="@i" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
+                                    <i class="bi bi-star-fill fs-5" style="color:orange;" id="@i" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
                                     count++;
                                 }
                                 @for (var k = count + 1; k <= 5; k++)
                                 {
-                                    <i class="bi bi-star-fill" id="@k" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
+                                    <i class="bi bi-star-fill fs-5" id="@k" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
                                 }
 
                             }
                             else
                             {
-                                <i class="bi bi-star-fill" id="1" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
-                                <i class="bi bi-star-fill" id="2" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
-                                <i class="bi bi-star-fill" id="3" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
-                                <i class="bi bi-star-fill" id="4" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
-                                <i class="bi bi-star-fill" id="5" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
+                                <i class="bi bi-star-fill fs-5" id="1" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
+                                <i class="bi bi-star-fill fs-5" id="2" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
+                                <i class="bi bi-star-fill fs-5" id="3" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
+                                <i class="bi bi-star-fill fs-5" id="4" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
+                                <i class="bi bi-star-fill fs-5" id="5" onclick="addRating(this.id,@ViewBag.Missiondetail.MissionId,@useridforrating)"></i>
                             }
 
                         }
                         else
                         {
-                            <i class="bi bi-star-fill" id="1" onclick="LoginAlert()"></i>
-                            <i class="bi bi-star-fill" id="1" onclick="LoginAlert()"></i>
-                            <i class="bi bi-star-fill" id="1" onclick="LoginAlert()"></i>
-                            <i class="bi bi-star-fill" id="1" onclick="LoginAlert()"></i>
-                            <i class="bi bi-star-fill" id="1" onclick="LoginAlert()"></i>
+                            <i class="bi bi-star-fill fs-5" id="1" onclick="LoginAlert()"></i>
+                            <i class="bi bi-star-fill fs-5" id="1" onclick="LoginAlert()"></i>
+                            <i class="bi bi-star-fill fs-5" id="1" onclick="LoginAlert()"></i>
+                            <i class="bi bi-star-fill fs-5" id="1" onclick="LoginAlert()"></i>
+                            <i class="bi bi-star-fill fs-5" id="1" onclick="LoginAlert()"></i>
 
 
                         }
@@ -344,9 +344,10 @@
                         <div class="tab-content-item active commentdiv" id="tab3-content">
                             <h5>Comments</h5>
                             <div class="input-group mt-3 mb-3">
-                                <textarea class="form-control" aria-label="With textarea" id="commentarea"
+                                <textarea  class="form-control" aria-label="With textarea" id="commentarea" onkeyup="Entercmt()"
                                           placeholder="Enter your comments..."></textarea>
                             </div>
+                            <span class="d-none text-danger col-12" id="cmtErr">Enter Your Comment</span>
                             <button class="btnApply rounded-pill" onclick="PostComment()">Post Comment</button>
 
                             <div class="panel mt-3" id="result_panel">
@@ -382,8 +383,6 @@
                 <!-- Tab Code Ends -->
 
             </div>
-
-
             <div class="col-12 col-lg-5 col-xl-5 col-md-12 col-sm-12">
                 <div class="border">
                     <table class="table p-3">
@@ -432,10 +431,10 @@
 
                 <div class="shadow-sm mt-5 ">
                     <h4>Recent Volunteers</h4>
-                    <div id="carouselExample" class="carousel slide" data-bs-interval="false" data-ride="carousel"
+                    <div id="carouselExample result_panel" class="carousel slide panel" data-bs-interval="false" data-ride="carousel"
                          data-pause="hover">
 
-                        <div class="carousel-inner carContent" style="height:310px">
+                        <div class="carousel-inner carContent panel-body" style="height:310px">
 
 
                             <div class="carousel-item active mt-5">
@@ -463,35 +462,16 @@
 
                                         }
                                     }
-
-
-
                                 </div>
-
-                                <div class="row volunteerCount">
-                                    <p class="text-secondary text-center">1-9 of 25 recent volunteers</p>
-                                </div>
-
                             </div>
 
                             <div class="carousel-item">
-                                @*                                <div class="row">
+                                @*<div class="row">
                                     <div class="col column2">
                                     <img src="/images/volunteer7.png" class="rounded-circle"
                                     style="height:60px;width:60px" />Travis Steen
                                     </div>
-                                    <div class="col column2">
-                                    <img src="/images/volunteer8.png" class="rounded-circle"
-                                    style="height:60px;width:60px" />Sarah Santillan
-                                    </div>
-                                    <div class="col column2">
-                                    <img src="/images/volunteer9.png" class="rounded-circle"
-                                    style="height:60px;width:60px" />Linda Richards
-                                    </div>
                                     </div>*@
-                                <!-- <div class="row volunteerCount"> -->
-                                @*  <div class="text-secondary text-center">1-9 of 25 recent volunteers</div>*@
-
                             </div>
 
                         </div>
@@ -503,7 +483,7 @@
                                      alt="">
                             </div>
                             <div class="col-8">
-                                <p class="ms-2 mt-3 text-center">1-9 of 25 Recent Volunteers</p>
+                                <p class="ms-2 mt-3 text-center">1 Recent Volunteered</p>
                             </div>
                             <div class="col-2 border-start">
                                 <img src="~/images/right-arrow1.png"
@@ -530,13 +510,8 @@
                     </div>
 
                 </div>
-
-
-
             </div>
-
         </div>
-
         <hr />
 
         @*--------------------Related Missions-------------------------*@
