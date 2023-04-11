@@ -116,7 +116,7 @@ namespace CI_Platform1.Controllers
                 var resetLink = Url.Action("Resetpass", "Home", new { email = model.Email, token }, Request.Scheme);
 
 
-                var fromAddress = new MailAddress("officehl1881@gmail.com", "Sender Name");
+                var fromAddress = new MailAddress("ciplatformoffice@gmail.com", "Sender Name");
                 var toAddress = new MailAddress(model.Email);
                 var subject = "Password reset request";
                 var body = $"Hi,<br /><br />Please click on the following link to reset your password:<br /><br /><a href='{resetLink}'>{resetLink}</a>";
@@ -129,7 +129,7 @@ namespace CI_Platform1.Controllers
                 var smtpClient = new SmtpClient("smtp.gmail.com", 587)
                 {
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("officehl1881@gmail.com", "vrbxqqayjlbvoihx"),
+                    Credentials = new NetworkCredential("ciplatformoffice@gmail.com", "cydalqjrspgeumxm"),
                     EnableSsl = true
                 };
                 smtpClient.Send(message);
@@ -324,7 +324,7 @@ namespace CI_Platform1.Controllers
 
             //Pagination
             ViewBag.missionCount = lp.missions.Count();
-            const int pageSize = 9;
+            const int pageSize = 6;
             if (jpg < 1)
             {
                 jpg = 1;
@@ -383,12 +383,12 @@ namespace CI_Platform1.Controllers
             VolunteeringVM volunteeringVM = new VolunteeringVM();
             if (userid == null)
             {
-            volunteeringVM.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.MissionId == missionId).ToList();
+                volunteeringVM.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.MissionId == missionId).ToList();
 
             }
             else
             {
-            volunteeringVM.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.MissionId == missionId && u.UserId!=Convert.ToInt32(userid)).ToList();
+                volunteeringVM.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.MissionId == missionId && u.UserId != Convert.ToInt32(userid)).ToList();
 
             }
 
@@ -527,9 +527,6 @@ namespace CI_Platform1.Controllers
 
             storylist.Stories = _CiPlatformContext.Stories.ToList();
 
-            storylist.users = _CiPlatformContext.Users.ToList();
-
-            storylist.missions = _CiPlatformContext.Missions.ToList();
             storylist.missionThemes = _CiPlatformContext.MissionThemes.ToList();
             storylist.storymedia = _CiPlatformContext.StoryMedia.ToList();
 
@@ -547,6 +544,9 @@ namespace CI_Platform1.Controllers
             ViewBag.missionTempDate = data;
             storylist.Stories = data.ToList();
             ViewBag.TotalMission = recsCount;
+
+            storylist.users = _CiPlatformContext.Users.ToList();
+            storylist.missions = _CiPlatformContext.Missions.ToList();
             return PartialView("_StoryList", storylist);
         }
 
@@ -567,7 +567,6 @@ namespace CI_Platform1.Controllers
             if (action == "submit")
             {
                 var userid = HttpContext.Session.GetString("userID");
-                ViewBag.UserId = int.Parse(userid);
                 ss.missions = _Landing.missions();
                 ss.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
 
@@ -604,7 +603,6 @@ namespace CI_Platform1.Controllers
             else if (action == "save")
             {
                 var userid = HttpContext.Session.GetString("userID");
-                ViewBag.UserId = int.Parse(userid);
                 ss.missions = _Landing.missions();
                 ss.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
 
@@ -647,7 +645,6 @@ namespace CI_Platform1.Controllers
         public IActionResult Draft()
         {
             var userid = HttpContext.Session.GetString("userID");
-            ViewBag.UserId = int.Parse(userid);
 
             StoryShareVM sl = new StoryShareVM();
             sl.Stories = _CiPlatformContext.Stories.Where(u => (u.Status == "Draft") && (u.UserId == Convert.ToInt64(userid))).ToList();
@@ -668,11 +665,23 @@ namespace CI_Platform1.Controllers
             st.singleStory = Story;
             st.users = _CiPlatformContext.Users.ToList();
             st.missions = _CiPlatformContext.Missions.ToList();
-
-
-
             st.ShortDescription = HttpUtility.HtmlDecode(Story.Description);
             st.Title = Story.Title;
+
+            var userId = HttpContext.Session.GetString("userID");
+            if (userId != null)
+            {
+                //views
+                if (Story.StoryViews == null)
+                {
+                    Story.StoryViews = 0;
+                }
+
+                Story.StoryViews = Story.StoryViews + 1;
+                st.StoryViews = Story.StoryViews;
+                _CiPlatformContext.Stories.Update(Story);
+                _CiPlatformContext.SaveChanges();
+            }
             return View(st);
         }
 
@@ -692,16 +701,16 @@ namespace CI_Platform1.Controllers
         {
             var userid = HttpContext.Session.GetString("userID");
             UserVM user = new UserVM();
-            user.Singleuser = _CiPlatformContext.Users.FirstOrDefault(u=> u.UserId== Convert.ToInt32(userid));
-            var u = _CiPlatformContext.Users.FirstOrDefault(u=> u.UserId== Convert.ToInt32(userid));
-            user.Countries= _CiPlatformContext.Countries.ToList();
-            user.cities= _CiPlatformContext.Cities.ToList();
-            user.userSkills=_CiPlatformContext.UserSkills.Where(u=> u.UserId== Convert.ToInt32(userid)).ToList();
+            user.Singleuser = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
+            var u = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
+            user.Countries = _CiPlatformContext.Countries.ToList();
+            user.cities = _CiPlatformContext.Cities.ToList();
+            user.userSkills = _CiPlatformContext.UserSkills.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
             user.skills = _CiPlatformContext.Skills.ToList();
 
-            user.FirstName=u.FirstName;
+            user.FirstName = u.FirstName;
             user.LastName = u.LastName;
-            user.EmployeeId=u.EmployeeId;
+            user.EmployeeId = u.EmployeeId;
             user.Title = u.Title;
             user.Department = u.Department;
             user.ProfileText = u.ProfileText;
@@ -759,6 +768,31 @@ namespace CI_Platform1.Controllers
             return View();
         }
 
+        //Editprofile ChangePassword
+        [HttpPost]
+        public bool ChangePassword(string old,string newp,string cnf )
+        {
+
+            var userid = HttpContext.Session.GetString("userID");
+            var user = _CiPlatformContext.Users.Where(e=>e.UserId == Convert.ToInt32(userid)).FirstOrDefault();
+
+            if(old!= user.Password)
+            {
+                return false;
+            }
+            else
+            {
+                var pass = _CiPlatformContext.Users.FirstOrDefault(u => u.Password == old);
+
+                pass.Password = newp;
+                _CiPlatformContext.Users.Update(pass);
+                _CiPlatformContext.SaveChanges();
+
+                return true;
+            }
+
+        }
+
         //Timesheet
         public IActionResult Timesheet()
         {
@@ -767,9 +801,6 @@ namespace CI_Platform1.Controllers
             ss.missions = _CiPlatformContext.Missions.ToList();
             ss.missionApplications = _CiPlatformContext.MissionApplications.Where(e => e.UserId == Convert.ToInt64(userid)).ToList();
             ss.timesheets = _CiPlatformContext.Timesheets.ToList();
-            //var sheet=_CiPlatformContext.Timesheets.Where(u=> u.UserId== Convert.ToInt32(userid)).ToList();
-
-            //var vm = ss.timesheets.ToList();
 
             return View(ss);
         }
@@ -780,10 +811,8 @@ namespace CI_Platform1.Controllers
             var userid = HttpContext.Session.GetString("userID");
             var user = Convert.ToInt32(userid);
 
-            //var sheet=_CiPlatformContext.Timesheets.Where(u=> u.UserId== Convert.ToInt32(userid)).FirstOrDefault();
-
-                Timesheet sheet = new Timesheet();
-            if(ss.hour !=0 && ss.minute != 0)
+            Timesheet sheet = new Timesheet();
+            if (ss.hour != 0 && ss.minute != 0)
             {
                 sheet.UserId = user;
                 sheet.MissionId = ss.MissionId;
@@ -791,8 +820,8 @@ namespace CI_Platform1.Controllers
                 ss.DateVolunteered = ss.DateVolunteered;
                 sheet.DateVolunteered = ss.DateVolunteered;
                 sheet.Notes = ss.Notes;
-
             }
+
             else
             {
 
@@ -802,15 +831,26 @@ namespace CI_Platform1.Controllers
                 sheet.DateVolunteered = ss.DateVolunteered;
                 sheet.Notes = ss.Notes;
                 sheet.Action = ss.Action;
-
             }
 
             _CiPlatformContext.Timesheets.Add(sheet);
             _CiPlatformContext.SaveChanges();
 
-            return RedirectToAction("Timesheet","Home");
+            return RedirectToAction("Timesheet", "Home");
         }
 
+
+        //Delete and edit
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var time = _CiPlatformContext.Timesheets.FirstOrDefault(x => x.TimesheetId == id);
+
+            _CiPlatformContext.Timesheets.Remove(time);
+            _CiPlatformContext.SaveChanges();
+
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> SaveUserSkills(long[] selectedSkills)
         {
@@ -821,7 +861,7 @@ namespace CI_Platform1.Controllers
             _CiPlatformContext.SaveChanges();
             foreach (var skills in selectedSkills)
             {
-                
+
                 //_IUser.AddUserSkills(skills, Convert.ToInt32(userid));
                 UserSkill u = new UserSkill();
                 u.SkillId = skills;
@@ -848,29 +888,31 @@ namespace CI_Platform1.Controllers
         public IActionResult addToFavourite(int missonid)
         {
             var userId = HttpContext.Session.GetString("userID");
-            ViewBag.UserId = int.Parse(userId);
-
-            //add favourite mission data
-            if (missonid != null)
+            if (userId != null)
             {
-                //var tempFav = _IUser.favoriteMissions().Where(e => (e.MissionId == missonid) && (e.UserId == Convert.ToInt32(userId))).FirstOrDefault();
-                _Interface.FavMission(missonid, Convert.ToInt32(userId));
+                if (missonid != null)
+                {
+                    _Interface.FavMission(missonid, Convert.ToInt32(userId));
+                }
+                return RedirectToAction("Volunteering", new { id = int.Parse(userId), missionid = missonid });
             }
-            return RedirectToAction("Volunteering", new { id = int.Parse(userId), missionid = missonid });
+            return View();
         }
 
         //favroite landing page
         public IActionResult addToFavouriteLanding(int missonid)
         {
             var userId = HttpContext.Session.GetString("userID");
-
-            if (missonid != null)
+            if (userId != null)
             {
-                //var tempFav = _IUser.favoriteMissions().Where(e => (e.MissionId == missonid) && (e.UserId == Convert.ToInt32(userId))).FirstOrDefault();
-                _Interface.FavMission(missonid, Convert.ToInt32(userId));
+                if (missonid != null)
+                {
+                    //var tempFav = _IUser.favoriteMissions().Where(e => (e.MissionId == missonid) && (e.UserId == Convert.ToInt32(userId))).FirstOrDefault();
+                    _Interface.FavMission(missonid, Convert.ToInt32(userId));
 
+                }
+                return RedirectToAction("_Missions", new { id = int.Parse(userId), missionid = missonid });
             }
-            return RedirectToAction("_Missions", new { id = int.Parse(userId), missionid = missonid });
             return View();
         }
 
@@ -879,46 +921,57 @@ namespace CI_Platform1.Controllers
         //---------------------Comments---------------------------
         public IActionResult PostComment(int missionId, string Content)
         {
-            Comment objComment = new Comment();
-            objComment.UserId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
-            objComment.MissionId = missionId;
-            objComment.Comment1 = Content;
-            objComment.CreatedAt = DateTime.Now;
-            _CiPlatformContext.Comments.Add(objComment);
-            _CiPlatformContext.SaveChanges();
-            return RedirectToAction("volunteering", new { id = Convert.ToInt64(HttpContext.Session.GetString("userID")), missionid = missionId });
-        }
+            var userId = HttpContext.Session.GetString("userID");
+            if (userId != null)
+            {
+                Comment objComment = new Comment();
+                objComment.UserId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
+                objComment.MissionId = missionId;
+                objComment.Comment1 = Content;
+                objComment.CreatedAt = DateTime.Now;
+                _CiPlatformContext.Comments.Add(objComment);
+                _CiPlatformContext.SaveChanges();
+                return RedirectToAction("volunteering", new { id = Convert.ToInt64(HttpContext.Session.GetString("userID")), missionid = missionId });
+            }
+            return View();
+            }
+
 
         //-----------------Reccomend to coworker----------------------
 
         [HttpPost]
         public async Task<IActionResult> Sendmail(long[] userid, int id)
         {
-            foreach (var item in userid)
+            var userId = HttpContext.Session.GetString("userID");
+            if (userId != null)
             {
-                var user = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == item);
-                var resetLink = Url.Action("Volunteering", "Home", new { user = user.UserId, missionId = id }, Request.Scheme);
-
-                var fromAddress = new MailAddress("officehl1882@gmail.com");
-                var toAddress = new MailAddress(user.Email);
-                var subject = "Password reset request";
-                var body = $"Hi,<br /><br />This is to <br /><br /><a href='{resetLink}'>{resetLink}</a>";
-                var message = new MailMessage(fromAddress, toAddress)
+                foreach (var item in userid)
                 {
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                };
-                var smtpClient = new SmtpClient("smtp.gmail.com", 587)
-                {
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential("officehl1882@gmail.com", "yedkuuhuklkqfzwx"),
-                    EnableSsl = true
-                };
-                smtpClient.Send(message);
+                    var user = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == item);
+                    var resetLink = Url.Action("Volunteering", "Home", new { user = user.UserId, missionId = id }, Request.Scheme);
 
+                    var fromAddress = new MailAddress("ciplatformoffice@gmail.com");
+                    var toAddress = new MailAddress(user.Email);
+                    var subject = "Password reset request";
+                    var body = $"Hi,<br /><br />This is to <br /><br /><a href='{resetLink}'>{resetLink}</a>";
+                    var message = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true
+                    };
+                    var smtpClient = new SmtpClient("smtp.gmail.com", 587)
+                    {
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential("ciplatformoffice@gmail.com", "cydalqjrspgeumxm"),
+                        EnableSsl = true
+                    };
+                    smtpClient.Send(message);
+
+                }
+                return Json(new { success = true });
             }
-            return Json(new { success = true });
+            return View();
         }
 
         //-----------------Rating-----------------

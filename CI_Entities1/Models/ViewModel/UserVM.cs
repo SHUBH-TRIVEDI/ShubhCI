@@ -19,9 +19,16 @@ namespace CI_Entities1.Models.ViewModel
         [Required]
         public string? LastName { get; set; }
 
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; }
+
 
         public string Password { get; set; } = null!;
+
+        public string NewPassword { get; set; }
+
+
+        public string ConfirmPassword { get; set; } 
+
 
         public long PhoneNumber { get; set; }
 

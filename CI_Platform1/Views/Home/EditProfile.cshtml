@@ -7,16 +7,16 @@
     <div class="row">
         <div class="col-3 border me-4 text-center" style="height:300px">
             <div>
-    @*            @if (@Model.Avatar == null)
-                {
+                @*                @if (@Model.Avatar == null)
+                    {
                     <img src="/Images/volunteer1.png" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
-                     alt="">
-                }
-                else
-                {
+                    alt="">
+                    }
+                    else
+                    {
                     <img src="@Model.Singleuser.Avatar" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
-                     alt="">
-                }*@
+                    alt="">
+                    }*@
             </div>
             <div class="mt-1 fs-4">Evan</div>
             <div class="mt-1 text-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change Password</div>
@@ -29,18 +29,18 @@
                             <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="fs-4">Change Password </div>
-                            <div><input class="col-12 mt-4" type="text" 
-                                
-                                placeholder="Enter Old Password" /></div>
-                            <div><input class="col-12 mt-4" type="text" placeholder="Enter New Password" /></div>
-                            <div><input class="col-12 mt-4" type="text" placeholder="Confirm Your Password" /></div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn oran shadow-none">Change Password</button>
-                        </div>
+                        <form>
+                            <div class="modal-body">
+                                <div class="fs-4">Change Password </div>
+                                <div><input asp-for="Password" class="col-12 mt-4" type="text" id="old" placeholder="Enter Old Password" /></div>
+                                <div><input asp-for="NewPassword" class="col-12 mt-4" type="text" id="new" placeholder="Enter New Password" /></div>
+                                <div><input asp-for="ConfirmPassword" class="col-12 mt-4" type="text" id="cnf" placeholder="Confirm Your Password" /></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" onclick="ChangePsw()" class="btn oran shadow-none">Change Password</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <div class=" col-6">
                         <div>Name* </div>
                         <div class="col-11">
-                            <input asp-for="FirstName" class="col-12 p-1" placeholder="Enter Your Name" type="text">
+                            <input asp-for="FirstName" class="col-12 p-1 form-control" placeholder="Enter Your Name" type="text">
                         </div>
 
                     </div>
@@ -70,7 +70,7 @@
                     <div class=" col-6">
                         <div>Surname*</div>
                         <div>
-                            <input asp-for="LastName" class="col-12 p-1" placeholder="Enter Your Surname" type="text">
+                            <input asp-for="LastName" class="col-12 p-1 form-control" placeholder="Enter Your Surname" type="text">
                         </div>
                         <span asp-validation-for="LastName" class="text-danger"></span>
 
@@ -81,14 +81,14 @@
                     <div class=" col-6">
                         <div>Employee Id* </div>
                         <div class="col-11">
-                            <input asp-for="EmployeeId" class="col-12 p-1" placeholder="Enter Your Employee Id" type="text">
+                            <input asp-for="EmployeeId" class="col-12 p-1 form-control" placeholder="Enter Your Employee Id" type="text">
                         </div>
                     </div>
 
                     <div class=" col-6">
                         <div>Manager*</div>
                         <div>
-                            <input class="col-12 p-1" placeholder="Enter Your Manager Details" type="text">
+                            <input class="col-12 p-1 form-control" placeholder="Enter Your Manager Details" type="text">
                         </div>
                     </div>
                 </div>
@@ -97,23 +97,23 @@
                     <div class=" col-6">
                         <div>Title* </div>
                         <div class="col-11">
-                            <input asp-for="Title" class="col-12 p-1" placeholder="Enter Your Title" type="text">
+                            <input asp-for="Title" class="col-12 p-1 form-control" placeholder="Enter Your Title" type="text">
                         </div>
                     </div>
 
                     <div class=" col-6">
                         <div>Department*</div>
                         <div class="mt-1">
-                            <input asp-for="Department" class="col-12 p-1" placeholder="Enter Your Department Details" type="text">
+                            <input asp-for="Department" class="col-12 p-1 form-control" placeholder="Enter Your Department Details" type="text">
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-4">My Profile*</div>
-                <textarea asp-for="ProfileText" class="col-12" rows="5" placeholder="Enter Your Comments"></textarea>
+                <textarea asp-for="ProfileText" class="col-12  form-control" rows="5" placeholder="Enter Your Comments"></textarea>
 
                 <div class="mt-4">Why I volunteer?</div>
-                <textarea asp-for="WhyIVolunteer" class="col-12" rows="5" placeholder="Why You Volunteered"></textarea>
+                <textarea asp-for="WhyIVolunteer" class="col-12  form-control" rows="5" placeholder="Why You Volunteered"></textarea>
 
                 <div class="fs-4"> Address Information</div>
                 <div class="row mt-3">
@@ -302,6 +302,40 @@
 
 
 <script>
+
+    function ChangePsw(){
+          var old = document.getElementById('old').value;
+          var newp = document.getElementById('new').value;
+          var cnf = document.getElementById('cnf').value;
+          if(old == ""){
+              alert("Old password Required");
+          }
+          else if(newp!= cnf){
+              alert("Confirm Password Dosen't Match");
+          }
+          else{
+               $.ajax({
+            url: '/Home/ChangePassword',
+            type: 'POST',
+            data: { old: old,newp:newp,cnf:cnf },
+            success: function (response) {
+                    if(response==true){
+                        alert("password change successfully");
+
+                    }
+                    else{
+                        alert("Password Don't Get Change Due to Some Issues");
+                    }
+
+            },
+            error: function () {
+                alert("could not comment");
+            }
+        });
+          }
+    }
+
+
     function ved1() {
         var a = document.getElementById("s1");
         var c = document.getElementById("s2");
@@ -332,7 +366,7 @@
             c.add(a.options[c, i])
         }
     }
-        
+
     function ved4() {
         var a = document.getElementById("s1");
         var c = document.getElementById("s2");
@@ -353,7 +387,7 @@
             url: '/Home/SaveUserSkills',
             type: 'POST',
             data: { selectedSkills: selectedSkills },
-    
+
             success: function (response) {
                 $('#userskilldiv').html($(response).find('#userskilldiv').html());
                 document.getElementById('close').click();

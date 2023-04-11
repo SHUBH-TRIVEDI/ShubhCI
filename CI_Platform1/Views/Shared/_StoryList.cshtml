@@ -23,26 +23,27 @@
                             @{
                                 var media = Model.storymedia.Where(e => e.StoryId == item.StoryId).FirstOrDefault();
                             }
-                            @if(media != null)
+                            @if (media != null)
                             {
-                                
-                            <img src="@media.StoryPath"
+
+                                <img src="@media.StoryPath"
                              class="card-img-top missionimg" alt="...">
-                            <button class="btn  btn-view oran" onclick="viewdetails()">
-                                <a asp-controller="Home" asp-action="StoryDetail" asp-route-missionid="@item.StoryId" class="text-decoration-none text-black">View details </a><i class="bi bi-arrow-right ms-2 mt-3 "></i>
+                                <button class="btn  btn-view oran" onclick="viewdetails()">
+                                    <a asp-controller="Home" asp-action="StoryDetail" asp-route-missionid="@item.StoryId" class="text-decoration-none text-black">View details </a><i class="bi bi-arrow-right ms-2 mt-3 "></i>
                                 </button>
                             }
                             else
                             {
-                                 <img src="/images/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png"
+                                <img src="/images/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png"
                              class="card-img-top missionimg" alt="...">
-                            <button class="btn cardbtn btn-view" onclick="viewdetails()">
-                                <a asp-controller="Home" asp-action="StoryDetail" asp-route-missionid="@item.StoryId" class="text-decoration-none text-black">View details </a><i class="bi bi-arrow-right ms-2 mt-3 "></i>
+                                <button class="btn cardbtn btn-view" onclick="viewdetails()">
+                                    <a asp-controller="Home" asp-action="StoryDetail" asp-route-missionid="@item.StoryId" class="text-decoration-none text-black">View details </a><i class="bi bi-arrow-right ms-2 mt-3 "></i>
                                 </button>
                             }
                             <div class="rule" style="margin-top:-20px !important;">
                                 <hr>
                                 <button class="hrbtn-img">@item.Mission.Theme.Title</button>
+
                                 <hr>
                             </div>
                         </div>
@@ -58,8 +59,9 @@
                         <div class="col column2">
                             <img src="~/images/volunteer1.png" class="rounded-circle me-1"
                              style="height:30px;width:30px" />
-                            @item.User.FirstName @item.User.LastName
+                             @item.User.FirstName @item.User.LastName
                         </div>
+
                     </div>
                 </div>
             </div>

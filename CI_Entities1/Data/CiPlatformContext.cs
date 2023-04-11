@@ -714,6 +714,7 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('draft')")
                 .HasColumnName("status");
+            entity.Property(e => e.StoryViews).HasDefaultValueSql("((0))");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .IsUnicode(false)
@@ -726,12 +727,12 @@ public partial class CiPlatformContext : DbContext
             entity.HasOne(d => d.Mission).WithMany(p => p.Stories)
                 .HasForeignKey(d => d.MissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__story__mission_i__2B0A656D");
+                .HasConstraintName("FK_Mission");
 
             entity.HasOne(d => d.User).WithMany(p => p.Stories)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__story__user_id__2BFE89A6");
+                .HasConstraintName("FK_Userid_story");
         });
 
         modelBuilder.Entity<StoryInvite>(entity =>

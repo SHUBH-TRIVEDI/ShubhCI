@@ -12,69 +12,70 @@
     }
 }
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 <style>
 
     /*card*/
-.card-img {
-    position: relative;
-}
+    .card-img {
+        position: relative;
+    }
 
-.pin {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.514);
-    border-radius: 50px;
-    top: 15px;
-    right: 10px;
-}
+    .pin {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.514);
+        border-radius: 50px;
+        top: 15px;
+        right: 10px;
+    }
 
-.heart {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.514);
-    border-radius: 50%;
-    top: 100px;
-    right: 12px;
-}
+    .heart {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.514);
+        border-radius: 50%;
+        top: 100px;
+        right: 12px;
+    }
 
-.share {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.514);
-    border-radius: 50%;
-    top: 150px;
-    right: 12px;
-    height:40px;
-    width:40px;
-}
+    .share {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.514);
+        border-radius: 50%;
+        top: 150px;
+        right: 12px;
+        height: 40px;
+        width: 40px;
+    }
 
-.env {
-    position: absolute;
-    color: #7d7d7d;
-    background-color: white;
-    border-radius: 40px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    width: fit-content;
-    bottom: -16px;
-}
-/*card*/
+    .env {
+        position: absolute;
+        color: #7d7d7d;
+        background-color: white;
+        border-radius: 40px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        width: fit-content;
+        bottom: -16px;
+    }
+    /*card*/
 
-.sort {
-    width: 11rem;
-    margin-left: auto;
-}
+    .sort {
+        width: 11rem;
+        margin-left: auto;
+    }
 
-.sortby {
-    margin-left: auto;
-}
+    .sortby {
+        margin-left: auto;
+    }
 
     /*card*/
-    .krunal{
-    background: transparent;
-    border: 0px;
-    z-index:1;
+    .krunal {
+        background: transparent;
+        border: 0px;
+        z-index: 1;
     }
+
     .card-img {
         position: relative;
     }
@@ -125,7 +126,6 @@
     .sortby {
         margin-left: auto;
     }
-
 </style>
 
 
@@ -139,7 +139,7 @@
         </div>
         <div class="col-6 col-md-8 col-sm-8 d-flex mt-3 sortby mb-3">
             <div class="dropdown sort nav-item">
-                <button class=" btn dropdown d-flex " type="button" data-bs-toggle="dropdown"
+                <button class=" btn dropdown d-flex shadow-none" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                     <span class="sortby me-5 border p-2"> Sort By &nbsp;&nbsp;<img src="~/images/drop-down.png" /> </span>
                     <img src="/Image/drop-down.png" alt="" class="sortaerrow">
@@ -163,7 +163,7 @@
 
                 <a class="btn-list ms-lg-3 ms-md-3 ms-sm-3 listbuton" href="">
                     <img src="~/images/list.png" />
-  @*<i class="bi bi-list"></i>*@
+                    @*<i class="bi bi-list"></i>*@
                 </a>
             </div>
         </div>
@@ -184,24 +184,24 @@
                         <div class="pin d-flex align-items-center px-2 py-1 ">
                             <img src="~/Images/pin.png" alt="location">
                             <p class="text-white mb-0 px-2">@category.City.Name</p>
-                        </div>  
+                        </div>
                         @*
                             <button class="heart align-items-center px-2 py-1 Addfavourite favmissiondiv" onclick="addToFavourite( @category.MissionId)">
                             <i class="bi bi-heart-fill" id="heart"></i>
                             </button>
-                        Addfavourite favmissiondiv
+                            Addfavourite favmissiondiv
                         *@
                         @{
                             var ui = Context.Session.GetString("userID");
-                            var fav = Model.favoriteMissions.FirstOrDefault(u => u.UserId ==Convert.ToInt32(ui) && u.MissionId== category.MissionId);
+                            var fav = Model.favoriteMissions.FirstOrDefault(u => u.UserId == Convert.ToInt32(ui) && u.MissionId == category.MissionId);
                         }
-                            
+
                         @if (fav == null)
                         {
                             <div class="heart" style="height:30px;width:30px; position: absolute; background-color: rgba(0, 0, 0, 0.514); border-radius: 45%;">
-                            <button class=" addFav align-items-center px-2 py-1  krunal" style="background:"transparent onclick="addToFav(@category.MissionId)">
-                                <i class="bi bi-heart-fill" id="heart" style="color:white"></i>
-                            </button>
+                                <button class=" addFav align-items-center px-2 py-1  krunal" style="background:" transparent onclick="addToFav(@category.MissionId)">
+                                    <i class="bi bi-heart-fill" id="heart" style="color:white"></i>
+                                </button>
                             </div>
                         }
                         else
@@ -235,7 +235,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn oran" id="sendmail" onclick="sendmail(@category.MissionId)">Send Mission</button>
+                                            <button type="button" class="btn oran shadow-none" id="sendmail" onclick="sendmail(@category.MissionId)">Send Mission</button>
                                         </div>
                                     </div>
                                 </div>
@@ -260,29 +260,29 @@
                             @*Star Rating*@
                             @{
                                 var count = 0;
-                                var rate = Model.missionRatings.Where(e => e.MissionId == category.MissionId).Select(e=> e.Rating).ToList();
-                                var avg = Math.Ceiling(Convert.ToDouble(rate.Sum())/Convert.ToDouble(rate.Count())) ;
+                                var rate = Model.missionRatings.Where(e => e.MissionId == category.MissionId).Select(e => e.Rating).ToList();
+                                var avg = Math.Ceiling(Convert.ToDouble(rate.Sum()) / Convert.ToDouble(rate.Count()));
                             }
-                            
+
                             <div class="ms-auto">
-                               @if (avg!=0)
-                               {
-                                    @for (var i = 0; i <avg; i++)
+                                @if (avg != 0)
+                                {
+                                    @for (var i = 0; i < avg; i++)
                                     {
                                         count++;
                                         <img src="~/images/selected-star.png">
 
                                     }
-                                    @for (var i =avg; i < 5; i++)
+                                    @for (var i = avg; i < 5; i++)
                                     {
                                         <img src="~/images/star.png">
                                     }
-                               }
+                                }
 
-                               @if(avg==0)
-                               {
-                                   <div class="ms-auto text-danger"> Not Rated</div>
-                               }
+                                @if (avg == 0)
+                                {
+                                    <div class="ms-auto text-danger"> Not Rated</div>
+                                }
 
                             </div>
 
@@ -378,7 +378,7 @@
         @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
         {
             <li class="page-item mx-1 @(pge==pager.CurrentPage ? "active":"")">
-                <a class="page-link back"  onclick="mysearch(order=1,jpg=@pge)">@pge</a>
+                <a class="page-link back" onclick="mysearch(order=1,jpg=@pge)">@pge</a>
             </li>
         }
         @if (pager.CurrentPage < pager.TotalPages)
@@ -393,6 +393,13 @@
 
     </ul>
 }
+
+<hr />
+<div class="container">
+    <div class="text-secondary fs-5 position-absolute bottom-0 ms-3">
+        <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+    </div>
+</div>
 @*
     <script>
 

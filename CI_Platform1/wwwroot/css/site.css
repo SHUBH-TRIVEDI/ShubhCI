@@ -2,6 +2,26 @@ html {
     font-size: 14px;
 }
 
+input:focus {
+    /*border-color:*/ /* rgb(118, 118, 118);*/ /*rgb(133, 133, 133));*/
+    border-color:red !important;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.btn:focus {
+    outline: none !important;
+}
+#preloader {
+    background: #ffff url(/images/CVyf.gif) no-repeat center center;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+}
+
 .back {
     background-color: #fd7e14;
     border: none;

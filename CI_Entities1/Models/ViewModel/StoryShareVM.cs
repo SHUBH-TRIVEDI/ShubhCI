@@ -11,6 +11,8 @@ namespace CI_Entities1.Models.ViewModel
     {
         public List<IFormFile> attachment { get; set; }
         public long StoryId { get; set; }
+        public int? StoryViews { get; set; }
+
 
         public long MissionId { get; set; }
 
@@ -98,7 +100,7 @@ namespace CI_Entities1.Models.ViewModel
 
         public virtual Mission? Mission { get; set; }
 
-        public virtual User? User { get; set; }
+     
 
     }
 }

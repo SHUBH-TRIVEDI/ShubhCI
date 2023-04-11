@@ -98,22 +98,28 @@ namespace CI_Project.Repository.Repository
         //Favroite mission
         public FavoriteMission FavMission(int  missionId, int userId)
         {
-            var tempFav = _CiPlatformContext.FavoriteMissions.Where(e => (e.MissionId == missionId) && (e.UserId == Convert.ToInt32(userId))).FirstOrDefault();
-            if (tempFav == null)
+            if (userId != 0)
             {
-                FavoriteMission fav = new FavoriteMission
+                var tempFav = _CiPlatformContext.FavoriteMissions.Where(e => (e.MissionId == missionId) && (e.UserId == Convert.ToInt32(userId))).FirstOrDefault();
+                if (tempFav == null)
                 {
-                    MissionId = missionId,
-                    UserId = userId,
-                };
-                _CiPlatformContext.Add(fav);
+                    FavoriteMission fav = new FavoriteMission
+                    {
+                        MissionId = missionId,
+                        UserId = userId,
+                    };
+                    _CiPlatformContext.Add(fav);
+                }
+                else
+                {
+                    _CiPlatformContext.FavoriteMissions.Remove(tempFav);
+                }
+                _CiPlatformContext.SaveChanges();
+                return tempFav;
+
             }
-            else
-            {
-                _CiPlatformContext.FavoriteMissions.Remove(tempFav);
-            }
-            _CiPlatformContext.SaveChanges();
-            return tempFav;
+            return null;
+
         }
         public List<MissionRating> missionRatings()
         {

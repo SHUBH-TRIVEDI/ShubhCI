@@ -108,8 +108,16 @@
                                     <td>@sheet.DateVolunteered</td>
                                     <td>@sheet.TimesheetTime.ToString().Split(":")[0]</td>
                                     <td>@sheet.TimesheetTime.ToString().Split(":")[1]</td>
-                                    <td><i class="bi bi-pencil-square"></i></td>
-                                    <td><img src=~/images/bin.png /></td>
+                                    <td>
+                                        <button onclick="edit(@sheet.TimesheetId)" class="btn shadow-none">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button onclick="edit(@sheet.TimesheetId)" class="btn shadow-none">
+                                            <img src=~/images/bin.png />
+                                        </button>
+                                    </td>
                                 </tr>
                             }
                         }
@@ -187,7 +195,7 @@
             </div>
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr >
                         <th scope="col">Mission</th>
                         <th scope="col">Date</th>
                         <th scope="col">Action</th>
@@ -202,12 +210,20 @@
                         {
                             if (sheet.Mission.MissionType == "Goal")
                             {
-                                <tr>
+                                <tr id="del">
                                     <th scope="row">@sheet.Mission.Title</th>
                                     <td>@sheet.DateVolunteered</td>
                                     <td>@sheet.Action</td>
-                                    <td><i class="bi bi-pencil-square"></i></td>
-                                    <td><img src=~/images/bin.png /></td>
+                                    <td>
+                                        <button onclick="edit(@sheet.TimesheetId)" class="btn shadow-none">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button onclick="edit(@sheet.TimesheetId)" class="btn shadow-none">
+                                            <img src=~/images/bin.png />
+                                        </button>
+                                    </td>
                                 </tr>
                             }
 
@@ -220,3 +236,24 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function edit(id)
+    {
+        console.log(id);
+        $.ajax({
+            url: '/Home/Delete',
+            type: 'POST',
+            data: {'id':id }
+            //success: function (res) {
+            //    $("#del").html(res);
+            //},
+
+            //error: function (res) {
+            //    alert("error");
+            //}
+        });
+    }
+
+</script>
