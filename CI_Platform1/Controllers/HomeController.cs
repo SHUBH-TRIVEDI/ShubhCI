@@ -236,6 +236,8 @@ namespace CI_Platform1.Controllers
 
                 var fav = lp.favoriteMissions.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid) && u.MissionId == missionId);
                 ViewBag.fav = fav;
+
+                //lp.application = _Landing.missionApplications().Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
             }
 
 
@@ -248,6 +250,8 @@ namespace CI_Platform1.Controllers
             lp.goalMissions = _Landing.goalMissions();
             lp.favoriteMissions = _Landing.favoriteMissions();
             lp.missionApplications = _Landing.missionApplications();
+
+
 
             //Search Mission
             if (SearchingMission != null)
@@ -715,10 +719,8 @@ namespace CI_Platform1.Controllers
             user.Department = u.Department;
             user.ProfileText = u.ProfileText;
             user.WhyIVolunteer = u.WhyIVolunteer;
-            //user.Country = u.Country;
             user.CountryId = u.CountryId;
             user.CityId = u.CityId;
-            //user.City = u.City;
             user.LinkedInUrl = u.LinkedInUrl;
             user.Avatar = u.Avatar;
 
@@ -760,7 +762,6 @@ namespace CI_Platform1.Controllers
             obj.CityId = user.CityId;
             obj.CountryId = user.CountryId;
 
-
             _CiPlatformContext.Users.Add(obj);
             _CiPlatformContext.Users.Update(obj);
             _CiPlatformContext.SaveChanges();
@@ -770,21 +771,21 @@ namespace CI_Platform1.Controllers
 
         //Editprofile ChangePassword
         [HttpPost]
-        public bool ChangePassword(string old,string newp,string cnf )
+        public bool ChangePassword(string old, string newp, string cnf)
         {
 
             var userid = HttpContext.Session.GetString("userID");
-            var user = _CiPlatformContext.Users.Where(e=>e.UserId == Convert.ToInt32(userid)).FirstOrDefault();
+            var user = _CiPlatformContext.Users.Where(e => e.UserId == Convert.ToInt32(userid)).FirstOrDefault();
 
-            if(old!= user.Password)
+            if (old != user.Password)
             {
                 return false;
             }
             else
             {
                 var pass = _CiPlatformContext.Users.FirstOrDefault(u => u.Password == old);
-
                 pass.Password = newp;
+
                 _CiPlatformContext.Users.Update(pass);
                 _CiPlatformContext.SaveChanges();
 
@@ -811,41 +812,90 @@ namespace CI_Platform1.Controllers
             var userid = HttpContext.Session.GetString("userID");
             var user = Convert.ToInt32(userid);
 
-            Timesheet sheet = new Timesheet();
-            if (ss.hour != 0 && ss.minute != 0)
+            if (ss.TimesheetId != null)
             {
-                sheet.UserId = user;
-                sheet.MissionId = ss.MissionId;
-                sheet.TimesheetTime = ss.hour + ":" + ss.minute;
-                ss.DateVolunteered = ss.DateVolunteered;
-                sheet.DateVolunteered = ss.DateVolunteered;
-                sheet.Notes = ss.Notes;
-            }
+                Timesheet sheet = _CiPlatformContext.Timesheets.FirstOrDefault(e => e.TimesheetId == ss.TimesheetId);
+                if (ss.hour != 0 && ss.minute != 0)
+                {
+                    sheet.UserId = user;
+                    sheet.MissionId = ss.MissionId;
+                    sheet.TimesheetTime = ss.hour + ":" + ss.minute;
+                    ss.DateVolunteered = ss.DateVolunteered;
+                    sheet.DateVolunteered = ss.DateVolunteered;
+                    sheet.Notes = ss.Notes;
+                }
 
+                else
+                {
+                    sheet.UserId = user;
+                    sheet.MissionId = ss.MissionId;
+                    ss.DateVolunteered = ss.DateVolunteered;
+                    sheet.DateVolunteered = ss.DateVolunteered;
+                    sheet.Notes = ss.Notes;
+                    sheet.Action = ss.Action;
+                }
+
+                _CiPlatformContext.Timesheets.Update(sheet);
+                _CiPlatformContext.SaveChanges();
+            }
             else
             {
+                Timesheet sheet = new Timesheet();
+                if (ss.hour != 0 && ss.minute != 0)
+                {
+                    sheet.UserId = user;
+                    sheet.MissionId = ss.MissionId;
+                    sheet.TimesheetTime = ss.hour + ":" + ss.minute;
+                    ss.DateVolunteered = ss.DateVolunteered;
+                    sheet.DateVolunteered = ss.DateVolunteered;
+                    sheet.Notes = ss.Notes;
+                }
 
-                sheet.UserId = user;
-                sheet.MissionId = ss.MissionId;
-                ss.DateVolunteered = ss.DateVolunteered;
-                sheet.DateVolunteered = ss.DateVolunteered;
-                sheet.Notes = ss.Notes;
-                sheet.Action = ss.Action;
+                else
+                {
+                    sheet.UserId = user;
+                    sheet.MissionId = ss.MissionId;
+                    ss.DateVolunteered = ss.DateVolunteered;
+                    sheet.DateVolunteered = ss.DateVolunteered;
+                    sheet.Notes = ss.Notes;
+                    sheet.Action = ss.Action;
+                }
+
+                _CiPlatformContext.Timesheets.Add(sheet);
+                _CiPlatformContext.SaveChanges();
             }
+           
 
-            _CiPlatformContext.Timesheets.Add(sheet);
-            _CiPlatformContext.SaveChanges();
-
+           
             return RedirectToAction("Timesheet", "Home");
         }
 
+        public IActionResult EditTimesheet(int id)
+        {
+            StoryShareVM ss = new StoryShareVM();
+            var userid = HttpContext.Session.GetString("userID");
+            ss.missions = _CiPlatformContext.Missions.ToList();
+            ss.missionApplications = _CiPlatformContext.MissionApplications.Where(e => e.UserId == Convert.ToInt64(userid)).ToList();
+            ss.timesheets = _CiPlatformContext.Timesheets.ToList();
 
-        //Delete and edit
+            ss.Singlesheet = _CiPlatformContext.Timesheets.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
+            var sheet = _CiPlatformContext.Timesheets.FirstOrDefault(u => u.TimesheetId == id);
+
+            ss.DateVolunteered = sheet.DateVolunteered;
+            ss.TimesheetId = sheet.TimesheetId;
+            ss.hour = Convert.ToInt32(sheet.TimesheetTime.Split(":")[0]);
+            ss.minute = Convert.ToInt32(sheet.TimesheetTime.Split(":")[1]);
+            ss.Notes = sheet.Notes;
+
+            return View("Timesheet", ss);
+        }
+
+
+        //Delete
         [HttpPost]
         public IActionResult Delete(int id)
         {
             var time = _CiPlatformContext.Timesheets.FirstOrDefault(x => x.TimesheetId == id);
-
             _CiPlatformContext.Timesheets.Remove(time);
             _CiPlatformContext.SaveChanges();
 
@@ -934,7 +984,7 @@ namespace CI_Platform1.Controllers
                 return RedirectToAction("volunteering", new { id = Convert.ToInt64(HttpContext.Session.GetString("userID")), missionid = missionId });
             }
             return View();
-            }
+        }
 
 
         //-----------------Reccomend to coworker----------------------

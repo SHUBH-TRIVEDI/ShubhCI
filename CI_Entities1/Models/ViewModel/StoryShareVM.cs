@@ -13,6 +13,9 @@ namespace CI_Entities1.Models.ViewModel
         public long StoryId { get; set; }
         public int? StoryViews { get; set; }
 
+        public User Singleuser { get; set; }
+        public Timesheet Singlesheet { get; set; }
+
 
         public long MissionId { get; set; }
 
@@ -84,6 +87,9 @@ namespace CI_Entities1.Models.ViewModel
         public List<Timesheet> timesheets { get; set; }
 
         public long TimesheetId { get; set; }
+
+        public long hiddenid { get; set; }
+
 
         public string TimesheetTime { get; set; }
 

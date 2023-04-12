@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "H8XDPZ7R0OOfTK+9EQLE2N5IvPT0yIM+xKHKXyp2oAU=",
+  "Hash": "YvQRDaTZws3N0xvWeqkf1o/pLGdjkDdO/P5q5m4VMeo=",
   "Source": "CI_Platform1",
   "BasePath": "_content/CI_Platform1",
   "Mode": "Default",
@@ -3075,6 +3075,57 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\tatva\\Desktop\\TempCI\\CI_Platform1\\wwwroot\\PDF\\sql.docx",
+      "SourceId": "CI_Platform1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tatva\\Desktop\\TempCI\\CI_Platform1\\wwwroot\\",
+      "BasePath": "_content/CI_Platform1",
+      "RelativePath": "PDF/sql.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PDF\\sql.docx"
+    },
+    {
+      "Identity": "C:\\Users\\tatva\\Desktop\\TempCI\\CI_Platform1\\wwwroot\\PDF\\Updated.pdf",
+      "SourceId": "CI_Platform1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tatva\\Desktop\\TempCI\\CI_Platform1\\wwwroot\\",
+      "BasePath": "_content/CI_Platform1",
+      "RelativePath": "PDF/Updated.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PDF\\Updated.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\tatva\\Desktop\\TempCI\\CI_Platform1\\wwwroot\\PDF\\Week.pdf",
+      "SourceId": "CI_Platform1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tatva\\Desktop\\TempCI\\CI_Platform1\\wwwroot\\",
+      "BasePath": "_content/CI_Platform1",
+      "RelativePath": "PDF/Week.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PDF\\Week.pdf"
     }
   ]
 }

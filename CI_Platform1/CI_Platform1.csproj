@@ -27,4 +27,8 @@
     <ProjectReference Include="..\CI_Project.Repository\CI_Project.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\PDF\" />
+  </ItemGroup>
+
 </Project>

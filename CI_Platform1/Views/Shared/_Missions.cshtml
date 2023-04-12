@@ -16,6 +16,26 @@
 </head>
 <style>
 
+    .top-left-applied {
+        position: absolute;
+        top: 15px;
+        left: 0px;
+        background-color: forestgreen;
+        color: #FFFFFF;
+        border-radius: 0px 15px 15px 0px;
+        padding: 5px 10px;
+    }
+
+    .top-left-closed {
+        position: absolute;
+        top: 15px;
+        left: 0px;
+        background-color: #F88634;
+        color: #FFFFFF;
+        border-radius: 0px 15px 15px 0px;
+        padding: 5px 12px;
+    }
+
     /*card*/
     .card-img {
         position: relative;
@@ -175,22 +195,40 @@
 @*card view*@
 <div class="container">
     <div class="row">
+        
         @foreach (var category in Model.missions)
         {
+            var userid = Context.Session.GetString("userID");
+
+            var apply = Model.missionApplications.Where(e => Convert.ToString(e.UserId) ==userid && e.MissionId == category.MissionId).FirstOrDefault();
+            var seat= Convert.ToInt32(category.Availability) - Convert.ToInt32(Model.missionApplications.Where(e => e.MissionId == category.MissionId).ToList().Count());
+
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-img ">
-                        <img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />
+                        @*<img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />*@
+                        <img class="card-img-top h-100 " src="@category.Imagepath" alt="Card image cap" />
+
+
+
+                        @if (apply != null)
+                        {
+                            <div class="top-left-applied">
+                                APPLIED
+                            </div>
+                        }
+                        @if (category.EndDate < DateTime.Now && category.MissionType.Equals("TIME"))
+                        {
+                            <div class="top-left-closed">
+                                CLOSED
+                            </div>
+                        }
+
                         <div class="pin d-flex align-items-center px-2 py-1 ">
                             <img src="~/Images/pin.png" alt="location">
                             <p class="text-white mb-0 px-2">@category.City.Name</p>
                         </div>
-                        @*
-                            <button class="heart align-items-center px-2 py-1 Addfavourite favmissiondiv" onclick="addToFavourite( @category.MissionId)">
-                            <i class="bi bi-heart-fill" id="heart"></i>
-                            </button>
-                            Addfavourite favmissiondiv
-                        *@
+
                         @{
                             var ui = Context.Session.GetString("userID");
                             var fav = Model.favoriteMissions.FirstOrDefault(u => u.UserId == Convert.ToInt32(ui) && u.MissionId == category.MissionId);
@@ -316,7 +354,7 @@
                             <div class="d-flex flex-row align-items-center">
                                 <img src="~/images/Seats-left.png" alt="" class="" height="30px" width="30px">
                                 <div class="d-flex flex-column ms-2">
-                                    <p class="d-inline mb-0 pt-2">@category.Availability</p>
+                                    <p class="d-inline mb-0 pt-2">@seat</p>
                                     <p class="seat">Seats Left</p>
                                 </div>
                             </div>
@@ -327,7 +365,9 @@
                             {
                                 <div class="ms-auto"><img src="/images/deadline.png" class="mt-2"></div>
                                 <div class="ms-2">
-                                    @category.EndDate.ToString().Split(" ")[0] <p>Deadline</p>
+                                    @*@category.EndDate.ToString().Split(" ")[0]*@
+                                    @category.StartDate.Value.AddDays(-1).ToShortDateString()
+                                    <p>Deadline</p>
                                 </div>
                             }
                             else
@@ -345,7 +385,6 @@
 
                         </div>
 
-                        @*href="/Home/volunteering/@ViewBag.user.UserId?missionid=@category.MissionId"*@
                         <div class="text-center ">
                             <a asp-controller="Home" asp-action="volunteering" asp-route-missionid="@category.MissionId" class="btn shadow-none cardbtn mx-auto ">
                                 <span>Apply</span> <img class="ms-1"
@@ -369,25 +408,25 @@
         @if (pager.CurrentPage > 1)
         {
             <li class="mx-1">
-                <a class="page-link back" onclick="mysearch(order=1,jpg=1)"><span aria-hidden="true">&laquo;</span></a>
+                <a class="page-link back" onclick="mysearch(order=0,jpg=1)"><span aria-hidden="true">&laquo;</span></a>
             </li>
             <li class="page-item mx-1">
-                <a class="page-link back" onclick="mysearch(order=1,jpg=@(pager.CurrentPage-1))"><span aria-hidden="true">&lsaquo;</span></a>
+                <a class="page-link back" onclick="mysearch(order=0,jpg=@(pager.CurrentPage-1))"><span aria-hidden="true">&lsaquo;</span></a>
             </li>
         }
         @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
         {
             <li class="page-item mx-1 @(pge==pager.CurrentPage ? "active":"")">
-                <a class="page-link back" onclick="mysearch(order=1,jpg=@pge)">@pge</a>
+                <a class="page-link back" onclick="mysearch(order=0,jpg=@pge)">@pge</a>
             </li>
         }
         @if (pager.CurrentPage < pager.TotalPages)
         {
             <li class="page-item mx-1">
-                <a class="page-link back" onclick="mysearch(order=1,jpg=@(pager.CurrentPage+1))"><span aria-hidden="true">&rsaquo;</span></a>
+                <a class="page-link back" onclick="mysearch(order=0,jpg=@(pager.CurrentPage+1))"><span aria-hidden="true">&rsaquo;</span></a>
             </li>
             <li class="mx-1">
-                <a class="page-link back" onclick="mysearch(order=1,jpg=@(pager.TotalPages))"><span aria-hidden="true">&raquo;</span></a>
+                <a class="page-link back" onclick="mysearch(order=0,jpg=@(pager.TotalPages))"><span aria-hidden="true">&raquo;</span></a>
             </li>
         }
 
@@ -395,49 +434,8 @@
 }
 
 <hr />
-<div class="container">
-    <div class="text-secondary fs-5 position-absolute bottom-0 ms-3">
+<div class="container ">
+    <div class="text-secondary ">
         <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
     </div>
 </div>
-@*
-    <script>
-
-    //list and grid view
-    function showlist(e) {
-    var imgdiv = document.queryselectorall('.imgdiv');
-    var missionimg = document.queryselectorall('.missionimg');
-
-    var $gridcont = $('.grid-container');
-    e.preventdefault();
-    //$gridcont.hasclass('list-view') ? $gridcont.removeclass('list-view') : $gridcont.addclass('list-view');
-    $gridcont.removeclass('grid-view');
-    $gridcont.addclass('list-view');
-    for (var item of imgdiv) {
-    item.style.width = "36%";
-    }
-
-    }
-    function gridlist(e) {
-    var imgdiv = document.queryselectorall('.imgdiv');
-    var missionimg = document.queryselectorall('.missionimg');
-    var $gridcont = $('.grid-container')
-    e.preventdefault();
-    //$gridcont.removeclass('list-view');
-
-    $gridcont.removeclass('list-view');
-    $gridcont.addclass('grid-view');
-    for (var item of imgdiv) {
-    item.style.width = "100%";
-    }
-
-    for (var item of missionimg) {
-    item.style.width = "100%";
-    }
-    }
-
-    $(document).on('click', '.btn-grid', gridlist);
-    $(document).on('click', '.btn-list', showlist);
-    </script>
-
-*@

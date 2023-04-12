@@ -68,6 +68,7 @@
                                     </div>
                                 </div>
 
+                                <input type="text" asp-for="TimesheetId" class="form-control shadow-none" id="TimesheetId" aria-describedby="emailHelp" hidden>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn border-secondary rounded-pill shadow-none"
@@ -102,19 +103,19 @@
                         {
                             if (sheet.Mission.MissionType == "Time")
                             {
-
                                 <tr>
                                     <td>@sheet.Mission.Title</td>
                                     <td>@sheet.DateVolunteered</td>
                                     <td>@sheet.TimesheetTime.ToString().Split(":")[0]</td>
                                     <td>@sheet.TimesheetTime.ToString().Split(":")[1]</td>
                                     <td>
-                                        <button onclick="edit(@sheet.TimesheetId)" class="btn shadow-none">
+                                        <button onclick="edit(@sheet.TimesheetId)" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop" class="btn shadow-none">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
                                     </td>
                                     <td>
-                                        <button onclick="edit(@sheet.TimesheetId)" class="btn shadow-none">
+                                        <button onclick="deletes(@sheet.TimesheetId)" class="btn shadow-none">
                                             <img src=~/images/bin.png />
                                         </button>
                                     </td>
@@ -220,7 +221,7 @@
                                         </button>
                                     </td>
                                     <td>
-                                        <button onclick="edit(@sheet.TimesheetId)" class="btn shadow-none">
+                                        <button onclick="deletes(@sheet.TimesheetId)" class="btn shadow-none">
                                             <img src=~/images/bin.png />
                                         </button>
                                     </td>
@@ -239,7 +240,7 @@
 
 
 <script>
-    function edit(id)
+    function deletes(id)
     {
         console.log(id);
         $.ajax({
@@ -247,12 +248,32 @@
             type: 'POST',
             data: {'id':id }
             //success: function (res) {
-            //    $("#del").html(res);
+            //    alert("Succesfully Deleted Please Refresh");
             //},
-
             //error: function (res) {
             //    alert("error");
             //}
+        });
+            alert("Succesfully Deleted Please Refresh");
+
+    }
+
+    function edit(id)
+    {
+        //var hiden= document.getElementById("hiden").value= @Model.TimesheetId;
+
+        //console.log(hiden);
+
+        $.ajax({
+            url: '/Home/EditTimesheet',
+            type: 'GET',
+            data: {'id':id },
+            success: function (res) {
+                $(".modal").html($(res).find(".modal").html());
+            },
+            error: function (res) {
+                alert("error");
+            }
         });
     }
 

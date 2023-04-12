@@ -108,6 +108,7 @@
                     checkbox.checked = false;
                 });
                 send.innerHTML = "sent"
+                setTimeout((send.innerHTML = "Send Mission"), 3000);
             },
             error: function () {
                 alert('Error: Could not recommend mission.');
@@ -181,9 +182,7 @@ function removeElement(value) {
 
     let elementToBeRemoved = document.getElementById(value);
     filtersSection.removeChild(elementToBeRemoved);
-
     mysearch();
-
 }
 
 

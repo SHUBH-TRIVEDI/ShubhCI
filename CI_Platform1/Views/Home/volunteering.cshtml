@@ -306,24 +306,24 @@
                                 <h2>Documents</h2>
                                 <div class="row mb-2">
                                     <div class="mt-1 column">
-                                        <a href="#" class="btn pdf  shadow-none">
+                                        <button class="btn pdf  shadow-none" onclick='Pdf("/PDF/Updated.pdf")'>
                                             <img class="me-1"
-                                                 src="/Images/pdf.png"><span>Application</span>
-                                        </a>
+                                                 src="/Images/pdf.png"><span>Training Plan</span>
+                                        </button>
                                     </div>
 
                                     <div class="mt-1 column">
-                                        <a href="#" class="btn pdf  shadow-none">
+                                        <button class="btn pdf  shadow-none" onclick='Pdf("/PDF/Week.pdf")'>
                                             <img class="me-1"
                                                  src="/Images/pdf.png"><span>Application</span>
-                                        </a>
+                                        </button>
                                     </div>
 
                                     <div class="mt-1 column">
-                                        <a href="#" class="btn pdf  shadow-none">
+                                        <button class="btn pdf  shadow-none" onclick='Pdf("/PDF/sql.docx")'>
                                             <img class="me-1"
                                                  src="/Images/pdf.png"><span>Application</span>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
 
@@ -344,7 +344,7 @@
                         <div class="tab-content-item active commentdiv" id="tab3-content">
                             <h5>Comments</h5>
                             <div class="input-group mt-3 mb-3">
-                                <textarea  class="form-control shadow-none" aria-label="With textarea" id="commentarea" onkeyup="Entercmt()"
+                                <textarea class="form-control shadow-none" aria-label="With textarea" id="commentarea" onkeyup="Entercmt()"
                                           placeholder="Enter your comments..."></textarea>
                             </div>
                             <span class="d-none text-danger col-12" id="cmtErr">Enter Your Comment</span>

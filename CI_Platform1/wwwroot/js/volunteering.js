@@ -1,4 +1,8 @@
-﻿let slideIndex = 1;
+﻿function Pdf(url) {
+    window.open(url);
+}
+
+let slideIndex = 1;
 showSlides(slideIndex);
 
 // Next/previous controls

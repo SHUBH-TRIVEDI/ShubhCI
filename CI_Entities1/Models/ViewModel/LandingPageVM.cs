@@ -8,6 +8,7 @@ namespace CI_Entities1.Models.ViewModel
 {
     public class LandingPageVM
     {
+        public List<MissionApplication> application { get; set; }
         public List<Mission> missions { get; set; }
         public List<City> cities { get; set; }
         public List<Country> countries { get; set; }
