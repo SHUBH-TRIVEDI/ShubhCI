@@ -7,18 +7,21 @@
     <div class="row">
         <div class="col-3 border me-4 text-center" style="height:300px">
             <div>
-                @*                @if (@Model.Avatar == null)
-                    {
-                    <img src="/Images/volunteer1.png" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
-                    alt="">
-                    }
-                    else
-                    {
-                    <img src="@Model.Singleuser.Avatar" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
-                    alt="">
-                    }*@
+                @if (@Model.Avatar == null)
+                {
+                    <input asp-for="Avatar" type="file" / id="InputImg" style="display:none;">
+                    <img src="/Images/volunteer1.png" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
+                     alt="">
+                }
+                else
+                {
+                    
+                    <input asp-for="Avatar" type="file" / id="InputImg" style="display:none;">
+                    <img src="/Images/volunteer1.png" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
+                     alt="">
+                }
             </div>
-            <div class="mt-1 fs-4">Evan</div>
+            <div class="mt-1 fs-4">@Model.FirstName @Model.LastName</div>
             <div class="mt-1 text-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change Password</div>
 
             <!-- Modal -->
@@ -302,99 +305,109 @@
 
 
 <script>
-
-    function ChangePsw(){
-          var old = document.getElementById('old').value;
-          var newp = document.getElementById('new').value;
-          var cnf = document.getElementById('cnf').value;
-          if(old == ""){
-              alert("Old password Required");
-          }
-          else if(newp!= cnf){
-              alert("Confirm Password Dosen't Match");
-          }
-          else{
-               $.ajax({
-            url: '/Home/ChangePassword',
-            type: 'POST',
-            data: { old: old,newp:newp,cnf:cnf },
-            success: function (response) {
-                    if(response==true){
-                        alert("password change successfully");
-
-                    }
-                    else{
-                        alert("Password Don't Get Change Due to Some Issues");
-                    }
-
-            },
-            error: function () {
-                alert("could not comment");
-            }
-        });
-          }
-    }
-
-
-    function ved1() {
-        var a = document.getElementById("s1");
-        var c = document.getElementById("s2");
-        for (var i = 0; i < a.length; i++) {
-            if (a.options[i].selected == true) {
-                a.options[i].selected = false
-                c.add(a.options[i])
-                ved1()
-            }
+        function FileImg(){
+            $('#InputImg').click();
         }
-    }
-    function ved2() {
-        var a = document.getElementById("s1");
-        var c = document.getElementById("s2");
-        for (var i = 0; i < c.length; i++) {
-            if (c.options[i].selected == true) {
-                c.options[i].selected = false
-                a.add(c.options[i])
-                ved2()
-            }
-        }
-    }
 
-    function ved3() {
-        var a = document.getElementById("s1");
-        var c = document.getElementById("s2");
-        for (var i = 0; i < a.length;) {
-            c.add(a.options[c, i])
-        }
+        document.getElementById('InputImg').addEventListener("change", e => {
+    const reader = new FileReader(); // Create a new FileReader object
+    reader.onload = function () {
+    document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image
     }
-
-    function ved4() {
-        var a = document.getElementById("s1");
-        var c = document.getElementById("s2");
-        for (var i = 0; i < c.length;) {
-            a.add(c.options[a, i])
-        }
-    }
-
-        //Skills
-    document.getElementById('skillSave').addEventListener("click", e => {
-        var selectedSkills = [];
-        const skillsSelected = $('#s2 option');
-        for (var i = 0; i < skillsSelected.length; i++) {
-            selectedSkills.push(skillsSelected[i].value);
-        }
-        console.log(selectedSkills);
-        $.ajax({
-            url: '/Home/SaveUserSkills',
-            type: 'POST',
-            data: { selectedSkills: selectedSkills },
-
-            success: function (response) {
-                $('#userskilldiv').html($(response).find('#userskilldiv').html());
-                document.getElementById('close').click();
-            },
-            error: function () {
-                alert("could not comment");
-            }
-        });
+    reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
     });
+        function ChangePsw(){
+              var old = document.getElementById('old').value;
+              var newp = document.getElementById('new').value;
+              var cnf = document.getElementById('cnf').value;
+              if(old == ""){
+                  alert("Old password Required");
+              }
+              else if(newp!= cnf){
+                  alert("Confirm Password Dosen't Match");
+              }
+              else{
+                   $.ajax({
+                url: '/Home/ChangePassword',
+                type: 'POST',
+                data: { old: old,newp:newp,cnf:cnf },
+                success: function (response) {
+                        if(response==true){
+                            alert("password change successfully");
+
+                        }
+                        else{
+                            alert("Password Don't Get Change Due to Some Issues");
+                        }
+
+                },
+                error: function () {
+                    alert("could not comment");
+                }
+            });
+              }
+        }
+
+
+        function ved1() {
+            var a = document.getElementById("s1");
+            var c = document.getElementById("s2");
+            for (var i = 0; i < a.length; i++) {
+                if (a.options[i].selected == true) {
+                    a.options[i].selected = false
+                    c.add(a.options[i])
+                    ved1()
+                }
+            }
+        }
+        function ved2() {
+            var a = document.getElementById("s1");
+            var c = document.getElementById("s2");
+            for (var i = 0; i < c.length; i++) {
+                if (c.options[i].selected == true) {
+                    c.options[i].selected = false
+                    a.add(c.options[i])
+                    ved2()
+                }
+            }
+        }
+
+        function ved3() {
+            var a = document.getElementById("s1");
+            var c = document.getElementById("s2");
+            for (var i = 0; i < a.length;) {
+                c.add(a.options[c, i])
+            }
+        }
+
+        function ved4() {
+            var a = document.getElementById("s1");
+            var c = document.getElementById("s2");
+            for (var i = 0; i < c.length;) {
+                a.add(c.options[a, i])
+            }
+        }
+
+            //Skills
+        document.getElementById('skillSave').addEventListener("click", e => {
+            var selectedSkills = [];
+            const skillsSelected = $('#s2 option');
+            for (var i = 0; i < skillsSelected.length; i++) {
+                selectedSkills.push(skillsSelected[i].value);
+            }
+            console.log(selectedSkills);
+            $.ajax({
+                url: '/Home/SaveUserSkills',
+                type: 'POST',
+                data: { selectedSkills: selectedSkills },
+
+                success: function (response) {
+                    $('#userskilldiv').html($(response).find('#userskilldiv').html());
+                    document.getElementById('close').click();
+                },
+                error: function () {
+                    alert("could not comment");
+                }
+            });
+        });
 </script>

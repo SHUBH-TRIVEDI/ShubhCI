@@ -722,7 +722,11 @@ namespace CI_Platform1.Controllers
             user.CountryId = u.CountryId;
             user.CityId = u.CityId;
             user.LinkedInUrl = u.LinkedInUrl;
-            user.Avatar = u.Avatar;
+            if (u.Avatar != null)
+            {
+               // user.Avatar = u.Avatar;
+            }
+
 
 
             var allskills = _CiPlatformContext.Skills.ToList();
@@ -744,7 +748,7 @@ namespace CI_Platform1.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProfile(UserVM user)
+        public async Task<IActionResult> EditProfileAsync(UserVM user)
         {
             user.Countries = _CiPlatformContext.Countries.ToList();
             user.cities = _CiPlatformContext.Cities.ToList();
@@ -761,6 +765,19 @@ namespace CI_Platform1.Controllers
             obj.LinkedInUrl = user.LinkedInUrl;
             obj.CityId = user.CityId;
             obj.CountryId = user.CountryId;
+
+            if (user.Avatar != null)
+            {
+                var FileName = "";
+                using (var ms = new MemoryStream())
+                {
+                    await user.Avatar.CopyToAsync(ms);
+                    var imageBytes = ms.ToArray();
+                    var base64String = Convert.ToBase64String(imageBytes);
+                    FileName = "data:image/png;base64," + base64String;
+                }
+                obj.Avatar = FileName;
+            }
 
             _CiPlatformContext.Users.Add(obj);
             _CiPlatformContext.Users.Update(obj);
@@ -809,14 +826,13 @@ namespace CI_Platform1.Controllers
         [HttpPost]
         public IActionResult Timesheet(StoryShareVM ss)
         {
-            var userid = HttpContext.Session.GetString("userID");
-            var user = Convert.ToInt32(userid);
-
-            if (ss.TimesheetId != null)
+            if (ss.TimesheetId != 0)
             {
                 Timesheet sheet = _CiPlatformContext.Timesheets.FirstOrDefault(e => e.TimesheetId == ss.TimesheetId);
                 if (ss.hour != 0 && ss.minute != 0)
                 {
+                    var userid = HttpContext.Session.GetString("userID");
+                    var user = Convert.ToInt32(userid);
                     sheet.UserId = user;
                     sheet.MissionId = ss.MissionId;
                     sheet.TimesheetTime = ss.hour + ":" + ss.minute;
@@ -827,6 +843,8 @@ namespace CI_Platform1.Controllers
 
                 else
                 {
+                    var userid = HttpContext.Session.GetString("userID");
+                    var user = Convert.ToInt32(userid);
                     sheet.UserId = user;
                     sheet.MissionId = ss.MissionId;
                     ss.DateVolunteered = ss.DateVolunteered;
@@ -838,35 +856,40 @@ namespace CI_Platform1.Controllers
                 _CiPlatformContext.Timesheets.Update(sheet);
                 _CiPlatformContext.SaveChanges();
             }
+
             else
             {
-                Timesheet sheet = new Timesheet();
+                Timesheet sheets = new Timesheet();
                 if (ss.hour != 0 && ss.minute != 0)
                 {
-                    sheet.UserId = user;
-                    sheet.MissionId = ss.MissionId;
-                    sheet.TimesheetTime = ss.hour + ":" + ss.minute;
+                    var userid = HttpContext.Session.GetString("userID");
+                    var user = Convert.ToInt32(userid);
+                    sheets.UserId = user;
+                    sheets.MissionId = ss.MissionId;
+                    sheets.TimesheetTime = ss.hour + ":" + ss.minute;
                     ss.DateVolunteered = ss.DateVolunteered;
-                    sheet.DateVolunteered = ss.DateVolunteered;
-                    sheet.Notes = ss.Notes;
+                    sheets.DateVolunteered = ss.DateVolunteered;
+                    sheets.Notes = ss.Notes;
                 }
 
                 else
                 {
-                    sheet.UserId = user;
-                    sheet.MissionId = ss.MissionId;
+                    var userid = HttpContext.Session.GetString("userID");
+                    var user = Convert.ToInt32(userid);
+                    sheets.UserId = user;
+                    sheets.MissionId = ss.MissionId;
                     ss.DateVolunteered = ss.DateVolunteered;
-                    sheet.DateVolunteered = ss.DateVolunteered;
-                    sheet.Notes = ss.Notes;
-                    sheet.Action = ss.Action;
+                    sheets.DateVolunteered = ss.DateVolunteered;
+                    sheets.Notes = ss.Notes;
+                    sheets.Action = ss.Action;
                 }
 
-                _CiPlatformContext.Timesheets.Add(sheet);
+                _CiPlatformContext.Timesheets.Add(sheets);
                 _CiPlatformContext.SaveChanges();
             }
-           
 
-           
+
+
             return RedirectToAction("Timesheet", "Home");
         }
 
@@ -883,9 +906,19 @@ namespace CI_Platform1.Controllers
 
             ss.DateVolunteered = sheet.DateVolunteered;
             ss.TimesheetId = sheet.TimesheetId;
-            ss.hour = Convert.ToInt32(sheet.TimesheetTime.Split(":")[0]);
-            ss.minute = Convert.ToInt32(sheet.TimesheetTime.Split(":")[1]);
             ss.Notes = sheet.Notes;
+
+            if (ss.hour != 0 && ss.minute != 0)
+            {
+                ss.hour = Convert.ToInt32(sheet.TimesheetTime.Split(":")[0]);
+                ss.minute = Convert.ToInt32(sheet.TimesheetTime.Split(":")[1]);
+            }
+
+            else
+            {
+                ss.Action = sheet.Action;
+            }
+
 
             return View("Timesheet", ss);
         }

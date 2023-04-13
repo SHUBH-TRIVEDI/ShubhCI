@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace CI_Entities1.Models.ViewModel
 
         public long PhoneNumber { get; set; }
 
-        public string? Avatar { get; set; }
+        public IFormFile Avatar { get; set; }
 
         public string? WhyIVolunteer { get; set; }
 
