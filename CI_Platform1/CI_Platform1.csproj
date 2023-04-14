@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Home\relatedmisssion.cshtml" />
+    <Content Remove="Areas\Employee\Views\Home\relatedmisssion.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="wwwroot\PDF\" />
   </ItemGroup>
 

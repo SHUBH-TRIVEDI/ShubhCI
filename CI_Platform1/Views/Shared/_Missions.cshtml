@@ -653,18 +653,18 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body overflow-y-auto" style="height:200px;overflow-x:auto;">
-                                                @foreach (var u in Model.users)
+                                                @foreach (var user in Model.users)
                                                 {
-                                                    <div>
-                                                        <img src="~/images/volunteer2.png" class="rounded-5 me-5" style="border-radius:50%;width:50px;height:50px">
-                                                        <label class=" ms-4 mt-2 "> @u.LastName @u.FirstName</label>
-                                                        <input class="form-check-input ms-auto me-2 mt-2" type="checkbox" id="@u.UserId" name="mail">
+                                                    <div class="d-flex my-3 bg-light ">
+                                                        <img src="~/images/volunteer1.png" class="rounded-5 me-5" style="border-radius:50%;width:50px;height:50px">
+                                                        <label class=" ms-4 mt-2 me-auto"> @user.FirstName @user.LastName </label>
+                                                        <input class="form-check-input me-2 mt-2" type="checkbox" value="" id=@user.UserId name="mail">
                                                     </div>
                                                 }
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary d-inline" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary d-inline" id="sendmail" onclick="sendmail(@i.MissionId)">Send Mission</button>
+                                                <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn oran shadow-none" id="sendmail" onclick="sendmail(@i.MissionId)">Send Mission</button>
                                             </div>
                                         </div>
                                     </div>
@@ -678,7 +678,7 @@
                         </div>
 
                         <div class="col-9 p-2">
-                            @*city, theme, organization and rating *@
+                            @*city, theme, organization *@
                             <div class="row py-2">
                                 <div class="col-9">
                                     <img class="px-2" src="~/images/pin1.png" />@i.City.Name
@@ -749,7 +749,7 @@
                                                     <div>
                                                         <div>@Deadline.ToString().Split(" ")[0]</div>
                                                     </div>
-                                                    <small>Registarction Deadline</small>
+                                                    <small>Registration Deadline</small>
                                                 </div>
                                             </div>
                                         }
@@ -781,47 +781,41 @@
                                         </div>
 
                                         <div class="col-lg-2 col-6 d-inline-flex px-0">
-                                            <div class="p-3 px-2">
-                                                <img class="" src="~/images/skill.png" />
+                                            <div class="p-3 px-2 ">
+                                                <i class="bi bi-tools border"></i>
                                             </div>
                                             <div class="">
                                                 <h6 class="pt-3 mb-0">Skill</h6>
-                                                @*@foreach (var j in missionSkill)
+@*                                                @foreach (var j in Model.skills)
                                                     {
-                                                    <small>@j.Skill.SkillName, </small>
+                                                    <small>@j.SkillName </small>
                                                     }*@
-                                                <small>j.Skill.SkillName, </small>
+                                                    <small>SkillName </small>
+
                                             </div>
                                         </div>
 
 
                                         <div class=" col-lg-4 col-6 d-inline-flex px-0" style="width: max-content;height: fit-content;margin-left: auto;margin-right: 25px; margin-top: 20px;">
-                                            @*                                            @if (isClosed == 1)
-                                                {
-                                                <a href="/Home/volunteering?missionid=@i.MissionId" style="text-decoration:none;border:2px solid orange!important" id="login-btn" class="form-control my-1 w-auto px-4 login-btn">
-                                                View Details <img src="~/images/right-arrow.png" />
-                                                </a>
-                                                }
-                                                else
-                                                {*@
+
                                             @if (userId != null)
                                             {
                                                 @if (applied == null)
                                                 {
-                                                    <a href="/Home/volunteering?missionid=@i.MissionId" style="text-decoration:none;border:2px solid orange!important" id="login-btn" class="form-control my-1 w-auto px-4 login-btn">
+                                                    <a href="/Employee/Home/volunteering?missionid=@i.MissionId" style="text-decoration:none;border:2px solid orange!important" id="login-btn" class="form-control my-1 w-auto px-4 login-btn">
                                                         Apply <img src="~/images/right-arrow.png" />
                                                     </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="/Home/volunteering?missionid=@i.MissionId" style="text-decoration:none;border:2px solid orange!important" id="login-btn" class="form-control my-1 w-auto px-4 login-btn">
+                                                    <a href="/Employee/Home/volunteering?missionid=@i.MissionId" style="text-decoration:none;border:2px solid orange!important" id="login-btn" class="form-control my-1 w-auto px-4 login-btn">
                                                         View Details <img src="~/images/right-arrow.png" />
                                                     </a>
                                                 }
                                             }
                                             else
                                             {
-                                                <a href="/Home/volunteering?missionid=@i.MissionId" style="text-decoration:none;border:2px solid orange!important" id="login-btn" class="form-control my-1 w-auto px-4 login-btn">
+                                                <a href="/Employee/Home/volunteering?missionid=@i.MissionId" style="text-decoration:none;border:2px solid orange!important" id="login-btn" class="form-control my-1 w-auto px-4 login-btn">
                                                     View Details <img src="~/images/right-arrow.png" />
                                                 </a>
                                             }

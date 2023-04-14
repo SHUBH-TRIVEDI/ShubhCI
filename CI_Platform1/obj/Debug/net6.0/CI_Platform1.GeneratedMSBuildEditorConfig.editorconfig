@@ -15,64 +15,84 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\tatva\Desktop\TempCI\CI_Platform1
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Draft.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEcmFmdC5jc2h0bWw=
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Admin/Views/_AdminLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX0FkbWluTGF5b3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/EditProfile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0UHJvZmlsZS5jc2h0bWw=
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Admin/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Forget.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGb3JnZXQuY3NodG1s
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Admin/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/LandingPage.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMYW5kaW5nUGFnZS5jc2h0bWw=
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Draft.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxEcmFmdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/EditProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxFZGl0UHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/nomissionfound.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxub21pc3Npb25mb3VuZC5jc2h0bWw=
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Forget.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxGb3JnZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/LandingPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxMYW5kaW5nUGFnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Registration.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RyYXRpb24uY3NodG1s
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Resetpass.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXNldHBhc3MuY3NodG1s
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/nomissionfound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxub21pc3Npb25mb3VuZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/StoryDetail.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdG9yeURldGFpbC5jc2h0bWw=
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Storylisting.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdG9yeWxpc3RpbmcuY3NodG1s
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Registration.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxSZWdpc3RyYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Storyshare.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTdG9yeXNoYXJlLmNzaHRtbA==
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Resetpass.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxSZXNldHBhc3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/time.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVx0aW1lLmNzaHRtbA==
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/StoryDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxTdG9yeURldGFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/Timesheet.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaW1lc2hlZXQuY3NodG1s
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Storylisting.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxTdG9yeWxpc3RpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Home/volunteering.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVx2b2x1bnRlZXJpbmcuY3NodG1s
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Storyshare.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxTdG9yeXNoYXJlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/time.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVx0aW1lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/Timesheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVxUaW1lc2hlZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/Home/volunteering.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcSG9tZVx2b2x1bnRlZXJpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tatva/Desktop/TempCI/CI_Platform1/Areas/Employee/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW1wbG95ZWVcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/tatva/Desktop/TempCI/CI_Platform1/Views/Shared/Carousel.cshtml]

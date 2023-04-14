@@ -30,7 +30,7 @@
 
 
             $.ajax({
-                url: '/Home/_Missions',
+                url: '/Employee/Home/_Missions',
                 type: 'GET',
                 data: { 'SearchingMission': search,'order':order ,'jpg':jpg,'country': country.toString(), 'city': city.toString(), 'theme': theme.toString() },
                 success: function (res) {
@@ -55,7 +55,7 @@
 
 
             $.ajax({
-                url: '/Home/Addrating',
+                url: '/Employee/Home/Addrating',
                 type: 'POST',
                 data: { missionId: missionId, Id: Id, rating: starId },
 
@@ -77,7 +77,7 @@
             $.ajax({
 
                 type: 'GET',
-                url: "/Home/addToFavouriteLanding",
+                url: "/Employee/Home/addToFavouriteLanding",
                 data: { 'missonid': missonid },
                 success: function (res) {
                     //$('.addFav').html($(res).find('.addFav').html());
@@ -97,7 +97,7 @@
             send.innerHTML = "Sending"
 
             $.ajax({
-                url: '/Home/Sendmail',
+                url: '/Employee/Home/Sendmail',
                 type: 'POST',
                 data: { userid: mail, id: id },
                 success: function (result) {
@@ -191,10 +191,6 @@
           $('#list-products').removeClass('d-none'); 
           $('#products').removeClass('d-flex'); 
           $('#products').addClass('d-none');
-
-      
-            
-
 	  }
 	function grid() {
 		localStorage.setItem("viewref", "grid");
@@ -202,75 +198,5 @@
         $('#products').addClass('d-flex'); 
         $('#list-products').addClass('d-none'); 
         $('#list-products').removeClass('d-flex');
-      
-
 	}
-
-
-
-        //Grid List
-
-
-        function showList(e) {
-            var $gridCont = $('.grid-container');
-            e.preventDefault();
-            $gridCont.hasClass('list-view') ? $gridCont.removeClass('list-view') : $gridCont.addClass('list-view');
-        }
-
-        function gridList(e) {
-            var $gridCont = $('.grid-container')
-            e.preventDefault();
-            $gridCont.removeClass('list-view');
-        }
-
-        $(document).on('click', '.btn-grid', gridList);
-        $(document).on('click', '.btn-list', showList);
-
-
-
-                        function showList(e) {
-                            var imgdiv = document.querySelectorAll('.imgdiv');
-                            var missionimg = document.querySelectorAll('.missionimg');
-
-                            var $gridCont = $('.grid-container');
-                            e.preventDefault();
-                            //$gridCont.hasClass('list-view') ? $gridCont.removeClass('list-view') : $gridCont.addClass('list-view');
-                            $gridCont.removeClass('grid-view');
-                            $gridCont.addClass('list-view');
-                            for (var item of imgdiv) {
-                                item.style.width = "36%";
-                            }
-
-                            //for(var item1 of missionimg){
-                            //    item.style.width = "100%";
-                            //}
-
-
-
-                        }
-                        function gridList(e) {
-                            var imgdiv = document.querySelectorAll('.imgdiv');
-                            var missionimg = document.querySelectorAll('.missionimg');
-                            var $gridCont = $('.grid-container')
-                            e.preventDefault();
-                            //$gridCont.removeClass('list-view');
-
-                            $gridCont.removeClass('list-view');
-                            $gridCont.addClass('grid-view');
-                            for (var item of imgdiv) {
-                                item.style.width = "100%";
-                            }
-
-                            for (var item of missionimg) {
-                                item.style.width = "100%";
-                            }
-
-                        }
-
-                        $(document).on('click', '.btn-grid', gridList);
-                        $(document).on('click', '.btn-list', showList);
-
-
-
-
 </script>

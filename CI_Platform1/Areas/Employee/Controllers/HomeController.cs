@@ -16,6 +16,8 @@ using System.Web;
 
 namespace CI_Platform1.Controllers
 {
+    [Area("Employee")]
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -250,6 +252,7 @@ namespace CI_Platform1.Controllers
             lp.goalMissions = _Landing.goalMissions();
             lp.favoriteMissions = _Landing.favoriteMissions();
             lp.missionApplications = _Landing.missionApplications();
+            lp.skills = _CiPlatformContext.Skills.ToList();
 
 
 
@@ -724,7 +727,7 @@ namespace CI_Platform1.Controllers
             user.LinkedInUrl = u.LinkedInUrl;
             if (u.Avatar != null)
             {
-               // user.Avatar = u.Avatar;
+              // user.Avatar = u.Avatar;
             }
 
 
@@ -908,7 +911,8 @@ namespace CI_Platform1.Controllers
             ss.TimesheetId = sheet.TimesheetId;
             ss.Notes = sheet.Notes;
 
-            if (ss.hour != 0 && ss.minute != 0)
+            //if (ss.hour != 0 && ss.minute != 0)
+            if(sheet.TimesheetTime != null)
             {
                 ss.hour = Convert.ToInt32(sheet.TimesheetTime.Split(":")[0]);
                 ss.minute = Convert.ToInt32(sheet.TimesheetTime.Split(":")[1]);
@@ -916,6 +920,8 @@ namespace CI_Platform1.Controllers
 
             else
             {
+                //ss.hour = 0;
+                //ss.minute = 0;
                 ss.Action = sheet.Action;
             }
 

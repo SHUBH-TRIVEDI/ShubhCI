@@ -60,7 +60,7 @@ tabs.forEach(tab => {
 function addToFav(missonid) {
     $.ajax({
         type: 'GET',
-        url: "/Home/addToFavourite",
+        url: "/Employee/Home/addToFavourite",
         data: { 'missonid': missonid },
         success: function (res) {
             $('.addFav').html($(res).find('.addFav').html());
@@ -76,7 +76,7 @@ function addToFav(missonid) {
 function Apply(missonid) {
     $.ajax({
         type: 'GET',
-        url: "/Home/Applied",
+        url: "/Employee/Home/Applied",
         data: { 'missonid': missonid },
         success: function (res) {
             $('.apply').html($(res).find('.apply').html());
@@ -94,7 +94,7 @@ function addRating(starId, missionId, Id) {
 
 
     $.ajax({
-        url: '/Home/Addrating',
+        url: '/Employee/Home/Addrating',
         type: 'POST',
         data: { missionId: missionId, Id: Id, rating: starId },
         success: function (response) {
@@ -122,7 +122,7 @@ function PostComment() {
     else {
 
         $.ajax({
-            url: "/Home/PostComment",
+            url: "/Employee/Home/PostComment",
             data: { missionId: query, Content: commentVal },
             success: function (result) {
                 $('.commentdiv').html($(result).find('.commentdiv').html());
@@ -143,7 +143,7 @@ function sendmail(id) {
     var send = document.getElementById("sendmail");
     send.innerHTML = "Sending"
     $.ajax({
-        url: '/Home/Sendmail',
+        url: '/Employee/Home/Sendmail',
         type: 'POST',
         data: { userid: mail, id: id },
         success: function (result) {

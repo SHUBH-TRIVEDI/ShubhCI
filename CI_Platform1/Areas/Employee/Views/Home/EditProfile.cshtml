@@ -9,14 +9,14 @@
             <div>
                 @if (@Model.Avatar == null)
                 {
-                    <input asp-for="Avatar" type="file" / id="InputImg" style="display:none;">
+                    <input asp-for="Avatar" type="file" id="InputImg" style="display:none;"/>
                     <img src="/Images/volunteer1.png" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
                      alt="">
                 }
                 else
                 {
                     
-                    <input asp-for="Avatar" type="file" / id="InputImg" style="display:none;">
+                    <input asp-for="Avatar" type="file"  id="InputImg" style="display:none;"/>
                     <img src="/Images/volunteer1.png" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
                      alt="">
                 }
@@ -328,7 +328,7 @@
               }
               else{
                    $.ajax({
-                url: '/Home/ChangePassword',
+                url: '/Employee/Home/ChangePassword',
                 type: 'POST',
                 data: { old: old,newp:newp,cnf:cnf },
                 success: function (response) {
@@ -397,7 +397,7 @@
             }
             console.log(selectedSkills);
             $.ajax({
-                url: '/Home/SaveUserSkills',
+                url: '/Employee/Home/SaveUserSkills',
                 type: 'POST',
                 data: { selectedSkills: selectedSkills },
 

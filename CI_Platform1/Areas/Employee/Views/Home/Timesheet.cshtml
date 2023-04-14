@@ -1,5 +1,6 @@
 ﻿@using CI_Entities1.Models.ViewModel
 @model StoryShareVM
+<partial name="Navbar1" />
 
 <div class="container">
     <div class="mt-5 fs-3">
@@ -11,13 +12,12 @@
             <div class="d-flex ">
                 <div class="mt-4">Volunteering Hours</div>
 
-                <button type="button" class="btn rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">
+                <button type="button" class="btn rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal" onclick="nullvalues()"
+                        data-bs-target="#timesheetADD">
                     <i class="bi bi-plus-lg me-2 "></i>ADD
                 </button>
                 <!-- Modal -->
-                <div class="modal  fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal  fade" id="timesheetADD" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel">
                     <div class="modal-dialog modal-xl modal-dialog-centered" style="width: 70%;">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -30,9 +30,10 @@
                             </div>
                             <form asp-action="Timesheet" asp-controller="Home" method="post">
                                 <div class="modal-body">
+                                    <span>Time</span>
                                     <div>
                                         <label for="mission">Mission</label>
-                                        <select class="col-12" asp-for="MissionId">
+                                        <select class="col-12" asp-for="MissionId" id="mis">
                                             @foreach (var mission in Model.missionApplications)
                                             {
                                                 @if (@mission.Mission.MissionType == "Time")
@@ -45,30 +46,30 @@
 
                                     <label class="mt-4">Date Volunteered</label>
                                     <div>
-                                        <input asp-for="DateVolunteered" class="col-12 " type="date" placeholder="Enter Date" />
+                                        <input asp-for="DateVolunteered" class="col-12 " type="date" id="dat" placeholder="Enter Date" />
                                     </div>
 
                                     <div class="row">
                                         <div class="col-6">
                                             <label for="Action" class="mt-4">Hours</label>
                                             <div>
-                                                <input asp-for="hour" class="col-12" type="number" min="0" max="23" placeholder="Enter Spent Hours" />
+                                                <input asp-for="hour" class="col-12" type="number" id="hour" min="0" max="23" placeholder="Enter Spent Hours" />
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <label for="Action" class="mt-4">Minutes</label>
                                             <div>
-                                                <input asp-for="minute" class="col-12" type="number" min="0" max="59" placeholder="Enter Spent Minutes" />
+                                                <input asp-for="minute" class="col-12" type="number" id="min" min="0" max="59" placeholder="Enter Spent Minutes" />
                                             </div>
                                         </div>
                                     </div>
                                     <label class="mt-4">Message</label>
                                     <div>
-                                        <textarea asp-for="Notes" class="col-12" rows="5" placeholder="Enter Your Message"></textarea>
+                                        <textarea asp-for="Notes" class="col-12" rows="5" id="note" placeholder="Enter Your Message"></textarea>
                                     </div>
                                 </div>
 
-                                <input type="text" asp-for="TimesheetId" class="form-control shadow-none" id="TimesheetId" aria-describedby="emailHelp" hidden>
+                                <input type="text" asp-for="TimesheetId" class="form-control shadow-none" id="TimesheetId" aria-describedby="emailHelp" hidden />
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn border-secondary rounded-pill shadow-none"
@@ -110,7 +111,7 @@
                                     <td>@sheet.TimesheetTime.ToString().Split(":")[1]</td>
                                     <td>
                                         <button onclick="edit(@sheet.TimesheetId)" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" class="btn shadow-none">
+                                    data-bs-target="#timesheetADD" class="btn shadow-none">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
                                     </td>
@@ -133,18 +134,17 @@
             <div class="d-flex ">
                 <div class="mt-4">Volunteering Goals</div>
 
-                <!-- <div class="mt-1 text-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change Password</div> -->
-                <button type="button" class="btn rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop2">
+                <!-- <div class="mt-1 text-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change Password</div> onclick="Modalopen()"  -->
+                <button type="button" class="btn rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal" onclick="nullvalues()"
+                        data-bs-target="#exampleModalADDGoal">
                     <i class="bi bi-plus-lg me-2 "></i>ADD
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
-                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal fade" id="exampleModalADDGoal" tabindex="-1" aria-labelledby="exampleModalLabel">
+                    <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                                <h1 class="modal-title fs-5" id="exampleModalADDGoal">
                                     Please input below
                                     volunteering Goals
                                 </h1>
@@ -155,7 +155,7 @@
                                 <div class="modal-body">
                                     <div>
                                         <label for="mission">Mission</label>
-                                        <select class="col-12" asp-for="MissionId">
+                                        <select class="col-12" asp-for="MissionId" id="miss">
                                             @foreach (var mission in Model.missionApplications)
                                             {
                                                 if (mission.Mission.MissionType == "Goal")
@@ -168,17 +168,17 @@
 
                                     <label for="Action" class="mt-4">Actions</label>
                                     <div>
-                                        <input asp-for="Action" class="col-12" type="text" placeholder="Enter Actions" />
+                                        <input asp-for="Action" class="col-12" id="action" type="text" placeholder="Enter Actions" />
                                     </div>
 
                                     <label class="mt-4">Date Volunteered</label>
                                     <div>
-                                        <input asp-for="DateVolunteered" class="col-12 " type="date" placeholder="Enter Date" />
+                                        <input asp-for="DateVolunteered" id="dats" class="col-12 " type="date" placeholder="Enter Date" />
                                     </div>
 
                                     <label class="mt-4">Message</label>
                                     <div>
-                                        <textarea asp-for="Notes" class="col-12" rows="5" placeholder="Enter Your Message"></textarea>
+                                        <textarea asp-for="Notes" id="notes" class="col-12" rows="5" placeholder="Enter Your Message"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -188,6 +188,7 @@
                                     </button>
                                     <button type="submit" class="btn oran shadow-none">Submit</button>
                                 </div>
+                                <input type="text" asp-for="TimesheetId" class="form-control shadow-none" id="TimesheetId" aria-describedby="emailHelp" hidden />
                             </form>
                         </div>
                     </div>
@@ -196,7 +197,7 @@
             </div>
             <table class="table">
                 <thead>
-                    <tr >
+                    <tr>
                         <th scope="col">Mission</th>
                         <th scope="col">Date</th>
                         <th scope="col">Action</th>
@@ -216,13 +217,15 @@
                                     <td>@sheet.DateVolunteered</td>
                                     <td>@sheet.Action</td>
                                     <td>
-                                        <button onclick="edit(@sheet.TimesheetId)" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop2" class="btn shadow-none">
+
+                                        <button onclick="editgoal(@sheet.TimesheetId)" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalADDGoal" class="btn shadow-none">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
                                     </td>
                                     <td>
-                                        <button onclick="deletes(@sheet.TimesheetId)" class="btn shadow-none">
+                                        <button onclick="deletes(@sheet.TimesheetId)" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalADDGoal" class="btn shadow-none">
                                             <img src=~/images/bin.png />
                                         </button>
                                     </td>
@@ -241,11 +244,33 @@
 
 
 <script>
+        function nullvalues()
+    {
+        mission =document.getElementById("mis");
+        mission.value="";
+        date=document.getElementById("dat");
+        date.value="";
+        hour=document.getElementById("hour");
+        hour.value="";
+        minute=document.getElementById("min");
+        minute.value="";
+        description=document.getElementById("note");
+        description.value="";
+        action=document.getElementById("action");
+        action.value="";
+                mission1 =document.getElementById("miss");
+        mission1.value="";
+        date1=document.getElementById("dats");
+        date1.value="";
+                description1=document.getElementById("notes");
+        description1.value="";
+    }
+
     function deletes(id)
     {
         console.log(id);
         $.ajax({
-            url: '/Home/Delete',
+            url: '/Employee/Home/Delete',
             type: 'POST',
             data: {'id':id }
             //success: function (res) {
@@ -258,24 +283,43 @@
             alert("Succesfully Deleted Please Refresh");
 
     }
+    //function Modalopen(){
 
+    //    var modalgoal=document.getElementById("exampleModalADDGoal");
+    //    var modaltime=document.getElementById("timesheetADD");
+    //    modaltime.style.display="none";
+    //    modalgoal.style.display="block";
+    //}
     function edit(id)
     {
-        //var hiden= document.getElementById("hiden").value= @Model.TimesheetId;
-
-        //console.log(hiden);
-
         $.ajax({
-            url: '/Home/EditTimesheet',
+            url: '/Employee/Home/EditTimesheet',
             type: 'GET',
             data: {'id':id },
             success: function (res) {
-                $(".modal").html($(res).find(".modal").html());
+                $("#timesheetADD").html($(res).find("#timesheetADD").html());
             },
             error: function (res) {
                 alert("error");
             }
         });
     }
+
+    function editgoal(id)
+    {
+        $.ajax({
+            url: '/Employee/Home/EditTimesheet',
+            type: 'GET',
+            data: {'id':id },
+            success: function (res) {
+                $("#exampleModalADDGoal").html($(res).find("#exampleModalADDGoal").html());
+            },
+            error: function (res) {
+                alert("error");
+            }
+        });
+    }
+
+
 
 </script>

@@ -1,0 +1,41 @@
+﻿.navi {
+    height: 100vh;
+    width: max-content;
+    background-color: #F88634;
+}
+
+.component {
+    color: white;
+    font-size: 20px;
+}
+
+.symbol {
+    color: white;
+}
+
+.back {
+    background-color: #F88634;
+    border: none;
+    font-size: 22px;
+}
+
+    
+.back:hover {
+    background-color: white;
+    text-emphasis-color: #F88634;
+ }
+
+        
+.back:hover a {
+    color: #F88634;
+ }
+
+        
+.back:hover .symbol {
+    color: #F88634;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
