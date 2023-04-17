@@ -72,5 +72,6 @@ namespace CI_Entities1.Models.ViewModel
 
         public List<Skill> skills { get; set; }
         public List<City> cities { get; set; }
+        public string UserAvatar { get; set; }
     }
 }

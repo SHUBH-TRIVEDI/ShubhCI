@@ -48,6 +48,17 @@ namespace CI_Platform1.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                var Admin=_CiPlatformContext.Admins.FirstOrDefault(u=> u.Email== model.Email);
+                if (Admin!=null)
+                {
+                    if(Admin.Password== model.Password)
+                    {
+                        HttpContext.Session.SetString("Firstname", Admin.FirstName);
+                        return RedirectToAction("Index", "Admin", new {Area="Admin"});
+
+                    }
+                }
                 var user = _Interface.UserByEmailPassword(model.Email, model.Password);
                 var username = model.Email.Split('@')[0];
                 if (user == null)
@@ -708,8 +719,9 @@ namespace CI_Platform1.Controllers
         {
             var userid = HttpContext.Session.GetString("userID");
             UserVM user = new UserVM();
-            user.Singleuser = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
+           // user.Singleuser = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
             var u = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
+
             user.Countries = _CiPlatformContext.Countries.ToList();
             user.cities = _CiPlatformContext.Cities.ToList();
             user.userSkills = _CiPlatformContext.UserSkills.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
@@ -727,7 +739,7 @@ namespace CI_Platform1.Controllers
             user.LinkedInUrl = u.LinkedInUrl;
             if (u.Avatar != null)
             {
-              // user.Avatar = u.Avatar;
+              user.UserAvatar = u.Avatar;
             }
 
 
@@ -821,7 +833,7 @@ namespace CI_Platform1.Controllers
             var userid = HttpContext.Session.GetString("userID");
             ss.missions = _CiPlatformContext.Missions.ToList();
             ss.missionApplications = _CiPlatformContext.MissionApplications.Where(e => e.UserId == Convert.ToInt64(userid)).ToList();
-            ss.timesheets = _CiPlatformContext.Timesheets.ToList();
+            ss.timesheets = _CiPlatformContext.Timesheets.ToList(); 
 
             return View(ss);
         }

@@ -80,9 +80,9 @@
         bottom: 65px;
         right: 15px;
         /*background-color: rgba(0,0,0,0.5);
-            color: #FFFFFF;
-            border-radius: 15px;
-            padding: 5px 10px;*/
+                color: #FFFFFF;
+                border-radius: 15px;
+                padding: 5px 10px;*/
     }
 
     .top-right {
@@ -132,7 +132,7 @@
         padding: 5px 10px;
     }
 
-    .top-left!!importantmportantclosed {
+    .top-left {
         position: absolute;
         top: 15px;
         left: 0px;
@@ -280,9 +280,9 @@
         bottom: 65px;
         right: 15px;
         /*background-color: rgba(0,0,0,0.5);
-                        color: #FFFFFF;
-                        border-radius: 15px;
-                        padding: 5px 10px;*/
+                            color: #FFFFFF;
+                            border-radius: 15px;
+                            padding: 5px 10px;*/
     }
 
     .top-right {
@@ -382,8 +382,6 @@
             @foreach (var category in Model.missions)
             {
                 var userid = Context.Session.GetString("userID");
-
-                var apply = Model.missionApplications.Where(e => Convert.ToString(e.UserId) == userid && e.MissionId == category.MissionId).FirstOrDefault();
                 var seat = Convert.ToInt32(category.Availability) - Convert.ToInt32(Model.missionApplications.Where(e => e.MissionId == category.MissionId).ToList().Count());
 
                 <div class="col-12 col-md-6 col-lg-4">
@@ -392,14 +390,13 @@
                             @*<img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />*@
                             <img class="card-img-top h-100 wid" src="@category.Imagepath" style="" />
 
-
-
-                            @if (apply != null)
+                           @{ var applied = Model.missionApplications.FirstOrDefault(e => e.MissionId == category.MissionId && e.UserId == Convert.ToInt32(userid));
+                           }
+                            @if (applied != null)
                             {
-                                <div class="top-left-applied">
-                                    APPLIED
-                                </div>
+                                <div class="applied-div">APPLIED</div>
                             }
+
                             @if (category.EndDate < DateTime.Now && category.MissionType.Equals("TIME"))
                             {
                                 <div class="top-left-closed">
@@ -786,11 +783,11 @@
                                             </div>
                                             <div class="">
                                                 <h6 class="pt-3 mb-0">Skill</h6>
-@*                                                @foreach (var j in Model.skills)
+                                                @*                                                @foreach (var j in Model.skills)
                                                     {
                                                     <small>@j.SkillName </small>
                                                     }*@
-                                                    <small>SkillName </small>
+                                                <small>SkillName </small>
 
                                             </div>
                                         </div>
