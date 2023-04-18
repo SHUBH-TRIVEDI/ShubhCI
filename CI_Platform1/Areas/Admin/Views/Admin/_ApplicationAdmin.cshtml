@@ -1,0 +1,88 @@
+﻿@using CI_Entities1.Models.ViewModel
+@model AdminVM
+
+<div class="fs-4">
+    Mission Application
+</div>
+
+<div class="row">
+    <hr class="col-3" style="border: 2px solid black;">
+    <hr class="col-9">
+</div>
+
+<table id="myTable" class="display ">
+    <thead>
+        <tr>
+            <th>Mission Title</th>
+            <th>Mission Id</th>
+            <th>User Id</th>
+            <th>User Name</th>
+            <th>Applied Date</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mission in Model.missionApplications)
+        {
+            <tr id="application">
+                <td>@mission.Mission.Title</td>
+                <td>@mission.MissionId</td>
+                <td>@mission.UserId</td>
+                <td>@mission.User.FirstName</td>
+                <td>@mission.AppliedAt</td>
+
+                <td>
+
+                    <span>
+                        <button class="btn shadow-none" onclick="Approve(@mission.MissionApplicationId)">
+                            <i class="bi bi-check-circle fs-5" style="color:green;"></i>
+                        </button>
+                    </span>
+                    <span>
+                        <button class="btn shadow-none" onclick="Reject(@mission.MissionApplicationId)">
+                            <i class="bi bi-x-circle fs-5" style="color:red;"></i>
+                        </button>
+                    </span>
+
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function Approve(Missionapplicationid)
+    {
+        $.ajax({
+            url: '/Admin/Admin/ApproveApplication',
+            type: 'GET',
+            data: {'Missionapplicationid':Missionapplicationid },
+            success: function (res) {
+                $("#application").html($(res).find("#application").html());
+            },
+            error: function (res) {
+                alert("error");
+            }
+        });
+    }
+
+    function Reject(Missionapplicationid)
+    {
+        $.ajax({
+            url: '/Admin/Admin/RejectApplication',
+            type: 'GET',
+            data: {'Missionapplicationid':Missionapplicationid },
+            success: function (res) {
+                $("#application").html($(res).find("#application").html());
+            },
+            error: function (res) {
+                alert("error");
+            }
+        });
+    }
+
+</script>
+

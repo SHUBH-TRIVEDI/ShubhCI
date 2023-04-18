@@ -36,7 +36,7 @@
     .landing-page-btn-img {
         border: none;
         background-color: rgba(0, 0, 0, 0.6);
-        border-radius: 30px;
+        -moz-border-radiusder-radiusradius: 30px;
         padding: 6px;
     }
 
@@ -47,7 +47,11 @@
         top: 8px;
         padding: 5px 10px;
         color: white;
-        background-color: rgba(0, 255, 97, 0.6);
+        /*background-color: rgba(0, 255, 97, 0.6);*/
+        background-color: rgba(0, 220, 90, 0.6);
+        border:1px solid rgba(0, 220, 90, 0.6);
+        border-radius:22px 22px 22px 0px;
+
         font-size: 14px;
     }
 
@@ -248,16 +252,6 @@
         width: fit-content;
         bottom: -16px;
     }
-    /*card*/
-
-    .sort {
-        width: 11rem;
-        margin-left: auto;
-    }
-
-    .sortby {
-        margin-left: auto;
-    }
 
     /*For List view*/
 
@@ -279,10 +273,7 @@
         position: absolute;
         bottom: 65px;
         right: 15px;
-        /*background-color: rgba(0,0,0,0.5);
-                            color: #FFFFFF;
-                            border-radius: 15px;
-                            padding: 5px 10px;*/
+
     }
 
     .top-right {
@@ -301,10 +292,10 @@
         background-color: white;
     }
 
-        .login-btn:hover {
-            color: #FFFFFF;
-            background-color: #F88634;
-        }
+    .login-btn:hover {
+        color: #FFFFFF;
+        background-color: #F88634;
+    }
 
     #theme-btn {
         position: absolute;
@@ -322,55 +313,7 @@
 </style>
 
 
-<div class="container">
-    @*sort by and explore mission*@
-    <div class="explore-now row me-5">
-        <div class="col-6 col-md-4 col-sm-4 d-inline">
-            <p class="fs-4 ms-5 mt-2">
-                Explore <strong class="fs-3">@ViewBag.TotalMission missions</strong>
-            </p>
-        </div>
-        <div class="col-6 col-md-8 col-sm-8 d-flex mt-3 sortby mb-3">
-            <div class="dropdown sort nav-item">
-                <button class=" btn dropdown d-flex shadow-none" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    <span class="sortby me-5 border p-2"> Sort By &nbsp;&nbsp;<img src="~/images/drop-down.png" /> </span>
-                    <img src="/Image/drop-down.png" alt="" class="sortaerrow">
-                </button>
-                <ul class="dropdown-menu" id="sortby" name="sortby">
-                    <li><a class="dropdown-item" onclick="mysearch(order=1)">Title</a></li>
-                    <li><a class="dropdown-item" onclick="mysearch(order=2)">Start Date</a></li>
-                    <li><a class="dropdown-item" onclick="mysearch(order=3)">End Date</a></li>
-                    <li><a class="dropdown-item" onclick="mysearch(order=4)">Availbility</a></li>
-                    <li><a class="dropdown-item" onclick="mysearch(order=5)">Theme</a></li>
-                    <li><a class="dropdown-item" onclick="mysearch(order=6)">Favrouite</a></li>
-                </ul>
-            </div>
 
-            @*            <div class="ms-5 ">
-
-                <a class="btn-grid " href="">
-                <img src="~/images/grid.png" />
-                </a>
-
-                <a class="btn-list ms-lg-3 ms-md-3 ms-sm-3 listbuton" href="">
-                <img src="~/images/list.png" />
-                </a>
-                </div>*@
-
-            <div class="btn-group d-none d-lg-flex">
-                <button class="btn shadow-none" id="grid" onclick="grid()">
-                    @*<i class="fa fa-th-large "></i>*@
-                    <i class="bi bi-grid-1x2-fill fs-5"></i>
-                </button>
-                <button class="btn shadow-none" id="list" onclick="list()">
-                    @*<i class="fa fa-bars"></i>*@
-                    <i class="bi bi-list fs-2"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="filters-section d-flex align-items-end flex-wrap justify-content-start ms-5">
 </div>
@@ -841,25 +784,25 @@
         @if (pager.CurrentPage > 1)
         {
             <li class="mx-1">
-                <a class="page-link back" onclick="mysearch(order=0,jpg=1)"><span aria-hidden="true">&laquo;</span></a>
+                <a class="page-link back" onclick="mysearch(jpg=1)"><span aria-hidden="true">&laquo;</span></a>
             </li>
             <li class="page-item mx-1">
-                <a class="page-link back" onclick="mysearch(order=0,jpg=@(pager.CurrentPage-1))"><span aria-hidden="true">&lsaquo;</span></a>
+                <a class="page-link back" onclick="mysearch(jpg=@(pager.CurrentPage-1))"><span aria-hidden="true">&lsaquo;</span></a>
             </li>
         }
         @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
         {
             <li class="page-item mx-1 @(pge==pager.CurrentPage ? "active":"")">
-                <a class="page-link back" onclick="mysearch(order=0,jpg=@pge)">@pge</a>
+                <a class="page-link back" onclick="mysearch(jpg=@pge)">@pge</a>
             </li>
         }
         @if (pager.CurrentPage < pager.TotalPages)
         {
             <li class="page-item mx-1">
-                <a class="page-link back" onclick="mysearch(order=0,jpg=@(pager.CurrentPage+1))"><span aria-hidden="true">&rsaquo;</span></a>
+                <a class="page-link back" onclick="mysearch(jpg=@(pager.CurrentPage+1))"><span aria-hidden="true">&rsaquo;</span></a>
             </li>
             <li class="mx-1">
-                <a class="page-link back" onclick="mysearch(order=0,jpg=@(pager.TotalPages))"><span aria-hidden="true">&raquo;</span></a>
+                <a class="page-link back" onclick="mysearch(jpg=@(pager.TotalPages))"><span aria-hidden="true">&raquo;</span></a>
             </li>
         }
 

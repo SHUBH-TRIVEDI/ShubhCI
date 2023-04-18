@@ -1,7 +1,59 @@
 ﻿@*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+
+<style>
+    .sort {
+        width: 11rem;
+        margin-left: auto;
+    }
+
+    .sortby {
+        margin-left: auto;
+    }
+</style>
+
 <partial name="Navbar1" />
 
 <partial name="Navbar2" />
+
+<div class="container">
+    @*sort by and explore mission*@
+    <div class="explore-now row me-5">
+        <div class="col-6 col-md-4 col-sm-4 d-inline">
+            <p class="fs-4 ms-5 mt-2">
+                Explore <strong class="fs-3">@ViewBag.TotalMission missions</strong>
+            </p>
+        </div>
+        <div class="col-6 col-md-8 col-sm-8 d-flex ms-auto sortby">
+            <div class="dropdown sort nav-item">
+                <button class=" btn dropdown d-flex shadow-none" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <span class="sortby me-5 border p-2"> Sort By &nbsp;&nbsp;<img src="~/images/drop-down.png" /> </span>
+                    <img src="/Image/drop-down.png" alt="" class="sortaerrow">
+                </button>
+                <ul class="dropdown-menu sorted" onclick="mysearch()" id="sortby" name="sortby">
+                    <li><a class="dropdown-item" value=1>Title</a></li>
+                    <li><a class="dropdown-item" value=2>Start Date</a></li>
+                    <li><a class="dropdown-item" value=3>End Date</a></li>
+                    <li><a class="dropdown-item" value=4>Availbility</a></li>
+                    <li><a class="dropdown-item" value=5>Theme</a></li>
+                    <li><a class="dropdown-item" value=6>Favrouite</a></li>
+                </ul>
+            </div>
+
+            <div class="btn-group d-none d-lg-flex ms-auto">
+                <button class="btn shadow-none" id="grid" onclick="grid()">
+                    <i class="bi bi-grid-1x2-fill fs-5"></i>
+                </button>
+                <button class="btn shadow-none" id="list" onclick="list()">
+                    <i class="bi bi-list fs-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="filters-section d-flex align-items-end flex-wrap justify-content-start ms-5">
+</div>
 
 <div id="missiondetails"></div>
 
@@ -10,8 +62,10 @@
 
 <script>
 
-        function mysearch(order=1, jpg){
-            var search = $("#search-addon[name=searchText]").val();
+        function mysearch(jpg){
+            //var search = $("#search-addon[name=searchText]").val();
+            var search=$(".sorted").val();
+            alert(search);
 
             var country = [];
             $("input[type='checkbox'][name='country']:checked").each(function () {
@@ -184,19 +238,19 @@
         mysearch();
     }
     //Local storage
-        
+
     function list() {
-		localStorage.setItem("viewref", "list");
-		  $('#list-products').addClass('d-flex'); 
-          $('#list-products').removeClass('d-none'); 
-          $('#products').removeClass('d-flex'); 
+        localStorage.setItem("viewref", "list");
+          $('#list-products').addClass('d-flex');
+          $('#list-products').removeClass('d-none');
+          $('#products').removeClass('d-flex');
           $('#products').addClass('d-none');
-	  }
-	function grid() {
-		localStorage.setItem("viewref", "grid");
-		$('#products').removeClass('d-none');
-        $('#products').addClass('d-flex'); 
-        $('#list-products').addClass('d-none'); 
+      }
+    function grid() {
+        localStorage.setItem("viewref", "grid");
+        $('#products').removeClass('d-none');
+        $('#products').addClass('d-flex');
+        $('#list-products').addClass('d-none');
         $('#list-products').removeClass('d-flex');
-	}
+    }
 </script>

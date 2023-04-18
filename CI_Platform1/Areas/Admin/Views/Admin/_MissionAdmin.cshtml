@@ -1,0 +1,58 @@
+﻿@using CI_Entities1.Models.ViewModel
+@model AdminVM
+
+<div class="fs-4">
+    Mission
+</div>
+
+<div class="row mt-1">
+    <hr class="col-1" style="border: 2px solid black;">
+    <hr class="col-11 ">
+</div>
+
+<button type="button" class="btn rounded-pill ms-auto shadow-none oran  data" data-bs-toggle="modal" onclick="nullvalues()"
+        data-bs-target="#exampleModalADDGoal">
+    <i class="bi bi-plus-lg me-2 "></i>ADD
+</button>
+
+
+<table id="myTable" class="display">
+    <thead>
+        <tr>
+            <th>Mission Title</th>
+            <th>Mission Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mission in Model.missions)
+        {
+            <tr>
+                <td>@mission.Title</td>
+                <td>@mission.MissionType</td>
+                <td>@mission.StartDate</td>
+                <td>@mission.EndDate</td>
+
+                <td>
+                    <span>
+                        <button class="btn shadow-none">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </span>
+                    <span>
+                        <button class="btn shadow-none">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </span>
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+

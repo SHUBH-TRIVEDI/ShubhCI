@@ -1,5 +1,5 @@
 ﻿@using CI_Entities1.Models.ViewModel
-@model UserVM
+@model AdminVM
 
 <div class="fs-4">
     User
@@ -41,15 +41,18 @@
                 <td>@user.Status</td>
 
                 <td>
-                    <button class="btn shadow-none">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
+                    <span>
+                        <button class="btn shadow-none">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </span>
+                    <span>
+                        <button class="btn shadow-none">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </span>
                 </td>
-                @*                    <td>
-                    <button  class="btn shadow-none">
-                    <img src=~/images/bin.png />
-                    </button>
-                    </td>*@
+
 
             </tr>
         }

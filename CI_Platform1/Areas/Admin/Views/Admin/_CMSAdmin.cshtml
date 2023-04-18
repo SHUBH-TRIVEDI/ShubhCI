@@ -1,0 +1,48 @@
+﻿@using CI_Entities1.Models.ViewModel
+@model AdminVM
+
+<div class="fs-4">
+    CMS Page
+</div>
+
+<div class="row mt-1">
+    <hr class="col-2" style="border: 2px solid black;">
+    <hr class="col-10 ">
+</div>
+
+<table id="myTable" class="display">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mission in Model.missions)
+        {
+            <tr>
+                <td>@mission.Title</td>
+                <td>@mission.Status</td>
+
+                <td>
+                    <span>
+                        <button class="btn shadow-none">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </span>
+                    <span>
+                        <button class="btn shadow-none">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </span>
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+

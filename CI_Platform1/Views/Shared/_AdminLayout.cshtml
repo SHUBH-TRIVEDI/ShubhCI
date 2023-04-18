@@ -21,54 +21,54 @@
 
     <div class="container-fluid">
         <div class="row">
-            @*<div class="col col-xl-3 col-lg-3 col-md-3 col-sm-3 navi d-sm-block d-none">*@
             <div class="col navi d-sm-block d-none col-lg-3 col-md-1 col-sm-1">
                 <div class="mt-5 ms-4 mb-4 component d-lg-block d-md-none d-sm-none">Navigation</div>
                 <ul class="list-group mt-md-5 mt-sm-5 side-nav">
-@*                    <li class="list-group-item row back row">
-                        <a asp-area="Admin" asp-controller="Admin" asp-action="User" class="row">
+
+                    <li class="list-group-item row back row">
+                        <a href="#" data-partial-view-url="/Admin/Admin/_UserAdmin" class="row">
                             <i class="bi bi-person-fill symbol fs-4 col-3 text-end "></i>
                             <span class="ms-3 d-lg-block d-md-none d-sm-none col-8 ">User</span>
                         </a>
-                    </li>*@
+                    </li>
 
                     <li class="list-group-item row back row">
-                        <a href="#"  data-partial-view-url="/Admin/Admin/_User" class="row">
+                        <a href="#" data-partial-view-url="/Admin/Admin/_CMSAdmin" class="row">
                             <i class="bi bi-file-earmark-text symbol fs-4 col-3 text-end "></i>
                             <span class="ms-3 d-lg-block d-md-none d-sm-none col-8 ">CMS Page</span>
                         </a>
                     </li>
 
                     <li class="list-group-item row  back row">
-                        <a href="#" class="row">
+                        <a href="#" data-partial-view-url="/Admin/Admin/_MissionAdmin" class="row">
                             <i class="bi bi-bullseye symbol fs-4 col-3 text-end "></i>
                             <span class="ms-3 d-lg-block d-md-none d-sm-none col-8 ">Mission</span>
                         </a>
                     </li>
 
                     <li class="list-group-item row back row">
-                        <a href="#" class="row">
+                        <a href="#" data-partial-view-url="/Admin/Admin/_ThemeAdmin" class="row">
                             <i class="bi bi-columns symbol fs-4 col-3 text-end "></i>
                             <span class="ms-3 d-lg-block d-md-none d-sm-none col-8 ">Missions Theme</span>
                         </a>
                     </li>
 
                     <li class="list-group-item row back row">
-                        <a href="#" class="row">
+                        <a href="#" data-partial-view-url="/Admin/Admin/_SkillAdmin"  class="row">
                             <i class="bi bi-tools symbol fs-4 col-3 text-end "></i>
                             <span class="ms-3 d-lg-block d-md-none d-sm-none col-8 ">Missions Skills</span>
                         </a>
                     </li>
 
                     <li class="list-group-item row back row">
-                        <a href="#" class="row">
+                        <a href="#" data-partial-view-url="/Admin/Admin/_Applicationadmin" class="row">
                             <i class="bi bi-folder symbol fs-4 col-3 text-end "></i>
                             <span class="ms-3 d-lg-block d-md-none d-sm-none col-8">Missions Applications</span>
                         </a>
                     </li>
 
                     <li class="list-group-item row back row">
-                        <a href="#" class="row">
+                        <a href="#" data-partial-view-url="/Admin/Admin/_StoryAdmin" class="row">
                             <i class="bi bi-bookmark-star symbol fs-4 col-3 text-end "></i>
                             <span class="ms-3 d-lg-block d-md-none d-sm-none col-8">Story</span>
                         </a>
@@ -85,8 +85,7 @@
             </div>
 
 
-            @*<div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8">*@
-            <div class="col col-lg-9 col-md-11 col-sm-11 shadow">
+            <div class="col col-lg-9 col-md-11 col-sm-11 shadow" style="max-height:100vh">
                 <nav class="">
                     <div class="row mt-4 ">
                         <button class="btn  d-block d-sm-none shadow-none" type="button" data-bs-toggle="offcanvas"
@@ -95,58 +94,58 @@
                         </button>
 
                         <!-- Offcanvas -->
-                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                        <div class="offcanvas offcanvas-start navi" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                             <div class="offcanvas-header">
-                                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Navigation</h5>
+                                <h5 class="offcanvas-title component" id="offcanvasExampleLabel">Navigation</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body">
 
-                                <ul class="list-group mt-md-5 mt-sm-5">
+                                <ul class="list-group mt-md-5 mt-sm-5 side-nav" >
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" class="row">
+                                        <a href="#" data-partial-view-url="/Admin/Admin/_UserAdmin" class="row">
                                             <i class="bi bi-person-fill symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">User</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" class="row">
+                                        <a href="#" data-partial-view-url="/Admin/Admin/_CMSAdmin" class="row">
                                             <i class="bi bi-file-earmark-text symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">CMS Page</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" class="row">
+                                        <a href="#" data-partial-view-url="/Admin/Admin/_MissionAdmin" class="row">
                                             <i class="bi bi-bullseye symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Mission</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" class="row">
+                                        <a href="#" data-partial-view-url="/Admin/Admin/_ThemeAdmin"  class="row">
                                             <i class="bi bi-columns symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Missions Theme</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" class="row">
+                                        <a href="#" data-partial-view-url="/Admin/Admin/_SkillAdmin"  class="row">
                                             <i class="bi bi-tools symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Missions Skills</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" class="row">
+                                        <a href="#" data-partial-view-url="/Admin/Admin/_Applicationadmin" class="row">
                                             <i class="bi bi-folder symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Missions&nbsp;Applications</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" class="row">
+                                        <a href="#" data-partial-view-url="/Admin/Admin/_StoryAdmin" class="row">
                                             <i class="bi bi-bookmark-star symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Story</span>
                                         </a>
@@ -164,8 +163,8 @@
                         </div>
                         <!-- Offcanvas  Ends-->
 
-                        <div class="col d-none d-md-block">
-                            @DateTime.Now
+                        <div class="col mt-2">
+                            <p id="datetime"></p>
                         </div>
 
                         <div class="dropdown text-end ms-auto col">
@@ -194,6 +193,7 @@
                 </nav>
 
                 <div id="PartialView">
+
                 </div>
 
                 <div class="mt-5">
@@ -213,12 +213,12 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-@*    <script>
+    @*    <script>
         let table = new DataTable('#myTable');
-    </script>*@
+        </script>*@
 
-        <script>
-        
+    <script>
+
         $(function() {
                 $("li").click(function(e) {
                   e.preventDefault();
@@ -243,6 +243,25 @@
             });
 
 
+    </script>
+
+    <script>
+        function updateDateTime() {
+          var now = new Date();
+          var options = {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second:"numeric",
+            hour12: true
+          };
+          var formattedDateTime = now.toLocaleDateString("en-US", options);
+          document.getElementById("datetime").innerHTML = formattedDateTime;
+        }
+        setInterval(updateDateTime, 1000);
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
