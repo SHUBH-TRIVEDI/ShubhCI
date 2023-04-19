@@ -33,7 +33,9 @@ namespace CI_Platform1.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            AdminVM adminVM = new AdminVM();
+            adminVM.users = _CiPlatformContext.Users.ToList();
+            return View(adminVM);
         }
 
         public IActionResult _UserAdmin()
@@ -52,12 +54,74 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return PartialView("_MissionAdmin", adminVM);
         }
 
+        //CMS
         public IActionResult _CMSAdmin()
         {
             AdminVM adminVM = new AdminVM();
-            adminVM.missions = _CiPlatformContext.Missions.ToList();
+            adminVM.cmsPages= _CiPlatformContext.CmsPages.ToList();
 
             return PartialView("_CMSAdmin", adminVM);
+        }
+
+        public IActionResult CMSAdd()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult CMSAdd(AdminVM adminVM)
+        {
+            CmsPage cms = new CmsPage();
+
+            cms.Title= adminVM.Title;
+            cms.Description= adminVM.editor1;
+            cms.Slug= adminVM.Slug;
+            cms.Status= adminVM.cmsStatus;
+
+            _CiPlatformContext.Add(cms);
+            _CiPlatformContext.SaveChanges();
+            return RedirectToAction("Index", "Admin");
+        }
+
+        public IActionResult CMSEdit(long id)
+        {
+            AdminVM adminVM = new AdminVM();
+            var cms = _CiPlatformContext.CmsPages.FirstOrDefault(u => u.CmsPageId == id);
+
+            adminVM.Title = cms.Title;
+            adminVM.editor1 = cms.Description;
+            adminVM.Slug= cms.Slug;
+            adminVM.cmsStatus=cms.Status;
+            adminVM.cmsid=id;
+            return View(adminVM);
+        }
+
+
+
+        [HttpPost]
+        public IActionResult CmsPageEdit(AdminVM adminVM, long id)
+        {
+            var cms = _CiPlatformContext.CmsPages.FirstOrDefault(u => u.CmsPageId == adminVM.cmsid);
+
+            cms.Title = adminVM.Title;
+            cms.Description = adminVM.editor1;
+            cms.Slug = adminVM.Slug;
+            cms.Status = adminVM.cmsStatus;
+
+            _CiPlatformContext.CmsPages.Update(cms);
+            _CiPlatformContext.SaveChanges();
+            return RedirectToAction("Index", "Admin");
+        }
+
+        public IActionResult CMSDelete(long id)
+        {
+            var cms = _CiPlatformContext.CmsPages.FirstOrDefault(u => u.CmsPageId == id);
+
+            _CiPlatformContext.CmsPages.Remove(cms);
+            _CiPlatformContext.SaveChanges();
+
+            return RedirectToAction("Index","Admin");
         }
 
         //Story

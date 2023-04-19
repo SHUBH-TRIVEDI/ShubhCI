@@ -10,7 +10,7 @@ namespace CI_Entities1.Models.ViewModel
     {
         public List<Admin> admins { get; set; }
         public long AdminId { get; set; }
-
+        public long cmsid { get;set; }
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
@@ -70,6 +70,18 @@ namespace CI_Entities1.Models.ViewModel
         public List<MissionTheme> missionThemes { get; set; }
 
         public List<Skill> skills { get; set; }
+
+        
+        //CMSPAGE
+        public List<CmsPage> cmsPages { get; set; }
+        public long CmsPageId { get; set; }
+
+        public string? editor1 { get; set; }
+
+        public string Slug { get; set; } = null!;
+
+        public string? cmsStatus { get; set; }
+
 
     }
 }

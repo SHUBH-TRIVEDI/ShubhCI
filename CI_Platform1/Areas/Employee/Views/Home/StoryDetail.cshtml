@@ -17,13 +17,20 @@
             <div class="col-12 col-lg-6 col-md-12 col-sm-12  p-1">
 
                 <!-- Full-width images with number text -->
-                <div class="mySlides" style="display: none;">
-                    <div class="numbertext">1 / 4</div>
-                    <img src="/Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-3.png"
-                         style="width:100%; height: 54vh;">
-                </div>
+                @{
+                    int a = 1;
+                }
+                @foreach(var media in Model.storymedia)
+                {
+                    <div class="mySlides" style="display: none;">
+                        <div class="numbertext">@a / 4</div>
+                        <img src="@media.StoryPath"
+                             style="width:100%; height: 54vh;">
+                    </div>
+                    a=a+1;
+                }
 
-                <div class="mySlides" style="display: none;">
+                @*<div class="mySlides" style="display: none;">
                     <div class="numbertext">2 / 4</div>
                     <img src="/Images/img1.png" style="width:100%; height: 54vh;">
                 </div>
@@ -37,16 +44,23 @@
                 <div class="mySlides" style="display: block;">
                     <div class="numbertext">4 / 4</div>
                     <img src="/Images/img11.png" style="width:100%; height: 54vh;">
-                </div>
+                </div>*@
 
                 <!-- Thumbnail images -->
                 <div class="row mt-3">
-                    <div class="column" style="width:25%">
-                        <img class="demo cursor"
-                             src="../Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png" style="width:100%"
-                             onclick="currentSlide(1)" alt="The Woods">
-                    </div>
-                    <div class="column" style="width:25%">
+                    @{
+                        int b = 1;
+                    }
+                    @foreach(var i in Model.storymedia)
+                    {
+                        <div class="column" style="width:25%">
+                            <img class="demo cursor"
+                                 src="@i.StoryPath" style="width:100%"
+                                 onclick="currentSlide(@b)" alt="The Woods">
+                        </div>
+                        b = b + 1;
+                    }
+                    @*<div class="column" style="width:25%">
                         <img class="demo cursor" src="../Images/img1.png" style="width:100%" onclick="currentSlide(2)"
                              alt="Cinque Terre">
                     </div>
@@ -58,7 +72,7 @@
                     <div class="column" style="width:25%">
                         <img class="demo cursor active" src="../Images/img11.png" style="width:100%"
                              onclick="currentSlide(4)" alt="Northern Lights">
-                    </div>
+                    </div>*@
 
                 </div>
             </div>

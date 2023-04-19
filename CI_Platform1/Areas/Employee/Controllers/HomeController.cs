@@ -233,7 +233,7 @@ namespace CI_Platform1.Controllers
             return View(lp);
         }
         [HttpGet]
-        public IActionResult _Missions(int jpg, string SearchingMission, int order, string country, string city, string theme, long missionId)
+        public IActionResult _Missions(int jpg, string SearchingMission,string sort, string country, string city, string theme, long missionId)
         {
             LandingPageVM lp = new LandingPageVM();
 
@@ -301,7 +301,7 @@ namespace CI_Platform1.Controllers
 
             if (lp.missions.Count() == 0)
             {
-                return RedirectToAction("NoMissionFound", "Home");
+                return RedirectToAction("NoMissionFound", "Home", new {Areas="Employee"});
             }
 
             //Add to favrouite
@@ -312,26 +312,29 @@ namespace CI_Platform1.Controllers
 
             }
             //Order By
-            switch (order)
+            switch (sort)
             {
-                case 1:
+                case "1":
                     lp.missions = lp.missions.OrderBy(e => e.Title).ToList();
                     break;
-                case 2:
+                case "2":
                     lp.missions = lp.missions.OrderByDescending(e => e.StartDate).ToList();
                     break;
-                case 3:
+                case "3":
                     lp.missions = lp.missions.OrderBy(e => e.EndDate).ToList();
                     break;
 
-                case 4:
+                case "4":
                     lp.missions = lp.missions.OrderBy(e => Convert.ToInt32(e.Availability)).ToList();
                     break;
 
-                case 5:
+                case "5":
                     lp.missions = lp.missions.OrderBy(e => e.ThemeId).ToList();
                     break;
 
+                default:
+                    lp.missions = lp.missions.OrderBy(e => e.Title).ToList();
+                    break;
                     //case 6:
                     //    lp.missions = lp.missions.Where(m => m.fav == true).ToList();
                     //    break;
@@ -356,10 +359,10 @@ namespace CI_Platform1.Controllers
             lp.missions = data.ToList();
             ViewBag.TotalMission = recsCount;
 
-
-
             return PartialView("_Missions", lp);
         }
+
+
 
 
         //Volunteering Missions Model
@@ -685,6 +688,7 @@ namespace CI_Platform1.Controllers
             st.missions = _CiPlatformContext.Missions.ToList();
             st.ShortDescription = HttpUtility.HtmlDecode(Story.Description);
             st.Title = Story.Title;
+            st.storymedia = _CiPlatformContext.StoryMedia.Where(x => x.StoryId == missionid).ToList();
 
             var userId = HttpContext.Session.GetString("userID");
             if (userId != null)

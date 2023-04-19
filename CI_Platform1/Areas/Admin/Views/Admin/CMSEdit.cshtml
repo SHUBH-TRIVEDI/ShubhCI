@@ -1,0 +1,58 @@
+﻿<script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+@using CI_Entities1.Models.ViewModel
+@model AdminVM
+
+@{
+    Layout = "_AdminLayout";
+}
+<form asp-action="CmsPageEdit" asp-controller="Admin" asp-area="Admin" method="post">
+    <div class="fs-5 bg-dark-subtle border p-3 col-12"> Edit</div>
+
+    <div class="border ps-4 pb-5">
+
+        <label class="mt-3">Title</label>
+        <div>
+            <input asp-for="Title" class="col-12 " type="text" />
+        </div>  
+
+        <label class="mt-2">Description</label>
+        <div class="col-12 mt-2">
+            <textarea asp-for="editor1" class="col-12" name="editor1"></textarea>
+        </div>
+
+        <label class="mt-2">Slug</label>
+        <div>
+            <input asp-for="Slug" class="col-12 " type="text" />
+        </div>
+
+        <label class="mt-2">Status</label>
+        <div>
+            <input asp-for="cmsStatus" class="col-12 " type="text" />
+        </div>
+    </div>
+
+    <input type="text" class="form-control shadow-none" id="TimesheetId" aria-describedby="emailHelp" hidden />
+
+    <div class="d-flex bd-highlight mb-3">
+
+        <div class="p-2 ms-auto">
+            <button type="submit" class="btn btn-outline-secondary px-3 me-auto shadow-none" style="border-radius:22px;">
+                Cancel
+            </button>
+        </div>
+        <div class="p-2">
+            <input asp-for="cmsid" />
+            <button type="submit" class="btn oran px-3 shadow-none">
+                Save
+            </button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+        //ckeditor
+    CKEDITOR.replace('editor1');
+
+
+</script>

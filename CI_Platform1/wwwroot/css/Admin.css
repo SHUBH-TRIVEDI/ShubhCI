@@ -4,6 +4,33 @@
     height:100vh;
 }
 
+.form-control:focus {
+    border-color: black !important;
+}
+
+.active {
+    background-color: darkorange;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+}
+
+.start-btn {
+    margin-right: auto;
+}
+
+.end-btn {
+    display: flex;
+}
+
+.edit {
+    background: white;
+    color: orange;
+    border: none;
+}
+
 .data{
     float:right;
     text-align:right;
@@ -11,6 +38,7 @@
 .dataTables_wrapper .dataTables_filter {
     float: left !important;
     text-align: left !important;
+    display:none;
 }
 
 .dataTables_length {

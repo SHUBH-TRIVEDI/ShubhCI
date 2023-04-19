@@ -9,7 +9,25 @@
     <hr class="col-2" style="border: 2px solid black;">
     <hr class="col-10 ">
 </div>
+@*<a asp-action="CMSAdd" asp-controller="Admin" asp-area="Admin">
+    <button type="button" class="btn rounded-pill ms-auto shadow-none oran  data">
+    <i class="bi bi-plus-lg me-2 "></i>ADD
+    </button>
+    </a>*@
 
+<div class="button-row mb-3">
+    <div class=" start-btn">
+
+        <input class="form-control me-2" id="myInputTextField" type="search" placeholder="Search" aria-label="Search">
+    </div>
+
+    <div class="end-btn">
+        <a asp-action="CMSAdd" asp-controller="Admin" asp-area="Admin">
+            <button class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
+        </a>
+
+    </div>
+</div>
 <table id="myTable" class="display">
     <thead>
         <tr>
@@ -20,22 +38,26 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var mission in Model.missions)
+        @foreach (var cms in Model.cmsPages)
         {
             <tr>
-                <td>@mission.Title</td>
-                <td>@mission.Status</td>
+                <td>@cms.Title</td>
+                <td>@cms.Status</td>
 
                 <td>
                     <span>
-                        <button class="btn shadow-none">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
+                        <a asp-action="CMSEdit" asp-controller="Admin" asp-area="Admin" asp-route-id="@cms.CmsPageId">
+                            <button class="btn shadow-none">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </a>
                     </span>
                     <span>
-                        <button class="btn shadow-none">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                        <a asp-action="CMSDelete" asp-controller="Admin" asp-area="Admin" asp-route-id="@cms.CmsPageId">
+                            <button class="btn shadow-none">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </a>
                     </span>
                 </td>
 
