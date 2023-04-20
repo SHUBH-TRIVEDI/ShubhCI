@@ -10,7 +10,7 @@ namespace CI_Entities1.Models.ViewModel
     {
         public List<Admin> admins { get; set; }
         public long AdminId { get; set; }
-        public long cmsid { get;set; }
+        public long cmsid { get; set; }
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
@@ -40,6 +40,18 @@ namespace CI_Entities1.Models.ViewModel
 
         public string Status { get; set; } = null!;
 
+        public string UserPassword { get; set; } = null!;
+
+        public long? CityId { get; set; }
+
+        public long? CountryId { get; set; }
+
+        public List<Country> countries { get; set; }
+
+        public List<City> cities { get; set; }
+
+        public string? ProfileText { get; set; }
+
         //_AdminMission.cshtml
 
         public List<Mission> missions { get; set; }
@@ -54,11 +66,14 @@ namespace CI_Entities1.Models.ViewModel
 
         //_StoryAdmin
         public List<Story> stories { get; set; }
+
         public long MissionId { get; set; }
 
         public long UserId { get; set; }
 
         public string? StoryTitle { get; set; }
+
+        public List<StoryMedium> storyMedia { get; set; }
 
         //_ApplicationAdmin
         public List<MissionApplication> missionApplications { get; set; }

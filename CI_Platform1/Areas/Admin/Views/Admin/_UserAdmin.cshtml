@@ -1,21 +1,6 @@
 ﻿@using CI_Entities1.Models.ViewModel
 @model AdminVM
 
-@*<style>
-    .button-row {
-        display: flex;
-        justify-content: center;
-    }
-
-    .start-btn {
-        margin-right: auto;
-    }
-
-    .end-btn {
-        display: flex;
-    }
-</style>*@
-
 <div class="fs-4">
     User
 </div>
@@ -32,10 +17,117 @@
     </div>
 
     <div class="end-btn">
-        <button class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
+        <button class="btn btn-outline-warning rounded-pill px-3 py-0 me-2" type="button" data-bs-toggle="modal" data-bs-target="#UserModal">
+            <i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span>
+        </button>
 
     </div>
 </div>
+
+<!-- Modal -->
+<form asp-action="_UserAdmin" asp-controller="Admin" asp-area="Admin" method="post">
+    <div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="Action" class="mt-4">First Name</label>
+                            <div>
+                                <input asp-for="UserFirstName" class="col-12" type="text" id="hour" placeholder="Enter First Name" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="Action" class="mt-4">Last Name</label>
+                            <div>
+                                <input asp-for="UserLastName" class="col-12" type="text" id="min" placeholder="Enter Last Name" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="Action" class="mt-4">Email</label>
+                            <div>
+                                <input asp-for="UserEmail" class="col-12" type="text" id="hour" placeholder="Enter Email" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="Action" class="mt-4">Password</label>
+                            <div>
+                                <input asp-for="UserPassword" class="col-12" type="text" id="min" placeholder="Enter Password" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="Action" class="mt-4">Employee Id</label>
+                            <div>
+                                <input asp-for="EmployeeId" class="col-12" type="text" id="hour" placeholder="Enter Employee Id" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="Action" class="mt-4">Department</label>
+                            <div>
+                                <input asp-for="Department" class="col-12" type="text" id="min" placeholder="Enter Department" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="mission">Country</label>
+                            <select asp-for="CountryId" class="col-12" id="mis">
+                                @foreach (var country in Model.countries)
+                                {
+                                    <option value="@country.CountryId">@country.Name</option>
+
+                                }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="mission">City</label>
+                            <select asp-for="CityId" class="col-12" id="mis">
+                                @foreach (var city in Model.cities)
+                                {
+                                    <option value="@city.CityId">@city.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="Action" class="mt-4">Profile Text</label>
+                            <div>
+                                <input asp-for="ProfileText" class="col-12" type="text" id="hour" placeholder="Enter Profile Text" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="Action" class="mt-4">Status</label>
+                            <div>
+                                <input asp-for="Status" class="col-12" type="text" id="min" placeholder="Enter Status" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn oran">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@*End Of Modal*@
 
 <table id="myTable" class="display">
     <thead>
@@ -53,38 +145,57 @@
     <tbody>
         @foreach (var user in Model.users)
         {
-                <tr>
-                    <td>@user.FirstName</td>
-                    <td>@user.LastName</td>
-                    <td>@user.Email</td>
-                    <td>@user.EmployeeId</td>
-                    <td>@user.Department</td>
-                    <td>@user.Status</td>
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>@user.EmployeeId</td>
+                <td>@user.Department</td>
+                <td>@user.Status</td>
 
-                    <td>
-                        <span>
-                            <button class="btn shadow-none">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                        </span>
-                        <span>
-                            <button class="btn shadow-none">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </span>
-                    </td>
+                <td>
+                    <span>
+                        <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#UserModal" onclick="UserEdit(@user.UserId)">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </span>
+                    <span>
+                        <button class="btn shadow-none" onclick="UserDelete(@user.UserId)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </span>
+                </td>
 
 
-                </tr>
+            </tr>
         }
     </tbody>
 </table>
 
+<script>
+    function UserEdit(id)
+    {
+        $.ajax({
+            url: '/Admin/Admin/UserEdit',
+            type: 'GET',
+            data: {'id':id },
+            success: function (res) {
+                console.log(res);
+                $("#UserModal").html($(res).find("#UserModal").html());
+            },
+            error: function (res) {
+                console.log(res);
+                alert("Modal error");
+            }
+        });
+    }
 
-@*<script>
-var table = new DataTable('#myTable');
-
-$('#myInputTextField').keyup(function () {
-table.search($(this).val()).draw();
-});
-</script>*@
+    function UserDelete(id)
+    {
+        $.ajax({
+            url: '/Admin/Admin/UserDelete',
+            type: 'GET',
+            data: {'id':id }
+        });
+    }
+</script>

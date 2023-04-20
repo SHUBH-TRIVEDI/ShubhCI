@@ -41,7 +41,7 @@
         </button>
     </div>
     <div class="p-2">
-        <button type="submit" class="btn oran px-3 shadow-none">
+        <button type="submit" onclick="rtp()" class="btn oran px-3 shadow-none">
             Save
         </button>
     </div>
@@ -53,5 +53,10 @@
         //ckeditor
     CKEDITOR.replace('editor1');
 
+    function rtp()
+    {
+        document.getElementById("cms").click();
+
+    }
 
 </script>

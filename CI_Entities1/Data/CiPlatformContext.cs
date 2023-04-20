@@ -12,7 +12,7 @@ public partial class CiPlatformContext : DbContext
     }
 
     public CiPlatformContext(DbContextOptions<CiPlatformContext> options)
-        : base(options)
+        :   base(options)
     {
     }
 

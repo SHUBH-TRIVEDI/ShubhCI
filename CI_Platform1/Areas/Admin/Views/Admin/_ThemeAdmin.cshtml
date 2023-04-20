@@ -27,6 +27,7 @@
         <tr>
             <th>Theme Name</th>
             <th>Status</th>
+            <th>Action</th>
 
         </tr>
     </thead>
@@ -36,7 +37,48 @@
             <tr id="application">
                 <td>@theme.Title</td>
                 <td>@theme.Status</td>
+
+                <td>
+                    <span>
+                        <button class="btn shadow-none" onclick="ThemeEdit(@theme.MissionThemeId)">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </span>
+                    <span>
+                        <button class="btn shadow-none" onclick="ThemeDelete(@theme.MissionThemeId)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </span>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+    function ThemeEdit(id)
+    {
+        $.ajax({
+            url: '/Admin/Admin/ThemeEdit',
+            type: 'GET',
+            data: {'id':id },
+            success: function (res) {
+                console.log(res);
+                $("#UserModal").html($(res).find("#UserModal").html());
+            },
+            error: function (res) {
+                console.log(res);
+                alert("Modal error");
+            }
+        });
+    }
+
+    function ThemeDelete(id)
+    {
+        $.ajax({
+            url: '/Admin/Admin/ThemeDelete',
+            type: 'GET',
+            data: {'id':id }
+        });
+    }
+</script>

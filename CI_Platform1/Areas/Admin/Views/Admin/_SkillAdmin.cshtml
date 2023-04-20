@@ -27,6 +27,7 @@
         <tr>
             <th>Skill Name</th>
             <th>Status</th>
+            <th>Action</th>
 
         </tr>
     </thead>
@@ -36,6 +37,18 @@
             <tr id="application">
                 <td>@skill.SkillName</td>
                 <td>@skill.Status</td>
+                <td>
+                    <span>
+                        <button class="btn shadow-none">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </span>
+                    <span>
+                        <button class="btn shadow-none">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </span>
+                </td>
             </tr>
         }
     </tbody>

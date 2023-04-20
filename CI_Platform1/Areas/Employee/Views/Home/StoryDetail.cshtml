@@ -30,22 +30,6 @@
                     a=a+1;
                 }
 
-                @*<div class="mySlides" style="display: none;">
-                    <div class="numbertext">2 / 4</div>
-                    <img src="/Images/img1.png" style="width:100%; height: 54vh;">
-                </div>
-
-                <div class="mySlides" style="display: none;">
-                    <div class="numbertext">3 / 4</div>
-                    <img src="/Images/Grow-Trees-On-the-path-to-environment-sustainability-2.png"
-                         style="width:100%; height: 54vh;">
-                </div>
-
-                <div class="mySlides" style="display: block;">
-                    <div class="numbertext">4 / 4</div>
-                    <img src="/Images/img11.png" style="width:100%; height: 54vh;">
-                </div>*@
-
                 <!-- Thumbnail images -->
                 <div class="row mt-3">
                     @{
@@ -60,26 +44,13 @@
                         </div>
                         b = b + 1;
                     }
-                    @*<div class="column" style="width:25%">
-                        <img class="demo cursor" src="../Images/img1.png" style="width:100%" onclick="currentSlide(2)"
-                             alt="Cinque Terre">
-                    </div>
-                    <div class="column" style="width:25%">
-                        <img class="demo cursor"
-                             src="../Images/Grow-Trees-On-the-path-to-environment-sustainability-1.png"
-                             style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-                    </div>
-                    <div class="column" style="width:25%">
-                        <img class="demo cursor active" src="../Images/img11.png" style="width:100%"
-                             onclick="currentSlide(4)" alt="Northern Lights">
-                    </div>*@
 
                 </div>
             </div>
 
             <div class="col-12 col-lg-6 col-md-12 col-sm-12 p-1 row">
                 <div class="ms-5">
-                    <div class="mt-5 "><img src="/Images/volunteer2.png" class="rounded-circle" alt=""></div>
+                    <div class="mt-5 "><img src="/Images/volunteer3.png" class="rounded-circle" alt=""></div>
                     @{
                         //var user = Model.users.Where(e => e.UserId == Model.singleStory.UserId).FirstOrDefault();
                         var user = Model.users.Where(e => e.UserId == Model.singleStory.UserId).FirstOrDefault();
