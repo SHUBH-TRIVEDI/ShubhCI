@@ -41,90 +41,73 @@ namespace CI_Platform1.Areas.Admin.Controllers
         //Users
         public IActionResult _UserAdmin()
         {
-            //.Where(u => u.DeletedAt == "NULL")
+            //.Where(u => u.DeletedAt == null)
             AdminVM adminVM = new AdminVM();
-            adminVM.users = _CiPlatformContext.Users.ToList();
+            adminVM.users = _CiPlatformContext.Users.Where(u => u.DeletedAt == null).ToList();
             adminVM.cities= _CiPlatformContext.Cities.ToList();
             adminVM.countries = _CiPlatformContext.Countries.ToList();
 
             return PartialView("_UserAdmin", adminVM);
-            //return RedirectToAction("Index", "Admin");
         }
-
         [HttpPost]
-        public IActionResult _UserAdmin(AdminVM adminVM)
+        public IActionResult UserAddEdit(string img, long USERID, string first,string last, string mail, string password, string employeeid, string department, long country, long city, string profile,string status)
         {
-            if (adminVM.UserId == 0)
+            if(USERID ==0)
             {
-                User use = new User();
+                User user = new User()
+                {
+                    FirstName = first,
+                    LastName = last,
+                    Email = mail,
+                    Password = password,
+                    EmployeeId = employeeid,
+                    Department = department,
+                    ProfileText = profile,
+                    Status = status,
+                    CountryId = country,
+                    CityId = city,
+                    Avatar=img,
 
-                use.FirstName = adminVM.UserFirstName;
-                use.LastName = adminVM.UserLastName;
-                use.Email = adminVM.UserEmail;
-                use.Password = adminVM.UserPassword;
-                use.EmployeeId = adminVM.EmployeeId;
-                use.Department = adminVM.Department;
-                use.CityId = adminVM.CityId;
-                use.CountryId = adminVM.CountryId;
-                use.Status = adminVM.Status;
-                use.ProfileText = adminVM.ProfileText;
-
-                _CiPlatformContext.Add(use);
+                };
+                _CiPlatformContext.Users.Add(user);
                 _CiPlatformContext.SaveChanges();
-
             }
 
             else
             {
-                var use= _CiPlatformContext.Users.FirstOrDefault(u => u.UserId== adminVM.UserId);
+                User user= _CiPlatformContext.Users.FirstOrDefault(x=> x.UserId == USERID);
+                user.FirstName = first;
+                user.LastName = last;
+                user.Email = mail;
+                user.Password = password;
+                user.EmployeeId = employeeid;
+                user.Department = department;
+                user.ProfileText = profile;
+                user.Status = status;   
+                user.CountryId= country;
+                user.CityId= city;
+                if (img != null) 
+                {
+                    user.Avatar = img;
+                }
 
-
-                use.FirstName = adminVM.UserFirstName;
-                use.LastName = adminVM.UserLastName;
-                use.Email = adminVM.UserEmail;
-                use.Password = adminVM.UserPassword;
-                use.EmployeeId = adminVM.EmployeeId;
-                use.Department = adminVM.Department;
-                use.CityId = adminVM.CityId;
-                use.CountryId = adminVM.CountryId;
-                use.Status = adminVM.Status;
-                use.ProfileText = adminVM.ProfileText;
-
-                _CiPlatformContext.Update(use);
+                _CiPlatformContext.Update(user);
                 _CiPlatformContext.SaveChanges();
             }
-            //return PartialView("_UserAdmin", adminVM);
-            return RedirectToAction("Index", "Admin");
 
+            return Json("_UserAdmin");
         }
 
-        public IActionResult UserEdit(long id)
+        public IActionResult GetUserData(long USERID)
         {
-            var user= _CiPlatformContext.Users.FirstOrDefault(u=> u.UserId==id);
-            AdminVM adminVM=new AdminVM();
-
-            adminVM.cities = _CiPlatformContext.Cities.ToList();
-            adminVM.countries = _CiPlatformContext.Countries.ToList();
-            adminVM.UserFirstName= user.FirstName;
-            adminVM.UserLastName= user.LastName;
-            adminVM.UserEmail= user.Email;
-            adminVM.UserPassword= user.Password;
-            adminVM.EmployeeId= user.EmployeeId;
-            adminVM.Department= user.Department;
-            adminVM.CityId= user.CityId;
-            adminVM.CountryId= user.CountryId;
-            adminVM.Status= user.Status;
-            adminVM.ProfileText = user.ProfileText;
-
-            return View("Index",adminVM);
-            //return RedirectToAction("Index", "Admin");
-
+            var Data = _CiPlatformContext.Users.FirstOrDefault(x => x.UserId == USERID);
+            return Json(Data);
         }
 
-        public IActionResult UserDelete(long id)
+        public IActionResult UserDelete(long USERID)
         {
-            var user = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == id);
-            user.DeletedAt= DateTime.Now;
+            var user = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == USERID);
+            user.DeletedAt = DateTime.Now;
 
             _CiPlatformContext.Users.Update(user);
             _CiPlatformContext.SaveChanges();
@@ -132,14 +115,6 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return View("Index");
         }
 
-        //Missions
-        public IActionResult _MissionAdmin()
-        {
-            AdminVM adminVM = new AdminVM();
-            adminVM.missions = _CiPlatformContext.Missions.ToList();
-
-            return PartialView("_MissionAdmin", adminVM);
-        }
 
         //CMS
         public IActionResult _CMSAdmin()
@@ -154,7 +129,6 @@ namespace CI_Platform1.Areas.Admin.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         public IActionResult CMSAdd(long CMSId, String Title, String Desc, String Slug, String Status)
@@ -196,37 +170,6 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return Json(Data);
         }
 
-
-        public IActionResult CMSEdit(long id)
-        {
-            AdminVM adminVM = new AdminVM();
-            var cms = _CiPlatformContext.CmsPages.FirstOrDefault(u => u.CmsPageId == id);
-
-            adminVM.Title = cms.Title;
-            adminVM.editor1 = cms.Description;
-            adminVM.Slug= cms.Slug;
-            adminVM.cmsStatus=cms.Status;
-            adminVM.cmsid= id;
-            return View(adminVM);
-        }
-
-
-
-        [HttpPost]
-        public IActionResult CmsPageEdit(AdminVM adminVM, long id)
-        {
-            var cms = _CiPlatformContext.CmsPages.FirstOrDefault(u => u.CmsPageId == adminVM.cmsid);
-
-            cms.Title = adminVM.Title;
-            cms.Description = adminVM.editor1;
-            cms.Slug = adminVM.Slug;
-            cms.Status = adminVM.cmsStatus;
-
-            _CiPlatformContext.CmsPages.Update(cms);
-            _CiPlatformContext.SaveChanges();
-            return RedirectToAction("Index", "Admin");
-        }
-
         public IActionResult CMSDelete(long CMSId)
         {
             var cms = _CiPlatformContext.CmsPages.FirstOrDefault(u => u.CmsPageId == CMSId);
@@ -235,6 +178,15 @@ namespace CI_Platform1.Areas.Admin.Controllers
             _CiPlatformContext.SaveChanges();
 
             return RedirectToAction("Index","Admin");
+        }
+
+        //Missions
+        public IActionResult _MissionAdmin()
+        {
+            AdminVM adminVM = new AdminVM();
+            adminVM.missions = _CiPlatformContext.Missions.ToList();
+
+            return PartialView("_MissionAdmin", adminVM);
         }
 
         //Story
@@ -323,6 +275,48 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return PartialView("_ThemeAdmin", adminVM);
         }
 
+        public IActionResult ThemeAddEdit(long Themeid, string title)
+        {
+            if(Themeid == 0)
+            {
+                MissionTheme missionTheme = new MissionTheme()
+                {
+                    Title = title,
+                };
+
+                _CiPlatformContext.MissionThemes.Add(missionTheme);
+                _CiPlatformContext.SaveChanges();
+            }
+
+            else
+            {
+                MissionTheme missionTheme = _CiPlatformContext.MissionThemes.FirstOrDefault(mt=> mt.MissionThemeId == Themeid); 
+                missionTheme.Title = title;
+
+                _CiPlatformContext.MissionThemes.Update(missionTheme);
+                _CiPlatformContext.SaveChanges();
+            }
+
+            return Json("_CMSAdmin");
+
+        }
+
+        public IActionResult GetThemeData(long Themeid)
+        {
+            var theme = _CiPlatformContext.MissionThemes.FirstOrDefault(t => t.MissionThemeId == Themeid);
+            return Json(theme);
+        }
+
+        public IActionResult ThemeDelete(long id)
+        {
+            var theme = _CiPlatformContext.MissionThemes.FirstOrDefault(t => t.MissionThemeId == id);
+
+            _CiPlatformContext.MissionThemes.Remove(theme);
+            _CiPlatformContext.SaveChanges();
+
+            return RedirectToAction("Index", "Admin");
+        }
+
         //Skill
         public IActionResult _SkillAdmin()
         {
@@ -331,5 +325,56 @@ namespace CI_Platform1.Areas.Admin.Controllers
 
             return PartialView("_SkillAdmin", adminVM);
         }
+
+
+
+
+        //[HttpPost]
+        //public IActionResult _UserAdmin(AdminVM adminVM)
+        //{
+        //    if (adminVM.UserId == 0)
+        //    {
+        //        User use = new User();
+
+        //        use.FirstName = adminVM.UserFirstName;
+        //        use.LastName = adminVM.UserLastName;
+        //        use.Email = adminVM.UserEmail;
+        //        use.Password = adminVM.UserPassword;
+        //        use.EmployeeId = adminVM.EmployeeId;
+        //        use.Department = adminVM.Department;
+        //        use.CityId = adminVM.CityId;
+        //        use.CountryId = adminVM.CountryId;
+        //        use.Status = adminVM.Status;
+        //        use.ProfileText = adminVM.ProfileText;
+
+        //        _CiPlatformContext.Add(use);
+        //        _CiPlatformContext.SaveChanges();
+
+        //    }
+
+        //    else
+        //    {
+        //        var use = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == adminVM.UserId);
+
+
+        //        use.FirstName = adminVM.UserFirstName;
+        //        use.LastName = adminVM.UserLastName;
+        //        use.Email = adminVM.UserEmail;
+        //        use.Password = adminVM.UserPassword;
+        //        use.EmployeeId = adminVM.EmployeeId;
+        //        use.Department = adminVM.Department;
+        //        use.CityId = adminVM.CityId;
+        //        use.CountryId = adminVM.CountryId;
+        //        use.Status = adminVM.Status;
+        //        use.ProfileText = adminVM.ProfileText;
+
+        //        _CiPlatformContext.Update(use);
+        //        _CiPlatformContext.SaveChanges();
+        //    }
+        //    //return PartialView("_UserAdmin", adminVM);
+        //    return RedirectToAction("Index", "Admin");
+
+        //}
+
     }
 }

@@ -17,7 +17,7 @@
     </div>
 
     <div class="end-btn">
-        <button class="btn btn-outline-warning rounded-pill px-3 py-0 me-2" type="button" data-bs-toggle="modal" data-bs-target="#UserModal">
+        <button onclick="nullvalues()" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2" type="button" data-bs-toggle="modal" data-bs-target="#UserModal">
             <i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span>
         </button>
 
@@ -25,108 +25,115 @@
 </div>
 
 <!-- Modal -->
-<form asp-action="_UserAdmin" asp-controller="Admin" asp-area="Admin" method="post">
-    <div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="UserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class" col-12">
+                    <div class="text-center">
+                        <input type="file" id="InputImg" style="display:none;" />
+                        <img id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height:100px; width:100px;" />
+                    </div>
                 </div>
-                <div class="modal-body">
 
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="Action" class="mt-4">First Name</label>
-                            <div>
-                                <input asp-for="UserFirstName" class="col-12" type="text" id="hour" placeholder="Enter First Name" />
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <label for="Action" class="mt-4">Last Name</label>
-                            <div>
-                                <input asp-for="UserLastName" class="col-12" type="text" id="min" placeholder="Enter Last Name" />
-                            </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="Action" class="mt-4">First Name</label>
+                        <div>
+                            <input class="col-12" type="text" id="first" placeholder="Enter First Name" />
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="Action" class="mt-4">Email</label>
-                            <div>
-                                <input asp-for="UserEmail" class="col-12" type="text" id="hour" placeholder="Enter Email" />
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <label for="Action" class="mt-4">Password</label>
-                            <div>
-                                <input asp-for="UserPassword" class="col-12" type="text" id="min" placeholder="Enter Password" />
-                            </div>
+                    <div class="col-6">
+                        <label for="Action" class="mt-4">Last Name</label>
+                        <div>
+                            <input class="col-12" type="text" id="last" placeholder="Enter Last Name" />
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="Action" class="mt-4">Employee Id</label>
-                            <div>
-                                <input asp-for="EmployeeId" class="col-12" type="text" id="hour" placeholder="Enter Employee Id" />
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <label for="Action" class="mt-4">Department</label>
-                            <div>
-                                <input asp-for="Department" class="col-12" type="text" id="min" placeholder="Enter Department" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="mission">Country</label>
-                            <select asp-for="CountryId" class="col-12" id="mis">
-                                @foreach (var country in Model.countries)
-                                {
-                                    <option value="@country.CountryId">@country.Name</option>
-
-                                }
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label for="mission">City</label>
-                            <select asp-for="CityId" class="col-12" id="mis">
-                                @foreach (var city in Model.cities)
-                                {
-                                    <option value="@city.CityId">@city.Name</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="Action" class="mt-4">Profile Text</label>
-                            <div>
-                                <input asp-for="ProfileText" class="col-12" type="text" id="hour" placeholder="Enter Profile Text" />
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <label for="Action" class="mt-4">Status</label>
-                            <div>
-                                <input asp-for="Status" class="col-12" type="text" id="min" placeholder="Enter Status" />
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn oran">Submit</button>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label for="Action" class="mt-4">Email</label>
+                        <div>
+                            <input class="col-12" type="text" id="mail" placeholder="Enter Email" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label for="Action" class="mt-4">Password</label>
+                        <div>
+                            <input class="col-12" type="text" id="password" placeholder="Enter Password" />
+                        </div>
+                    </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label for="Action" class="mt-4">Employee Id</label>
+                        <div>
+                            <input class="col-12" type="text" id="employeeid" placeholder="Enter Employee Id" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label for="Action" class="mt-4">Department</label>
+                        <div>
+                            <input class="col-12" type="text" id="department" placeholder="Enter Department" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label for="mission">Country</label>
+                        <select class="col-12" id="country">
+                            @foreach (var country in Model.countries)
+                            {
+                                <option value="@country.CountryId">@country.Name</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="mission">City</label>
+                        <select class="col-12" id="city">
+                            @foreach (var city in Model.cities)
+                            {
+                                <option value="@city.CityId">@city.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label for="Action" class="mt-4">Profile Text</label>
+                        <div>
+                            <input class="col-12" type="text" id="profile" placeholder="Enter Profile Text" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label for="Action" class="mt-4">Status</label>
+                        <div>
+                            <input class="col-12" type="text" id="status" placeholder="Enter Status" />
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="USERID" value="0" name="CMSId" />
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn oran" onclick="UserAddEdit()" data-bs-dismiss="modal">Submit</button>
             </div>
         </div>
     </div>
-</form>
+</div>
 @*End Of Modal*@
 
 <table id="myTable" class="display">
@@ -155,7 +162,7 @@
 
                 <td>
                     <span>
-                        <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#UserModal" onclick="UserEdit(@user.UserId)">
+                        <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#UserModal" onclick="GetUserData(@user.UserId)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                     </span>
@@ -165,23 +172,45 @@
                         </button>
                     </span>
                 </td>
-
-
             </tr>
         }
     </tbody>
 </table>
 
 <script>
-    function UserEdit(id)
+    function UserAddEdit()
     {
+        var first=$("#first").val();
+        var last=$("#last").val();
+        var mail=$("#mail").val();
+        var password=$("#password").val();
+        var employeeid=$("#employeeid").val();
+        var department=$("#department").val();
+        var country=$("#country").val();
+        var city=$("#city").val();
+        var profile=$("#profile").val();
+        var status=$("#status").val();
+        var USERID=$("#USERID").val();
+        var image=document.getElementById("InputImg").files[0];
+        console.log(image);
+
+        var reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = function (e) {
+
+        var img = e.target.result;
+            console.log(img);
+
+
+
+
         $.ajax({
-            url: '/Admin/Admin/UserEdit',
-            type: 'GET',
-            data: {'id':id },
+            url: '/Admin/Admin/UserAddEdit',
+            type: 'POST',
+            data: {'img':img,'first':first,'last':last, 'mail':mail,'password':password, 'employeeid':employeeid, 'department':department, 'country':country, 'city':city, 'profile':profile,'status':status,'USERID':USERID },
             success: function (res) {
                 console.log(res);
-                $("#UserModal").html($(res).find("#UserModal").html());
+                $("#User").click();
             },
             error: function (res) {
                 console.log(res);
@@ -189,13 +218,78 @@
             }
         });
     }
+    }
+    function GetUserData(USERID)
+    {
+               $.ajax({
+               url: '/Admin/Admin/GetUserData',
+               type: 'GET',
+               data: {'USERID':USERID},
+               success: function (res) {
+                   console.log(res);
+                   $("#first").val(res.firstName);
+                   $("#last").val(res.lastName);
+                   $("#mail").val(res.email);
+                   $("#password").val(res.password);
+                   $("#employeeid").val(res.employeeId);
+                   $("#department").val(res.department);
+                   $("#country").val(res.countryId);
+                   $("#city").val(res.cityId);
+                   $("#profile").val(res.profileText);
+                   $("#status").val(res.status);
+                   $("#USERID").val(res.userId);
+                   
+                  document.getElementById('imgdiv').src = res.avatar;
+                  // const img=document.getElementById('imgdiv')
+                   //img.setAttribute('src','res.avatar');
 
-    function UserDelete(id)
+                   },
+               error: function (res) {
+                   console.log(res);
+                   alert("get Modal error");
+               }
+           });
+
+    }
+
+    function UserDelete(USERID)
     {
         $.ajax({
             url: '/Admin/Admin/UserDelete',
             type: 'GET',
-            data: {'id':id }
+            data: {'USERID':USERID },
+             success: function (res) {
+                console.log(res);
+                $("#User").click();
+            }
         });
     }
+
+    function nullvalues()
+    {
+        $("#first").val('');
+        $("#last").val('');
+        $("#mail").val('');
+        $("#password").val('');
+        $("#employeeid").val('');
+        $("#department").val('');
+        $("#country").val('');
+        $("#city").val('');
+        $("#profile").val('');
+        $("#status").val('');
+        $("#USERID").val('');
+    }
+
+            function FileImg(){
+            $('#InputImg').click();
+        }
+
+        document.getElementById('InputImg').addEventListener("change", e => {
+    const reader = new FileReader(); // Create a new FileReader object
+    reader.onload = function () {
+    document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image
+    }
+    reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
+    });
+
 </script>

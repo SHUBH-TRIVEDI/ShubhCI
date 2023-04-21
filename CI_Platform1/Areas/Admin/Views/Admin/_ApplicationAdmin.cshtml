@@ -68,7 +68,9 @@
             type: 'GET',
             data: {'Missionapplicationid':Missionapplicationid },
             success: function (res) {
-                $("#application").html($(res).find("#application").html());
+                //$("#application").html($(res).find("#application").html());
+                   $("#Application").click();
+
             },
             error: function (res) {
                 alert("error");
@@ -83,7 +85,9 @@
             type: 'GET',
             data: {'Missionapplicationid':Missionapplicationid },
             success: function (res) {
-                $("#application").html($(res).find("#application").html());
+                //$("#application").html($(res).find("#application").html());
+                   $("#Application").click();
+
             },
             error: function (res) {
                 alert("error");

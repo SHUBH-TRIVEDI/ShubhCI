@@ -17,8 +17,35 @@
     </div>
 
     <div class="end-btn">
-        <button class="btn btn-outline-warning rounded-pill px-3 py-0 me-2 shadow-none"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
+        <button data-bs-toggle="modal" data-bs-target="#ThemeModal" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2 shadow-none"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
 
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ThemeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="col-12">
+                    <label>Theme Title</label>
+                    <div>
+                        <input class="col-11" type="text" id="title" />
+                    </div>
+                </div>
+
+                <input type="hidden" id="Themeid" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="ThemeAddEdit()">Save</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -36,11 +63,20 @@
         {
             <tr id="application">
                 <td>@theme.Title</td>
-                <td>@theme.Status</td>
-
+                @*<td>@theme.Status</td>*@
+                <td>
+                    @if (@theme.Status == 1)
+                    {
+                        <span style="color:green">Active</span>
+                    }
+                    else
+                    {
+                        <span style="color:red">Inactive</span>
+                    }
+                    </td>
                 <td>
                     <span>
-                        <button class="btn shadow-none" onclick="ThemeEdit(@theme.MissionThemeId)">
+                        <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#ThemeModal" onclick="GetThemeData(@theme.MissionThemeId)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                     </span>
@@ -56,21 +92,42 @@
 </table>
 
 <script>
-    function ThemeEdit(id)
+    function ThemeAddEdit()
     {
+        var title=$("#title").val();
+        var Themeid=$("#Themeid").val();
+
         $.ajax({
-            url: '/Admin/Admin/ThemeEdit',
+            url: '/Admin/Admin/ThemeAddEdit',
             type: 'GET',
-            data: {'id':id },
+            data: {'title':title, 'Themeid': Themeid},
             success: function (res) {
                 console.log(res);
-                $("#UserModal").html($(res).find("#UserModal").html());
+                $("#theme").click();
             },
             error: function (res) {
-                console.log(res);
-                alert("Modal error");
+                alert("Theme Modal error");
             }
         });
+    }
+
+        function GetThemeData(Themeid)
+        {
+               $.ajax({
+               url: '/Admin/Admin/GetThemeData',
+               type: 'GET',
+               data: {'Themeid':Themeid},
+               success: function (res) {
+                   console.log(res);
+                   $("#title").val(res.title);
+                   $("#Themeid").val(res.missionThemeId);
+                    },
+               error: function (res) {
+                   console.log(res);
+                   alert("get Theme Modal error");
+               }
+           });
+
     }
 
     function ThemeDelete(id)
@@ -78,7 +135,11 @@
         $.ajax({
             url: '/Admin/Admin/ThemeDelete',
             type: 'GET',
-            data: {'id':id }
+            data: {'id':id },
+            success: function (res) {
+                console.log(res);
+                $("#theme").click();
+            }
         });
     }
 </script>

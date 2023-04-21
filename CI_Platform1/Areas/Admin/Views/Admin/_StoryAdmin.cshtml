@@ -76,7 +76,7 @@
             type: 'GET',
             data: {'storyid':storyid },
             success: function (res) {
-                $("#application").html($(res).find("#application").html());
+                   $("#Story").click();
             },
             error: function (res) {
                 alert("error");
@@ -91,7 +91,7 @@
             type: 'GET',
             data: {'storyid':storyid },
             success: function (res) {
-                $("#application").html($(res).find("#application").html());
+                   $("#Story").click();
             },
             error: function (res) {
                 alert("error");
@@ -104,7 +104,12 @@
         $.ajax({
             url: '/Admin/Admin/StoryDelete',
             type: 'GET',
-            data: {'id':id }
+            data: {'id':id },
+             success: function (res) {
+                //$("#application").html($(res).find("#application").html());
+                   $("#Story").click();
+
+            }
         });
     }
 </script>

@@ -6,57 +6,190 @@
     Layout = "_AdminLayout";
 }
 <form asp-action="CMSEdit" asp-controller="Admin" asp-area="Admin">
-<div class="fs-5 bg-dark-subtle border p-3 col-12"> Add</div>
+    <div class="fs-5 bg-dark-subtle border p-3 col-12"> Add</div>
 
-<div class="border ps-4 pb-5">
+    <div class="border" style="height:80vh; overflow-y: auto;">
 
-    <label class="mt-3">Title</label>
-    <div>
-        <input asp-for="Title" class="col-12 " type="text" />
+        <label class="mt-3">Mission Title</label>
+        <div>
+            <input class="col-12 " type="text" />
+        </div>
+
+        <label class="mt-3">Short Description</label>
+        <div>
+            @*<input  class="col-12 " type="text" />*@
+            <textarea class="col-12" rows="2"></textarea>
+        </div>
+
+        <label class="mt-2">Description</label>
+        <div class="col-12 mt-2">
+            <textarea class="col-12" name="editor1"></textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="mt-2">Country</label>
+                <div>
+                    @*<input class="col-11" type="text" />*@
+                    <select class="col-11">
+                        <option>
+                            Country
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mt-2">City</label>
+                <div>
+                    @*<input class="col-11" type="text" />*@
+                    <select class="col-11">
+                        <option>
+                            City
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="mt-3">Mission Organisation Name</label>
+                <div>
+                    <input class="col-11" type="text" />
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label class="mt-3">Mission Organisation Detail</label>
+                <div>
+                    <input class="col-11 " type="text" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="mt-3">Mission Type</label>
+                <select class="col-11">
+                    <option>Time</option>
+                    <option>Goal</option>
+                </select>
+            </div>
+
+            <div class="col-6">
+                <label class="mt-3">Total Seats</label>
+                <div>
+                    <input class="col-11 " placeholder="If Mission Type is Time" type="text" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="mt-3">Mission start date</label>
+                <div>
+                    <input class="col-11" type="date" />
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label class="mt-3">Mission End date</label>
+                <div>
+                    <input class="col-11 " type="date" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="mt-3">Mission registration deadline </label>
+                <div>
+                    <input class="col-11" type="text" />
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label class="mt-3">Mission Availability</label>
+                <div>
+                    <input class="col-11 " type="text" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="mt-2">Mission Theme</label>
+                <div>
+                    <select class="col-11">
+                        <option>
+                            Themes
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="mt-2">Mission Skill</label>
+                <div>
+                    <select class="col-11">
+                        <option>
+                            Skills
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="mt-3">Mission Images </label>
+                <div>
+                    <input class="col-11" type="file" />
+                </div>
+            </div>
+
+            <div class="col-6">
+                <label class="mt-3">Mission Documents</label>
+                <div>
+                    <input class="col-11 " type="file" />
+                </div>
+            </div>
+        </div>
+
+        <label class="mt-3">Mission Video </label>
+        <div>
+            <input class="col-12" type="url" />
+        </div>
+
+
+        <div class="d-flex bd-highlight mb-3">
+
+            <div class="p-2 ms-auto">
+                <button type="button" class="btn btn-outline-secondary px-3 me-auto shadow-none" style="border-radius:22px;">
+                    Cancel
+                </button>
+            </div>
+            <div class="p-2">
+                <button type="submit" onclick="rtp()" class="btn oran px-3 shadow-none">
+                    Save
+                </button>
+            </div>
+        </div>
+
+        @*hidden Field*@
+        <input type="text" class="form-control shadow-none" id="TimesheetId" aria-describedby="emailHelp" hidden />
+
     </div>
 
-    <label class="mt-2">Description</label>
-    <div class="col-12 mt-2">
-        <textarea asp-for="editor1" class="col-12" name="editor1"></textarea>
-    </div>
 
-    <label class="mt-2">Slug</label>
-    <div>
-        <input asp-for="Slug" class="col-12 " type="text" />
-    </div>
 
-    <label class="mt-2">Status</label>
-    <div>
-        <input asp-for="cmsStatus" class="col-12 " type="text" />
-    </div>
-</div>
-
-<input type="text"  class="form-control shadow-none" id="TimesheetId" aria-describedby="emailHelp" hidden />
-
-<div class="d-flex bd-highlight mb-3">
-
-    <div class="p-2 ms-auto">
-        <button type="button"  class="btn btn-outline-secondary px-3 me-auto shadow-none" style="border-radius:22px;">
-            Cancel
-        </button>
-    </div>
-    <div class="p-2">
-        <button type="submit" onclick="rtp()" class="btn oran px-3 shadow-none">
-            Save
-        </button>
-    </div>
-</div>
 </form>
 
 
 <script>
         //ckeditor
     CKEDITOR.replace('editor1');
-
-    function rtp()
-    {
-        document.getElementById("cms").click();
-
-    }
 
 </script>
