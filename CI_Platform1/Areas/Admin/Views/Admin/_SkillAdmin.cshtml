@@ -37,13 +37,18 @@
                     <div>
                         <input class="col-11" type="text" id="title" />
                     </div>
+
+                    <label>Skill Status</label>
+                    <div>
+                        <input class="col-11" placeholder="Type 1 for Active and 0 for Inactive" type="text" id="status" />
+                    </div>
                 </div>
 
                 <input type="hidden" id="SkillId" />
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="ThemeAddEdit()">Save</button>
+                <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn oran" data-bs-dismiss="modal" onclick="SkillAddEdit()">Save</button>
             </div>
         </div>
     </div>
@@ -63,15 +68,25 @@
         {
             <tr id="application">
                 <td>@skill.SkillName</td>
-                <td>@skill.Status</td>
+                @*<td>@skill.Status</td>*@
+                <td>
+                 @if (Convert.ToInt16(@skill.Status) != 0)
+                    {
+                        <span style="color:green">Active</span>
+                    }
+                    else
+                    {
+                        <span style="color:red">Inactive</span>
+                    }
+                    </td>
                 <td>
                     <span>
-                        <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#SkillModal">
+                        <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#SkillModal" onclick="GetSkillData(@skill.SkillId)">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                     </span>
                     <span>
-                        <button class="btn shadow-none">
+                        <button class="btn shadow-none" onclick="SkillDelete(@skill.SkillId)">
                             <i class="bi bi-trash"></i>
                         </button>
                     </span>
@@ -81,16 +96,18 @@
     </tbody>
 </table>
 
-@*<script>
+<script>
     function SkillAddEdit()
     {
+        debugger;
         var title=$("#title").val();
-        var Themeid=$("#SkillId").val();
+        var status=$("#status").val();
+        var SkillId=$("#SkillId").val();
 
         $.ajax({
             url: '/Admin/Admin/SkillAddEdit',
             type: 'GET',
-            data: {'title':title, 'SkillId': SkillId},
+            data: {'title':title, 'status':status,'SkillId': SkillId},
             success: function (res) {
                 console.log(res);
                 $("#skill").click();
@@ -106,11 +123,12 @@
                $.ajax({
                url: '/Admin/Admin/GetSkillData',
                type: 'GET',
-               data: {'Themeid':Themeid},
+               data: {'SkillId':SkillId},
                success: function (res) {
                    console.log(res);
-                   $("#title").val(res.title);
-                   $("#Themeid").val(res.missionThemeId);
+                   $("#title").val(res.skillName);
+                   $("#status").val(res.status);
+                   $("#SkillId").val(res.skillId);
                     },
                error: function (res) {
                    console.log(res);
@@ -120,16 +138,16 @@
 
     }
 
-    function SkillDelete(id)
+    function SkillDelete(SkillId)
     {
         $.ajax({
             url: '/Admin/Admin/SkillDelete',
             type: 'GET',
-            data: {'id':id },
+            data: {'SkillId':SkillId },
             success: function (res) {
                 console.log(res);
                 $("#skill").click();
             }
         });
     }
-</script>*@
+</script>

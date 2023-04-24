@@ -6,17 +6,17 @@
 
 <div class="container">
     @*sort by and explore mission*@
-    <div class="explore-now row me-5">
+    <div class="row me-5 d-flex">
         <div class="col-6 col-md-4 col-sm-4 d-inline">
             <p class="fs-4 ms-5 mt-2">
                <div id="count1"></div>
             </p>
         </div>
 
-        <div class="col-6 col-md-8 col-sm-8 d-flex ms-auto sortby">
+        <div class="col-lg-3 col-md-8 col-sm-8 d-flex ms-auto text-end sortby">
             <div class="dropdown sort nav-item">
-                <select class="dropdown sorted nav-item" onchange="mysearch()" >
-                    <option selected>Sort</option>
+                <select class="dropdown sorted nav-item p-1 mt-3" onchange="mysearch()" >
+                    <option selected>Sort by</option>
                     <option class="dropdown-item" value="1" >Title</option>
                     <option class="dropdown-item" value="2" >Start Date</option>
                     <option class="dropdown-item" value="3">End Date</option>
@@ -26,7 +26,7 @@
                 </select>
             </div>
 
-            <div class="btn-group d-none d-lg-flex ms-auto">
+            <div class="btn-group d-none d-lg-flex ms-5">
                 <button class="btn shadow-none" id="grid" onclick="grid()">
                     <i class="bi bi-grid-1x2-fill fs-5"></i>
                 </button>
@@ -117,7 +117,7 @@
 
 
         function addToFav(missonid) {
-            alert(missonid);
+            //alert(missonid);
             $.ajax({
 
                 type: 'GET',

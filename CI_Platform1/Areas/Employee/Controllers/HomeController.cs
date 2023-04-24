@@ -1018,7 +1018,9 @@ namespace CI_Platform1.Controllers
                 }
                 return RedirectToAction("_Missions", new { id = int.Parse(userId), missionid = missonid });
             }
-            return View();
+            return RedirectToAction("_Missions");
+            return PartialView("_Missions");
+
         }
 
 

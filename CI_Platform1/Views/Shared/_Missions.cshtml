@@ -49,9 +49,8 @@
         color: white;
         /*background-color: rgba(0, 255, 97, 0.6);*/
         background-color: rgba(0, 220, 90, 0.6);
-        border:1px solid rgba(0, 220, 90, 0.6);
-        border-radius:22px 22px 22px 0px;
-
+        border: 1px solid rgba(0, 220, 90, 0.6);
+        border-radius: 22px 22px 22px 0px;
         font-size: 14px;
     }
 
@@ -84,9 +83,9 @@
         bottom: 65px;
         right: 15px;
         /*background-color: rgba(0,0,0,0.5);
-                color: #FFFFFF;
-                border-radius: 15px;
-                padding: 5px 10px;*/
+                    color: #FFFFFF;
+                    border-radius: 15px;
+                    padding: 5px 10px;*/
     }
 
     .top-right {
@@ -273,7 +272,6 @@
         position: absolute;
         bottom: 65px;
         right: 15px;
-
     }
 
     .top-right {
@@ -292,10 +290,10 @@
         background-color: white;
     }
 
-    .login-btn:hover {
-        color: #FFFFFF;
-        background-color: #F88634;
-    }
+        .login-btn:hover {
+            color: #FFFFFF;
+            background-color: #F88634;
+        }
 
     #theme-btn {
         position: absolute;
@@ -313,29 +311,28 @@
 </style>
 
 
-
-
 <div class="filters-section d-flex align-items-end flex-wrap justify-content-start ms-5">
 </div>
 @*card view*@
 <div class="container">
-<div id="count2">Explore  <strong> @ViewBag.TotalMission missions</strong></div>
+    <div id="count2" class="fs-4">Explore  <span class="fw-bolder"> @ViewBag.TotalMission missions</span></div>
     <div class="row">
 
-        <div id="products" class="row view-group d-flex">
+        <div id="products" class="row view-group d-flex ">
             @foreach (var category in Model.missions)
             {
                 var userid = Context.Session.GetString("userID");
                 var seat = Convert.ToInt32(category.Availability) - Convert.ToInt32(Model.missionApplications.Where(e => e.MissionId == category.MissionId).ToList().Count());
 
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
+                    <div class="card shadow">
                         <div class="card-img ">
                             @*<img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />*@
                             <img class="card-img-top h-100 wid" src="@category.Imagepath" style="" />
 
-                           @{ var applied = Model.missionApplications.FirstOrDefault(e => e.MissionId == category.MissionId && e.UserId == Convert.ToInt32(userid));
-                           }
+                            @{
+                                var applied = Model.missionApplications.FirstOrDefault(e => e.MissionId == category.MissionId && e.UserId == Convert.ToInt32(userid));
+                            }
                             @if (applied != null)
                             {
                                 <div class="applied-div">APPLIED</div>

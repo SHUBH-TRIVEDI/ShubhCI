@@ -37,13 +37,18 @@
                     <div>
                         <input class="col-11" type="text" id="title" />
                     </div>
+
+                    <label class="mt-2">Theme Status</label>
+                    <div>
+                        <input class="col-11" placeholder="Type 1 for Active and 0 for Inactive" type="text" id="status" />
+                    </div>
                 </div>
 
                 <input type="hidden" id="Themeid" />
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="ThemeAddEdit()">Save</button>
+                <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn oran" data-bs-dismiss="modal" onclick="ThemeAddEdit()">Save</button>
             </div>
         </div>
     </div>
@@ -73,7 +78,7 @@
                     {
                         <span style="color:red">Inactive</span>
                     }
-                    </td>
+                </td>
                 <td>
                     <span>
                         <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#ThemeModal" onclick="GetThemeData(@theme.MissionThemeId)">
@@ -95,12 +100,13 @@
     function ThemeAddEdit()
     {
         var title=$("#title").val();
+        var status=$("#status").val();
         var Themeid=$("#Themeid").val();
 
         $.ajax({
             url: '/Admin/Admin/ThemeAddEdit',
             type: 'GET',
-            data: {'title':title, 'Themeid': Themeid},
+            data: {'title':title, 'status':status,'Themeid': Themeid},
             success: function (res) {
                 console.log(res);
                 $("#theme").click();
@@ -120,6 +126,7 @@
                success: function (res) {
                    console.log(res);
                    $("#title").val(res.title);
+                   $("#status").val(res.status);
                    $("#Themeid").val(res.missionThemeId);
                     },
                error: function (res) {

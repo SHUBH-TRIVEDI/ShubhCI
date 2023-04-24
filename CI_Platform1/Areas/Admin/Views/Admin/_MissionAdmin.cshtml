@@ -17,12 +17,198 @@
     </div>
 
     <div class="end-btn">
-        <a asp-action="CMSAdd" asp-controller="Admin" asp-area="Admin"> 
-        <button class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
-        </a>
+        @*<a asp-action="CMSAdd" asp-controller="Admin" asp-area="Admin"> </a>*@
+        <button data-bs-toggle="modal" data-bs-target="#MissionModal" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
+
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="MissionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <div>
+
+                    <label class="mt-3">Mission Title</label>
+                    <div>
+                        <input id="title" class="col-12" type="text" />
+                    </div>
+
+                    <label class="mt-3">Short Description</label>
+                    <div>
+                        <textarea id="shortdesc" class="col-12" rows="2"></textarea>
+                    </div>
+
+                    <label class="mt-2">Description</label>
+                    <div class="col-12 mt-2">
+                        <textarea id="description" class="col-12" name="editor1"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="mt-2">Country</label>
+                            <div>
+                                <select class="col-12" id="country">
+                                    @foreach (var country in Model.countries)
+                                    {
+                                        <option value="@country.CountryId">@country.Name</option>
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="mt-2">City</label>
+                            <div>
+                                <select class="col-12" id="city">
+                                    @foreach (var city in Model.cities)
+                                    {
+                                        <option value="@city.CityId">@city.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="mt-3">Mission Organisation Name</label>
+                            <div>
+                                <input id="orgname" class="col-11" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <label class="mt-3">Mission Organisation Detail</label>
+                            <div>
+                                <input id="orgdetail" class="col-11 " type="text" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="mt-3">Mission Type</label>
+                            <select id="misstype" class="col-11">
+                                <option>Time</option>
+                                <option>Goal</option>
+                            </select>
+                        </div>
+
+                        <div class="col-6">
+                            <label class="mt-3">Total Seats</label>
+                            <div>
+                                <input id="seats" class="col-11 " placeholder="If Mission Type is Time" type="text" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="mt-3">Mission start date</label>
+                            <div>
+                                <input id="start" class="col-11" type="date" />
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <label class="mt-3">Mission End date</label>
+                            <div>
+                                <input id="end" class="col-11 " type="date" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="mt-3">Mission registration deadline </label>
+                            <div>
+                                <input id="deadline" class="col-11" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <label class="mt-3">Mission Availability</label>
+                            <div>
+                                <input  id="avail" class="col-11 " type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="mt-2">Mission Theme</label>
+                            <div>
+                                <select id="themeid"  class="col-11">
+                                    @foreach(var item in Model.missionThemes)
+                                    {
+                                    <option value="@item.MissionThemeId">
+                                        @item.Title
+                                    </option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="mt-2">Mission Skill</label>
+                            <div>
+                                <select id="skill" class="col-11">
+                                    @foreach(var skill in Model.skills)
+                                    {
+                                    <option value="@skill.SkillId">@skill.SkillName</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="mt-3">Mission Images </label>
+                            <div>
+                                <input class="col-11" type="file" />
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <label class="mt-3">Mission Documents</label>
+                            <div>
+                                <input class="col-11 " type="file" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="mt-3">Mission Video </label>
+                    <div>
+                        <input id="video" class="col-12" type="url" />
+                    </div>
+
+                    @*hidden Field*@
+                    <input type="text" class="form-control shadow-none" id="MISSIONID" aria-describedby="emailHelp" hidden />
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn border-secondary rounded-pill " data-bs-dismiss="modal">Close</button>
+                <button onclick="MissionAddEdit()" type="button" class="btn oran" data-bs-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <table id="myTable" class="display">
     <thead>
@@ -46,12 +232,12 @@
 
                 <td>
                     <span>
-                        <button class="btn shadow-none">
+                        <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#MissionModal" onclick="GetMissionData(@mission.MissionId) ">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                     </span>
                     <span>
-                        <button class="btn shadow-none">
+                        <button class="btn shadow-none" onclick="MissionDelete(@mission.MissionId)">
                             <i class="bi bi-trash"></i>
                         </button>
                     </span>
@@ -62,5 +248,93 @@
         }
     </tbody>
 </table>
+
+
+<script>
+
+    function MissionAddEdit()
+    {
+        var title=$("#title").val();
+        var shortdesc=$("#shortdesc").val();
+        var description=$("#description").val();
+        var country=$("#country").val();
+        var city=$("#city").val();
+        var orgname=$("#orgname").val();
+        var orgdetail=$("#orgdetail").val();
+        var misstype=$("#misstype").val();
+        var themeid=$("#themeid").val();
+        //var seats=$("#seats").val();
+        var start=$("#start").val();
+        var end=$("#end").val();
+        //var deadline=$("#deadline").val();
+        var avail=$("#avail").val();
+        var skill=$("#skill").val();
+        var video=$("#video").val();
+        var MISSIONID=$("#MISSIONID").val();
+
+          $.ajax({
+            url: '/Admin/Admin/MissionAddEdit',
+            type: 'POST',
+            data: {'title':title,'shortdesc':shortdesc,'description':description, 'orgname':orgname,'orgdetail':orgdetail, 'misstype':misstype, 
+            'themeid':themeid, 'country':country, 'city':city,'end':end,'start':start, 'avail':avail,  'MISSIONID':MISSIONID, 'skill':skill},
+            success: function (res) {
+                console.log(res);
+                $("#mission").click();
+            },
+            error: function (res) {
+                console.log(res);
+                alert("Modal error");
+            }
+        });
+    }
+
+
+    function GetMissionData(MISSIONID)
+    {
+               $.ajax({
+               url: '/Admin/Admin/GetMissionData',
+               type: 'GET',
+               data: {'MISSIONID':MISSIONID},
+               success: function (res) {
+                   console.log(res);
+                   $("#title").val(res.title);
+                   $("#shortdesc").val(res.shortDescription);
+                   $("#description").val(res.description);
+                   $("#country").val(res.countryId);
+                   $("#city").val(res.cityId);
+                   $("#orgname").val(res.organizationName);
+                   $("#orgdetail").val(res.organizationDetail);
+                   $("#misstype").val(res.missionType);
+                   $("#themeid").val(res.themeId);
+                   $("#start").val(res.startDate);
+                   $("#end").val(res.endDate);
+                   $("#avail").val(res.availability);
+                   //$("#skill").val(res.userId);
+                   //$("#video").val(res.userId);
+                   $("#MISSIONID").val(res.missionId);
+                   
+                   },
+               error: function (res) {
+                   console.log(res);
+                   alert("Mission Modal error");
+               }
+           });
+
+    }
+
+        function MissionDelete(MISSIONID)
+    {
+        $.ajax({
+            url: '/Admin/Admin/MissionDelete',
+            type: 'GET',
+            data: {'MISSIONID':MISSIONID },
+             success: function (res) {
+                console.log(res);
+                $("#mission").click();
+            }
+        });
+    }
+
+</script>
 
 

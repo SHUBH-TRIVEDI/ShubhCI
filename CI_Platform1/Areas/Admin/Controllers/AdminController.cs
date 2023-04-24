@@ -56,6 +56,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
             {
                 User user = new User()
                 {
+                    
                     FirstName = first,
                     LastName = last,
                     Email = mail,
@@ -184,9 +185,104 @@ namespace CI_Platform1.Areas.Admin.Controllers
         public IActionResult _MissionAdmin()
         {
             AdminVM adminVM = new AdminVM();
-            adminVM.missions = _CiPlatformContext.Missions.ToList();
+            adminVM.missions = _CiPlatformContext.Missions.Where(u => u.DeletedAt == null).ToList();
+            adminVM.cities = _CiPlatformContext.Cities.ToList();
+            adminVM.countries = _CiPlatformContext.Countries.ToList();
+            adminVM.skills = _CiPlatformContext.Skills.ToList();
+            adminVM.missionThemes = _CiPlatformContext.MissionThemes.ToList();
 
             return PartialView("_MissionAdmin", adminVM);
+        }
+
+        public IActionResult MissionAddEdit(string title, string shortdesc, string description,string orgname, int country, int city,string orgdetail,
+            string misstype,int themeid, DateTime start , DateTime end, string avail,  int MISSIONID,int skill)
+        {
+
+            if(MISSIONID==0)
+            {
+                Mission mission = new Mission()
+                {
+                    Title = title,
+                    ShortDescription = shortdesc,
+                    Description= description,
+                    OrganizationName = orgname,
+                    OrganizationDetail= orgdetail,
+                    CountryId=country,
+                    CityId= city,
+                    MissionType=misstype,
+                    ThemeId= themeid,
+                    StartDate=start,
+                    EndDate=end,
+                    Availability= avail,
+                };
+                _CiPlatformContext.Missions.Add(mission);
+                _CiPlatformContext.SaveChanges();
+
+                MissionSkill missionSkill = new MissionSkill()
+                {
+                    MissionSkillId = skill,
+                };
+                _CiPlatformContext.MissionSkills.Add(missionSkill);
+                _CiPlatformContext.SaveChanges();
+            }
+
+            else
+            {
+                var mission = _CiPlatformContext.Missions.FirstOrDefault(miss => miss.MissionId == MISSIONID);
+                //var skills= _CiPlatformContext.MissionSkills.FirstOrDefault(skill=> skill.SkillId==)
+
+                mission.Title= title;
+                mission.ShortDescription= shortdesc;    
+                mission.Description= description;
+                mission.OrganizationName= orgname;
+                mission.OrganizationDetail= orgdetail;
+                mission.CountryId= country;
+                mission.CityId= city;
+                mission.MissionType= misstype;
+                mission.ThemeId= themeid;
+                mission.StartDate= start;
+                mission.EndDate= end;
+                mission.Availability= avail;
+
+                _CiPlatformContext.Missions.Update(mission);
+                _CiPlatformContext.SaveChanges();
+            }
+
+            return Json("_MissionAdmin");
+
+
+        }
+
+        public IActionResult MissionDelete(long MISSIONID)
+        {
+            var mission = _CiPlatformContext.Missions.FirstOrDefault(miss => miss.MissionId == MISSIONID);
+            mission.DeletedAt = DateTime.Now;
+
+
+            var goal = _CiPlatformContext.GoalMissions.Where(miss => miss.MissionId == MISSIONID).ToList();
+            foreach(var i in goal)
+            {
+                i.DeletedAt = DateTime.Now;
+            }
+
+            var favrouite = _CiPlatformContext.FavoriteMissions.Where(miss => miss.MissionId == MISSIONID);
+            foreach(var i in favrouite)
+            {
+                i.DeletedAt= DateTime.Now;
+            }
+
+            _CiPlatformContext.Missions.Update(mission);
+            _CiPlatformContext.SaveChanges();
+
+            return RedirectToAction("Index", "Admin");
+
+        }
+
+        public IActionResult GetMissionData(long MISSIONID)
+        {
+            var mission= _CiPlatformContext.Missions.FirstOrDefault(miss=> miss.MissionId == MISSIONID);
+            return Json(mission);
+
         }
 
         //Story
@@ -275,13 +371,14 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return PartialView("_ThemeAdmin", adminVM);
         }
 
-        public IActionResult ThemeAddEdit(long Themeid, string title)
+        public IActionResult ThemeAddEdit(long Themeid, string title,byte status)
         {
             if(Themeid == 0)
             {
                 MissionTheme missionTheme = new MissionTheme()
                 {
                     Title = title,
+                    Status=status,
                 };
 
                 _CiPlatformContext.MissionThemes.Add(missionTheme);
@@ -292,6 +389,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
             {
                 MissionTheme missionTheme = _CiPlatformContext.MissionThemes.FirstOrDefault(mt=> mt.MissionThemeId == Themeid); 
                 missionTheme.Title = title;
+                missionTheme.Status = status;
 
                 _CiPlatformContext.MissionThemes.Update(missionTheme);
                 _CiPlatformContext.SaveChanges();
@@ -326,55 +424,50 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return PartialView("_SkillAdmin", adminVM);
         }
 
+        public IActionResult SkillAddEdit(string status, string title, long SkillId)
+        {
+            if (SkillId == 0)
+            {
+                Skill skills = new Skill()
+                {
+                    Status = status,
+                    SkillName = title,
+                };
+                _CiPlatformContext.Skills.Add(skills);
+            }
+
+            else
+            {
+                var skill= _CiPlatformContext.Skills.FirstOrDefault(u=> u.SkillId == SkillId);
+
+                skill.Status = status;
+                skill.SkillName= title;
+
+                _CiPlatformContext.Skills.Update(skill);
+
+            }
+            _CiPlatformContext.SaveChanges();
+
+            return Json("_SkillAdmin");
 
 
+        }
 
-        //[HttpPost]
-        //public IActionResult _UserAdmin(AdminVM adminVM)
-        //{
-        //    if (adminVM.UserId == 0)
-        //    {
-        //        User use = new User();
+        public IActionResult GetSkillData(long SkillId)
+        {
+            var skill = _CiPlatformContext.Skills.FirstOrDefault(u => u.SkillId == SkillId);
+            return Json(skill);
+        }
 
-        //        use.FirstName = adminVM.UserFirstName;
-        //        use.LastName = adminVM.UserLastName;
-        //        use.Email = adminVM.UserEmail;
-        //        use.Password = adminVM.UserPassword;
-        //        use.EmployeeId = adminVM.EmployeeId;
-        //        use.Department = adminVM.Department;
-        //        use.CityId = adminVM.CityId;
-        //        use.CountryId = adminVM.CountryId;
-        //        use.Status = adminVM.Status;
-        //        use.ProfileText = adminVM.ProfileText;
+        public IActionResult SkillDelete(long SkillId)
+        {
+            var skill = _CiPlatformContext.Skills.FirstOrDefault(u => u.SkillId == SkillId);
 
-        //        _CiPlatformContext.Add(use);
-        //        _CiPlatformContext.SaveChanges();
+            _CiPlatformContext.Skills.Remove(skill);
+            _CiPlatformContext.SaveChanges();
 
-        //    }
-
-        //    else
-        //    {
-        //        var use = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == adminVM.UserId);
-
-
-        //        use.FirstName = adminVM.UserFirstName;
-        //        use.LastName = adminVM.UserLastName;
-        //        use.Email = adminVM.UserEmail;
-        //        use.Password = adminVM.UserPassword;
-        //        use.EmployeeId = adminVM.EmployeeId;
-        //        use.Department = adminVM.Department;
-        //        use.CityId = adminVM.CityId;
-        //        use.CountryId = adminVM.CountryId;
-        //        use.Status = adminVM.Status;
-        //        use.ProfileText = adminVM.ProfileText;
-
-        //        _CiPlatformContext.Update(use);
-        //        _CiPlatformContext.SaveChanges();
-        //    }
-        //    //return PartialView("_UserAdmin", adminVM);
-        //    return RedirectToAction("Index", "Admin");
-
-        //}
+            return Json("_SkillAdmin");
+        }
 
     }
 }
