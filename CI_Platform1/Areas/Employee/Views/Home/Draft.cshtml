@@ -25,9 +25,9 @@
                             <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
                              class="card-img-top missionimg" alt="...">
                             @*}*@
-
+                            @*href="/Home/Storyshare?storyId=@item.StoryId"*@
                             <button class="btn cardbtn btn-view" onclick="viewdetails()">
-                                <a href="/Home/Storyshare?storyId=@item.StoryId" class="text-decoration-none text-black">Edit </a><i class="bi bi-arrow-right ms-2 mt-3 "></i>
+                                <a asp-action="Storyshare" asp-controller="Home" asp-area="Employee" asp-route-id="@item.StoryId" class="text-decoration-none text-black">Edit </a><i class="bi bi-arrow-right ms-2 mt-3 "></i>
                             </button>
                             <div class="rule" style="margin-top:-20px !important;">
                                 <hr>
@@ -44,7 +44,7 @@
 
 
                         <div class="col column2">
-                            <img src="../Images/volunteer4.png" class="rounded-circle me-1"
+                            <img src="~/images/volunteer7.png" class="rounded-circle me-1"
                              style="height:30px;width:30px" />
                         </div>
                     </div>

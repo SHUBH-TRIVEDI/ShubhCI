@@ -7,18 +7,31 @@ html {
     border-color: black !important;
 }
 
+.form-check-input {
+    box-shadow: none !important;
+    border-color: black !important;
+}
+
+.page-item.active .page-link {
+    background-color: #F88634 !important;
+    border-color: #F88634 !important;
+    color: white !important;
+}
+
+.back {
+    background-color: white;
+    border: none;
+    color: gray !important;
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+    border-color: black !important;
+}
+
 .btn {
     box-shadow: none !important;
 }
-
-/*coworker {
-    style ="position: relative;top: -5px;bottom: 0px;right: 10px;"
-}*/
-
-/*input:focus {*/
-    /*border-color:*/ /* rgb(118, 118, 118);*/ /*rgb(133, 133, 133));*/
-    /*border-color:red !important;
-}*/
 
 .button:focus {
     outline: none;
@@ -33,12 +46,6 @@ html {
     width: 100%;
     position: fixed;
     z-index: 100;
-}
-
-.back {
-    background-color: #fd7e14;
-    border: none;
-    color: white;
 }
 
 .brd {

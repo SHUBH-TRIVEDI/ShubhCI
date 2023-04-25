@@ -20,12 +20,17 @@ namespace CI_Project.Repository.Repository
 
         public List<User> users()
         {
-            return _CiPlatformContext.Users.ToList();
+            return _CiPlatformContext.Users.Where(u => u.DeletedAt == null).ToList();
+        }
+
+        public List<Skill> skills()
+        {
+            return _CiPlatformContext.Skills.ToList();
         }
 
         public List<Mission> missions()
         {
-            return _CiPlatformContext.Missions.ToList();
+            return _CiPlatformContext.Missions.Where(u=> u.DeletedAt == null).ToList();
         }
 
 

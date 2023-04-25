@@ -2,13 +2,13 @@
 @model StoryShareVM
 
 @{
-    Pager pager = new Pager();
-    int pageNo = 0;
-    //int jpg = 0;
-    if (ViewBag.Pager != null)
-    {
-        pager = ViewBag.Pager;
-        pageNo = pager.CurrentPage;
+    Pager pager = new Pager();
+    int pageNo = 0;
+    //int jpg = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
     }
 }
 
@@ -35,10 +35,15 @@
 
 
     <div id="storyList">
-        
+
     </div>
 
-
+    <hr />
+<div class="container ">
+    <div class="text-secondary ">
+        <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+    </div>
+</div>
 
 
 <script>

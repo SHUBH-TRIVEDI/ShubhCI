@@ -83,9 +83,9 @@
         bottom: 65px;
         right: 15px;
         /*background-color: rgba(0,0,0,0.5);
-                    color: #FFFFFF;
-                    border-radius: 15px;
-                    padding: 5px 10px;*/
+                                color: #FFFFFF;
+                                border-radius: 15px;
+                                padding: 5px 10px;*/
     }
 
     .top-right {
@@ -308,6 +308,16 @@
         padding: 8px;
         border-radius: 20px
     }
+
+    .top-left-closed {
+        position: absolute;
+        top: 15px;
+        left: 0px;
+        background-color: #F88634;
+        color: #FFFFFF;
+        border-radius: 0px 15px 15px 0px;
+        padding: 5px 12px;
+    }
 </style>
 
 
@@ -332,18 +342,22 @@
 
                             @{
                                 var applied = Model.missionApplications.FirstOrDefault(e => e.MissionId == category.MissionId && e.UserId == Convert.ToInt32(userid));
+                                var closed = Model.missions.FirstOrDefault(e => e.MissionId == category.MissionId);
+
                             }
                             @if (applied != null)
                             {
                                 <div class="applied-div">APPLIED</div>
                             }
 
-                            @if (category.EndDate < DateTime.Now && category.MissionType.Equals("TIME"))
+
+                            @if (closed.EndDate < DateTime.Now)
                             {
                                 <div class="top-left-closed">
                                     CLOSED
                                 </div>
                             }
+
 
                             <div class="pin d-flex align-items-center px-2 py-1 ">
                                 <img src="~/Images/pin.png" alt="location">

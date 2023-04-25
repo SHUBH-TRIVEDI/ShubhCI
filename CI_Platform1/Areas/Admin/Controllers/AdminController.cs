@@ -34,7 +34,9 @@ namespace CI_Platform1.Areas.Admin.Controllers
         public IActionResult Index()
         {
             AdminVM adminVM = new AdminVM();
-            adminVM.users = _CiPlatformContext.Users.ToList();
+            adminVM.users = _CiPlatformContext.Users.Where(u => u.DeletedAt == null).ToList();
+            adminVM.countries = _CiPlatformContext.Countries.ToList();
+            adminVM.cities = _CiPlatformContext.Cities.ToList();
             return View(adminVM);
         }
 
@@ -87,6 +89,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
                 user.Status = status;   
                 user.CountryId= country;
                 user.CityId= city;
+                user.UpdatedAt = DateTime.Now;
                 if (img != null) 
                 {
                     user.Avatar = img;
@@ -109,6 +112,8 @@ namespace CI_Platform1.Areas.Admin.Controllers
         {
             var user = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == USERID);
             user.DeletedAt = DateTime.Now;
+
+
 
             _CiPlatformContext.Users.Update(user);
             _CiPlatformContext.SaveChanges();
@@ -243,6 +248,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
                 mission.StartDate= start;
                 mission.EndDate= end;
                 mission.Availability= avail;
+                mission.UpdatedAt=DateTime.Now;
 
                 _CiPlatformContext.Missions.Update(mission);
                 _CiPlatformContext.SaveChanges();
@@ -390,6 +396,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
                 MissionTheme missionTheme = _CiPlatformContext.MissionThemes.FirstOrDefault(mt=> mt.MissionThemeId == Themeid); 
                 missionTheme.Title = title;
                 missionTheme.Status = status;
+                missionTheme.UpdatedAt = DateTime.Now;
 
                 _CiPlatformContext.MissionThemes.Update(missionTheme);
                 _CiPlatformContext.SaveChanges();
@@ -442,6 +449,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
 
                 skill.Status = status;
                 skill.SkillName= title;
+                skill.UpdatedAt = DateTime.Now;
 
                 _CiPlatformContext.Skills.Update(skill);
 
@@ -467,6 +475,34 @@ namespace CI_Platform1.Areas.Admin.Controllers
             _CiPlatformContext.SaveChanges();
 
             return Json("_SkillAdmin");
+        }
+
+        //Banner Management
+
+        public IActionResult _BannerAdmin()
+        {
+            AdminVM adminVM = new AdminVM();
+            adminVM.banners = _CiPlatformContext.Banners.ToList();
+
+            return PartialView("_BannerAdmin", adminVM);
+        }
+
+        public IActionResult BannerAddEdit(long BANNERID, string bannertext, int order, IFormFile fileInput)
+        {
+            if(BANNERID ==0)
+            {
+                Banner banner = new Banner()
+                { 
+                    //Image= fileInput,
+                    Text =bannertext,
+                    SortOrder = order,
+                };
+
+                _CiPlatformContext.Banners.Add(banner);
+                _CiPlatformContext.SaveChanges();
+            }
+
+            return Json("_BannerAdmin");
         }
 
     }

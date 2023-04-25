@@ -19,10 +19,10 @@
                     <option selected>Sort by</option>
                     <option class="dropdown-item" value="1" >Title</option>
                     <option class="dropdown-item" value="2" >Start Date</option>
-                    <option class="dropdown-item" value="3">End Date</option>
+                    <option class="dropdown-item" value="3">Start Date Desc</option>
                     <option class="dropdown-item" value="4">Availbility</option>
                     <option class="dropdown-item" value="5">Theme</option>
-                    <option class="dropdown-item" value="6">Favrouite</option>
+                    @*<option class="dropdown-item" value="6">Favrouite</option>*@
                 </select>
             </div>
 
@@ -243,4 +243,19 @@
         $('#list-products').addClass('d-none');
         $('#list-products').removeClass('d-flex');
     }
+
+    function detectScreenSize() {
+// Get the width of the screen
+var screenWidth = window.innerWidth;
+
+// If the screen width is less than 1050 pixels
+if (screenWidth < 992) {
+// Get a reference to the button
+var myButton = document.getElementById("list");
+
+// Trigger a click event on the button
+myButton.click();
+}
+}
+window.addEventListener("resize", detectScreenSize);
 </script>

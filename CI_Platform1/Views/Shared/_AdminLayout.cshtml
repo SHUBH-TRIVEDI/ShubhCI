@@ -17,7 +17,7 @@
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
-    <div id=preloader></div>
+    @*<div id=preloader></div>*@
 
     <div class="container-fluid">
         <div class="row">
@@ -75,7 +75,7 @@
                     </li>
 
                     <li class="list-group-item row back row">
-                        <a href="#" class="row">
+                        <a href="#" id="banner" data-partial-view-url="/Admin/Admin/_BannerAdmin" class="row">
                             <i class="bi bi-border-style symbol fs-4 col-3 text-end "></i>
                             <span class="ms-3 d-lg-block d-md-none d-sm-none col-8">Banner Management</span>
                         </a>
@@ -193,6 +193,7 @@
                 </nav>
 
                 <div id="PartialView">
+                    @*<partial name="_UserAdmin"/>*@
                 </div>
 
                 <div class="mt-5">
@@ -215,6 +216,8 @@
 
 
     <script>
+            var table = new DataTable('#myTable');
+
              $(function() {
                  $("li").click(function(e) {
                      e.preventDefault();

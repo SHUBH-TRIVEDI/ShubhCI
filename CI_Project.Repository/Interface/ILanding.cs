@@ -13,6 +13,8 @@ namespace CI_Project.Repository.Interface
 
         public List<Mission> missions();
 
+        public List<Skill> skills();
+
         public List<MissionRating> missionRatings();
 
         public List<City> city();

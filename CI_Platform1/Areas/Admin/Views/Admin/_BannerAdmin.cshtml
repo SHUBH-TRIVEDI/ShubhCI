@@ -1,0 +1,202 @@
+﻿@using CI_Entities1.Models.ViewModel
+@model AdminVM
+<script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+
+<div class="fs-4">
+    Banner Management
+</div>
+
+<div class="row mt-1">
+    <hr class="col-2" style="border: 2px solid black;">
+    <hr class="col-10 ">
+</div>
+
+<div class="button-row mb-3">
+    <div class=" start-btn">
+
+        <input class="form-control me-2" id="myInputTextField" type="search" placeholder="Search" aria-label="Search">
+    </div>
+
+    <div class="end-btn">
+        <button data-bs-toggle="modal" data-bs-target="#BannerModal" onclick="nullvalues()" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="BannerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label class="mt-2">Banner Text</label>
+                <div class="col-12 mt-2">
+                    <textarea class="col-12" name="editor1" id="bannertext"></textarea>
+                </div>
+
+                <label class="mt-2">Sort Order</label>
+                <div>
+                    <input class="col-12 " type="number" id="order" />
+                </div>
+
+                <label class="mt-2 mb-1">Image</label>
+                <div>
+                    <input type="file" id="InputImg" style="display:none;" />
+                    <div onclick="ClickImage()" class="border-4 p-2 col-3">Upload Image</div>
+                </div>
+
+            </div>
+
+            <input type="hidden" id="BANNERID" value="0" name="CMSId" />
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn oran" onclick="BannerAddEdit()" data-bs-dismiss="modal">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@*End of Modal*@
+
+<table id="myTable" class="display">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Sort Order</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var banner in Model.banners)
+        {
+            <tr>
+                <td>@banner.Image</td>
+                <td>@banner.Text</td>
+                <td>@banner.SortOrder</td>
+
+                <td>
+                    <span>
+                        <button data-bs-toggle="modal" data-bs-target="#AddModal" class="btn shadow-none" onclick="GetCmsData(@banner.BannerId)">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+
+                    </span>
+                    <span>
+                        <button class="btn shadow-none" onclick="DeleteCMS(@banner.BannerId)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    function ClickImage(){
+        $('#InputImg').click();
+    }
+
+    
+        document.getElementById('InputImg').addEventListener("change", e => {
+    const reader = new FileReader(); // Create a new FileReader object
+    reader.onload = function () {
+    document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image
+    }
+    reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
+    });
+</script>
+
+@*<script>
+    function BannerAddEdit()
+    {
+        var bannertext=$("#bannertext").val();
+        var order=$("#order").val();
+        //var InputImg=$("#InputImg").val();
+        var BANNERID=$("#BANNERID").val();
+
+      //var fileInput = document.getElementById('InputImg');
+      //var file = fileInput.files[0];
+      //var formData = new FormData();
+      //formData.append('file', file);
+      var myfile= document.getElementById("InputImg");
+       var formData = new FormData();
+       console.log(formData);
+       console.log(myfile.files);
+       if (myfile.files.length > 0) {
+           for (var i = 0; i < myfile.files.length; i++) {
+               formData.append('file-' + i, myfile.files[i]);
+           }
+       }
+
+
+    $.ajax({
+    url: '/Admin/Admin/BannerAddEdit',
+    type: 'POST',
+    data: {'BANNERID':BANNERID,'formData':formData , 'bannertext':bannertext, 'order': order, 'InputImg': InputImg  },
+    success: function (res) {
+    $("#banner").click();
+    },
+    error: function (res) {
+    console.log(res);
+    alert("Banner Modal error");
+    }
+    });
+    }
+
+    function GetCmsData(CMSId){
+    $.ajax({
+    url: '/Admin/Admin/GetCMSData',
+    type: 'GET',
+    data: {'CMSId':CMSId},
+    success: function (res) {
+    //console.log(res);
+    //$("#UserModal").html($(res).find("#UserModal").html());
+    $("#Title").val(res.title);
+    $("#Desc").val(res.description);
+    $("#Slug").val(res.slug);
+    $("#Status").val(res.status);
+    $("#CMSId").val(res.cmsPageId);
+    },
+    error: function (res) {
+    console.log(res);
+    alert("Modal error");
+    }
+    });
+    }
+
+    function DeleteCMS(CMSId)
+    {
+    $.ajax({
+    url: '/Admin/Admin/CMSDelete',
+    type: 'GET',
+    data: {'CMSId':CMSId},
+    success: function (res) {
+    $("#cms").click();
+    },
+    error: function (res) {
+    console.log(res);
+    alert("Modal error");
+    }
+    });
+    }
+
+    function nullvalues()
+    {
+    document.getElementById("Title").value ="";
+    document.getElementById("Desc").value ="";
+    document.getElementById("Slug").value ="";
+    document.getElementById("Status").value ="";
+    document.getElementById("CMSId").value ="";
+    }
+
+    CKEDITOR.replace('editor1');
+
+</script>*@

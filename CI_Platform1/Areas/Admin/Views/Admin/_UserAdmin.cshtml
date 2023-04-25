@@ -37,7 +37,7 @@
                 <div class" col-12">
                     <div class="text-center">
                         <input type="file" id="InputImg" style="display:none;" />
-                        <img id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height:100px; width:100px;" />
+                        <img  onclick="FileImg()" class="imgDiv rounded-circle mt-5" style="height:100px; width:100px;" />
                     </div>
                 </div>
 
@@ -191,23 +191,11 @@
         var profile=$("#profile").val();
         var status=$("#status").val();
         var USERID=$("#USERID").val();
-        var image=document.getElementById("InputImg").files[0];
-        console.log(image);
-
-        var reader = new FileReader();
-        reader.readAsDataURL(image);
-        reader.onload = function (e) {
-
-        var img = e.target.result;
-            console.log(img);
-
-
-
 
         $.ajax({
             url: '/Admin/Admin/UserAddEdit',
             type: 'POST',
-            data: {'img':img,'first':first,'last':last, 'mail':mail,'password':password, 'employeeid':employeeid, 'department':department, 'country':country, 'city':city, 'profile':profile,'status':status,'USERID':USERID },
+            data: {'first':first,'last':last, 'mail':mail,'password':password, 'employeeid':employeeid, 'department':department, 'country':country, 'city':city, 'profile':profile,'status':status,'USERID':USERID },
             success: function (res) {
                 console.log(res);
                 $("#User").click();
@@ -217,7 +205,6 @@
                 alert("Modal error");
             }
         });
-    }
     }
     function GetUserData(USERID)
     {
@@ -238,11 +225,6 @@
                    $("#profile").val(res.profileText);
                    $("#status").val(res.status);
                    $("#USERID").val(res.userId);
-                   
-                  document.getElementById('imgdiv').src = res.avatar;
-                  // const img=document.getElementById('imgdiv')
-                   //img.setAttribute('src','res.avatar');
-
                    },
                error: function (res) {
                    console.log(res);
@@ -251,7 +233,6 @@
            });
 
     }
-
     function UserDelete(USERID)
     {
         $.ajax({
@@ -279,17 +260,5 @@
         $("#status").val('');
         $("#USERID").val('');
     }
-
-            function FileImg(){
-            $('#InputImg').click();
-        }
-
-        document.getElementById('InputImg').addEventListener("change", e => {
-    const reader = new FileReader(); // Create a new FileReader object
-    reader.onload = function () {
-    document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image
-    }
-    reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
-    });
 
 </script>

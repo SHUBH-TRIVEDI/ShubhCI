@@ -1,6 +1,13 @@
 ﻿@using CI_Entities1.Models.ViewModel
 @model StoryShareVM
 <partial name="Navbar1" />
+<style>
+    .yover {
+        height: 550px;
+        overflow-y: auto;
+    }
+</style>
+
 
 <div class="container">
     <div class="mt-5 fs-3">
@@ -85,49 +92,49 @@
                 </div>
 
             </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Mission</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Hours</th>
-                        <th scope="col">Minutes</th>
-                        <th scope="col"> </th>
-                        <th scope="col"> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.timesheets != null)
-                    {
-                        @foreach (var sheet in @Model.timesheets)
+            <div class="yover mt-2">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mission</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Hours</th>
+                            <th scope="col">Minutes</th>
+                            <th scope="col"> </th>
+                            <th scope="col"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.timesheets != null)
                         {
-                            if (sheet.Mission.MissionType == "Time")
+                            @foreach (var sheet in @Model.timesheets)
                             {
-                                <tr>
-                                    <td>@sheet.Mission.Title</td>
-                                    <td>@sheet.DateVolunteered</td>
-                                    <td>@sheet.TimesheetTime.ToString().Split(":")[0]</td>
-                                    <td>@sheet.TimesheetTime.ToString().Split(":")[1]</td>
-                                    <td>
-                                        <button onclick="edit(@sheet.TimesheetId)" data-bs-toggle="modal"
-                                    data-bs-target="#timesheetADD" class="btn shadow-none">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button onclick="deletes(@sheet.TimesheetId)" class="btn shadow-none">
-                                            <img src=~/images/bin.png />
-                                        </button>
-                                    </td>
-                                </tr>
+                                if (sheet.Mission.MissionType == "Time")
+                                {
+                                    <tr>
+                                        <td>@sheet.Mission.Title</td>
+                                        <td>@sheet.DateVolunteered</td>
+                                        <td>@sheet.TimesheetTime.ToString().Split(":")[0]</td>
+                                        <td>@sheet.TimesheetTime.ToString().Split(":")[1]</td>
+                                        <td>
+                                            <button onclick="edit(@sheet.TimesheetId)" data-bs-toggle="modal"
+                                        data-bs-target="#timesheetADD" class="btn shadow-none">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button onclick="deletes(@sheet.TimesheetId)" class="btn shadow-none">
+                                                <img src=~/images/bin.png />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
                             }
+
                         }
-
-                    }
-                </tbody>
-            </table>
-
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="border col-6">
@@ -195,53 +202,61 @@
                 </div>
 
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Mission</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Action</th>
-                        <th scope="col"> </th>
-                        <th scope="col"> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.timesheets != null)
-                    {
-                        @foreach (var sheet in Model.timesheets)
+
+            <div class="yover mt-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mission</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Action</th>
+                            <th scope="col"> </th>
+                            <th scope="col"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.timesheets != null)
                         {
-                            if (sheet.Mission.MissionType == "Goal")
+                            @foreach (var sheet in Model.timesheets)
                             {
-                                <tr id="del">
-                                    <th scope="row">@sheet.Mission.Title</th>
-                                    <td>@sheet.DateVolunteered</td>
-                                    <td>@sheet.Action</td>
-                                    <td>
+                                if (sheet.Mission.MissionType == "Goal")
+                                {
+                                    <tr id="del">
+                                        <th scope="row">@sheet.Mission.Title</th>
+                                        <td>@sheet.DateVolunteered</td>
+                                        <td>@sheet.Action</td>
+                                        <td>
 
-                                        <button onclick="editgoal(@sheet.TimesheetId)" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalADDGoal" class="btn shadow-none">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button onclick="deletes(@sheet.TimesheetId)" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalADDGoal" class="btn shadow-none">
-                                            <img src=~/images/bin.png />
-                                        </button>
-                                    </td>
-                                </tr>
+                                            <button onclick="editgoal(@sheet.TimesheetId)" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalADDGoal" class="btn shadow-none">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button onclick="deletes(@sheet.TimesheetId)" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalADDGoal" class="btn shadow-none">
+                                                <img src=~/images/bin.png />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+
                             }
-
                         }
-                    }
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
+    <hr />
+    <div class="container ">
+        <div class="text-secondary ">
+            <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
         </div>
     </div>
 </div>
-
 
 <script>
         function nullvalues()
@@ -273,12 +288,6 @@
             url: '/Employee/Home/Delete',
             type: 'POST',
             data: {'id':id }
-            //success: function (res) {
-            //    alert("Succesfully Deleted Please Refresh");
-            //},
-            //error: function (res) {
-            //    alert("error");
-            //}
         });
             alert("Succesfully Deleted Please Refresh");
 

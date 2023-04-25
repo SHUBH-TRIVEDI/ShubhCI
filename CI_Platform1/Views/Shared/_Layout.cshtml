@@ -15,18 +15,19 @@
 
 </head>
 <body>
-    <div id=preloader></div>
+    <div id="preloader" class="load1"></div>
     <div class="">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
 
     </div>
-@*    <div class="container">
+    @*    <div class="container">
         <div class="text-secondary fs-5 position-absolute bottom-0 ms-3">
-            <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+        <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
         </div>
-    </div>*@
+        </div>*@
+
 
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
             integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
@@ -36,6 +37,13 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        var loader = document.getElementById('preloader');
+        window.addEventListener("load", function () {
+            loader.style.display = "none";
+        })
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

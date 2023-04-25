@@ -8,6 +8,8 @@ namespace CI_Entities1.Models.ViewModel
 {
     public class AdminVM
     {
+        public List<Banner> banners { get; set; }
+
         public List<Admin> admins { get; set; }
         public long AdminId { get; set; }
         public long cmsid { get; set; }

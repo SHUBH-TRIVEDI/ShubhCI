@@ -229,6 +229,7 @@ namespace CI_Platform1.Controllers
             lp.goalMissions = _Landing.goalMissions();
             lp.favoriteMissions = _Landing.favoriteMissions();
             lp.missionApplications = _Landing.missionApplications();
+            lp.skills= _Landing.skills();
 
             return View(lp);
         }
@@ -263,7 +264,9 @@ namespace CI_Platform1.Controllers
             lp.goalMissions = _Landing.goalMissions();
             lp.favoriteMissions = _Landing.favoriteMissions();
             lp.missionApplications = _Landing.missionApplications();
-            lp.skills = _CiPlatformContext.Skills.ToList();
+            //lp.skills = _CiPlatformContext.Skills.ToList();
+            lp.skills = _Landing.skills();
+
 
 
 
@@ -299,9 +302,11 @@ namespace CI_Platform1.Controllers
                 lp.missions = lp.missions.Where(m => themeText.Contains(m.Theme.Title)).ToList();
             }
 
+
+
             if (lp.missions.Count() == 0)
             {
-                return RedirectToAction("NoMissionFound", "Home", new {Areas="Employee"});
+                return RedirectToAction("nomissionfound", "Home", new {Areas="Employee"});
             }
 
             //Add to favrouite
@@ -318,10 +323,11 @@ namespace CI_Platform1.Controllers
                     lp.missions = lp.missions.OrderBy(e => e.Title).ToList();
                     break;
                 case "2":
-                    lp.missions = lp.missions.OrderByDescending(e => e.StartDate).ToList();
+                    //lp.missions = lp.missions.OrderByDescending(e => e.StartDate).ToList();
+                    lp.missions = lp.missions.OrderBy(e => e.StartDate).ToList();
                     break;
                 case "3":
-                    lp.missions = lp.missions.OrderBy(e => e.EndDate).ToList();
+                    lp.missions = lp.missions.OrderByDescending(e => e.StartDate).ToList();
                     break;
 
                 case "4":
@@ -329,7 +335,7 @@ namespace CI_Platform1.Controllers
                     break;
 
                 case "5":
-                    lp.missions = lp.missions.OrderBy(e => e.ThemeId).ToList();
+                    lp.missions = lp.missions.OrderBy(e => e.Theme.Title).ToList();
                     break;
 
                 default:
@@ -546,7 +552,7 @@ namespace CI_Platform1.Controllers
         {
             StoryShareVM storylist = new StoryShareVM();
 
-            storylist.Stories = _CiPlatformContext.Stories.ToList();
+            storylist.Stories = _CiPlatformContext.Stories.Where(u=> u.Status == "Approved").ToList();
 
             storylist.missionThemes = _CiPlatformContext.MissionThemes.ToList();
             storylist.storymedia = _CiPlatformContext.StoryMedia.ToList();
@@ -574,10 +580,13 @@ namespace CI_Platform1.Controllers
         //Storyshare
         public IActionResult Storyshare(long StoryId)
         {
+            
             var userid = HttpContext.Session.GetString("userID");
             StoryShareVM sl = new StoryShareVM();
             sl.missions = _Landing.missions();
             sl.missionApplications = _CiPlatformContext.MissionApplications.ToList();
+
+
 
             return View(sl);
         }
