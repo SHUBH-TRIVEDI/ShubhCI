@@ -23,43 +23,43 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="BannerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label class="mt-2">Banner Text</label>
-                <div class="col-12 mt-2">
-                    <textarea class="col-12" name="editor1" id="bannertext"></textarea>
+<form asp-action="_BannerAdmin" asp-controller="Admin" asp-area="Admin" method="post" >
+    <div class="modal fade" id="BannerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="mt-2">Banner Text</label>
+                    <div class="col-12 mt-2">
+                        <textarea asp-for="Text" class="col-12" id="bannertext"></textarea>
+                    </div>
+
+                    <label class="mt-2">Sort Order</label>
+                    <div>
+                        <input asp-for="SortOrder" class="col-12 " type="number" id="order" />
+                    </div>
+
+                    <label class="mt-2 mb-1">Image</label>
+                    <div>
+                        <input asp-for="Image" type="file" id="InputImg" style="display:none;" />
+                        <div onclick="ClickImage()" class="border-4 p-2 col-3">Upload Image</div>
+                    </div>
+
                 </div>
 
-                <label class="mt-2">Sort Order</label>
-                <div>
-                    <input class="col-12 " type="number" id="order" />
+                <input asp-for="BannerId" type="hidden" id="BANNERID" value="0" name="CMSId" />
+
+                <div class="modal-footer">
+                    <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn oran" data-bs-dismiss="modal">Submit</button>
                 </div>
-
-                <label class="mt-2 mb-1">Image</label>
-                <div>
-                    <input type="file" id="InputImg" style="display:none;" />
-                    <div onclick="ClickImage()" class="border-4 p-2 col-3">Upload Image</div>
-                </div>
-
-            </div>
-
-            <input type="hidden" id="BANNERID" value="0" name="CMSId" />
-
-
-            <div class="modal-footer">
-                <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn oran" onclick="BannerAddEdit()" data-bs-dismiss="modal">Submit</button>
             </div>
         </div>
-
     </div>
-</div>
+</form>
 @*End of Modal*@
 
 <table id="myTable" class="display">
@@ -76,7 +76,9 @@
         @foreach (var banner in Model.banners)
         {
             <tr>
-                <td>@banner.Image</td>
+                <td>
+                    <img src="@banner.Image" style="height:130px;width:130px;">
+                </td>
                 <td>@banner.Text</td>
                 <td>@banner.SortOrder</td>
 
@@ -88,7 +90,7 @@
 
                     </span>
                     <span>
-                        <button class="btn shadow-none" onclick="DeleteCMS(@banner.BannerId)">
+                        <button class="btn shadow-none" >
                             <i class="bi bi-trash"></i>
                         </button>
                     </span>
@@ -104,7 +106,7 @@
         $('#InputImg').click();
     }
 
-    
+
         document.getElementById('InputImg').addEventListener("change", e => {
     const reader = new FileReader(); // Create a new FileReader object
     reader.onload = function () {
@@ -117,24 +119,24 @@
 @*<script>
     function BannerAddEdit()
     {
-        var bannertext=$("#bannertext").val();
-        var order=$("#order").val();
-        //var InputImg=$("#InputImg").val();
-        var BANNERID=$("#BANNERID").val();
+    var bannertext=$("#bannertext").val();
+    var order=$("#order").val();
+    //var InputImg=$("#InputImg").val();
+    var BANNERID=$("#BANNERID").val();
 
-      //var fileInput = document.getElementById('InputImg');
-      //var file = fileInput.files[0];
-      //var formData = new FormData();
-      //formData.append('file', file);
-      var myfile= document.getElementById("InputImg");
-       var formData = new FormData();
-       console.log(formData);
-       console.log(myfile.files);
-       if (myfile.files.length > 0) {
-           for (var i = 0; i < myfile.files.length; i++) {
-               formData.append('file-' + i, myfile.files[i]);
-           }
-       }
+    //var fileInput = document.getElementById('InputImg');
+    //var file = fileInput.files[0];
+    //var formData = new FormData();
+    //formData.append('file', file);
+    var myfile= document.getElementById("InputImg");
+    var formData = new FormData();
+    console.log(formData);
+    console.log(myfile.files);
+    if (myfile.files.length > 0) {
+    for (var i = 0; i < myfile.files.length; i++) {
+    formData.append('file-' + i, myfile.files[i]);
+    }
+    }
 
 
     $.ajax({
@@ -199,4 +201,4 @@
 
     CKEDITOR.replace('editor1');
 
-</script>*@
+    </script>*@

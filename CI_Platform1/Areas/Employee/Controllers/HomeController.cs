@@ -39,9 +39,17 @@ namespace CI_Platform1.Controllers
         public IActionResult Login()
         {
             HttpContext.Session.Clear();
-            return View();
+            LoginModel lm= new LoginModel();
+            lm.banners = _CiPlatformContext.Banners.ToList();
+
+            return View(lm);
         }
 
+        public IActionResult Carousel()
+        {
+            var banner = _CiPlatformContext.Banners.ToList();
+            return PartialView("Carousel", banner);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)

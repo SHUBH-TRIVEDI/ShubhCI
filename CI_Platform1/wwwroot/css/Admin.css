@@ -4,10 +4,27 @@
     height:100vh;
 }
 
-.form-control:focus {
-    box-shadow:none !important;
-    border-color: black !important;
+
+
+.list-group-item.active {
+    z-index: 2;
+    color: red;
+    background-color: white;
+    /*border-color: #0d6efd;*/
 }
+
+    .list-group-item.active span {
+        color: #F88634;
+    }
+
+    .list-group-item.active .symbol {
+        color: #F88634;
+    }
+
+    .form-control:focus {
+        box-shadow: none !important;
+        border-color: black !important;
+    }
 
 .btn {
     box-shadow: none !important;
@@ -94,4 +111,31 @@
 a {
     text-decoration: none;
     color: white;
+}
+
+.btn {
+    box-shadow: none !important;
+    shadow:none !important;
+}
+
+.btn-close {
+    box-shadow: none !important;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.btn:focus {
+    outline: none !important;
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+    border-color: black !important;
+}
+
+.form-check-input {
+    box-shadow: none !important;
+    border-color: black !important;
 }

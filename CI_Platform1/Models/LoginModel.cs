@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CI_Entities1.Models;
+using System.ComponentModel.DataAnnotations;
 
 using Xunit;
 
@@ -16,6 +17,7 @@ namespace CI_Platform1.Models
         [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Password should contain atleast one Capital letter , one small case letter, one Digit and one special symbol")]
         public string? Password { get; set; }
 
+        public List<Banner> banners { get; set; }
 
     }
 }

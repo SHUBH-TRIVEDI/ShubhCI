@@ -12,7 +12,7 @@ public partial class CiPlatformContext : DbContext
     }
 
     public CiPlatformContext(DbContextOptions<CiPlatformContext> options)
-        :   base(options)
+        : base(options)
     {
     }
 
@@ -25,6 +25,8 @@ public partial class CiPlatformContext : DbContext
     public virtual DbSet<CmsPage> CmsPages { get; set; }
 
     public virtual DbSet<Comment> Comments { get; set; }
+
+    public virtual DbSet<ContactU> ContactUs { get; set; }
 
     public virtual DbSet<Country> Countries { get; set; }
 
@@ -120,8 +122,7 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Image)
-                .HasMaxLength(512)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("image");
             entity.Property(e => e.SortOrder)
                 .HasDefaultValueSql("((0))")
@@ -237,6 +238,28 @@ public partial class CiPlatformContext : DbContext
                 .HasConstraintName("FK__comment__user_id__5EBF139D");
         });
 
+        modelBuilder.Entity<ContactU>(entity =>
+        {
+            entity.HasKey(e => e.ContactUsId);
+
+            entity.ToTable("contact_us");
+
+            entity.Property(e => e.ContactUsId).HasColumnName("contact_us_id");
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Message).HasColumnName("message");
+            entity.Property(e => e.Subject)
+                .HasMaxLength(255)
+                .HasColumnName("subject");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ContactUs)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_contact_us_contact_us");
+        });
+
         modelBuilder.Entity<Country>(entity =>
         {
             entity.HasKey(e => e.CountryId).HasName("PK__country__7E8CD0553FF080D3");
@@ -344,6 +367,9 @@ public partial class CiPlatformContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
+            entity.Property(e => e.Deadline)
+                .HasColumnType("datetime")
+                .HasColumnName("deadline");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
@@ -368,6 +394,7 @@ public partial class CiPlatformContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("organization_name");
+            entity.Property(e => e.Seatleft).HasColumnName("seatleft");
             entity.Property(e => e.ShortDescription)
                 .HasColumnType("text")
                 .HasColumnName("short_description");

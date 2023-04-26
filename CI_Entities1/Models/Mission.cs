@@ -41,6 +41,10 @@ public partial class Mission
 
     public string? Imagepath { get; set; }
 
+    public DateTime? Deadline { get; set; }
+
+    public long? Seatleft { get; set; }
+
     public virtual City City { get; set; } = null!;
 
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();

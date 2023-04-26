@@ -1,4 +1,6 @@
 ﻿@*Carousel*@
+@using CI_Entities1.Models.ViewModel
+@model LoginModel
 
 <div id="carouselExampleCaptions" class="carousel slide">
     <div class="carousel-indicators">
@@ -15,8 +17,11 @@
     </div>
 
     <div class="carousel-inner ">
+        @foreach( var i in Model.banners)
+        {
         <div class="carousel-item active" id="carouselExampleCaptions">
-            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
+            <img @*src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"*@
+            src="@i.Image"
                  class="d-block w-100 img1" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <p class="title text-left ml-4">
@@ -39,6 +44,7 @@
                 </p>
             </div>
         </div>
+        }
         <div class="carousel-item" id="carouselExampleCaptions1">
             <img src="~/images/Animal-welfare-&-save-birds-campaign-1.png" class="d-block w-100 img1" alt="...">
             <div class="carousel-caption d-none d-md-block">

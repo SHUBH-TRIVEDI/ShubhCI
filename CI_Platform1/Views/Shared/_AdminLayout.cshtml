@@ -103,56 +103,65 @@
 
                                 <ul class="list-group mt-md-5 mt-sm-5 side-nav">
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" data-partial-view-url="/Admin/Admin/_UserAdmin" class="row">
+                                        <a data-partial-view-url="/Admin/Admin/_UserAdmin" class="row" id="User">
+
                                             <i class="bi bi-person-fill symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">User</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" data-partial-view-url="/Admin/Admin/_CMSAdmin" class="row">
+
+                                        <a href="#" id="cms" data-partial-view-url="/Admin/Admin/_CMSAdmin" class="row">
+
                                             <i class="bi bi-file-earmark-text symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">CMS Page</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" data-partial-view-url="/Admin/Admin/_MissionAdmin" class="row">
+                                        <a href="#" id="mission" data-partial-view-url="/Admin/Admin/_MissionAdmin" class="row">
+
                                             <i class="bi bi-bullseye symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Mission</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" data-partial-view-url="/Admin/Admin/_ThemeAdmin" class="row">
+                                        <a id="theme" href="#" data-partial-view-url="/Admin/Admin/_ThemeAdmin" class="row">
+
                                             <i class="bi bi-columns symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Missions Theme</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" data-partial-view-url="/Admin/Admin/_SkillAdmin" class="row">
+                                        <a href="#" id="skill" data-partial-view-url="/Admin/Admin/_SkillAdmin" class="row">
+
                                             <i class="bi bi-tools symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Missions Skills</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" data-partial-view-url="/Admin/Admin/_Applicationadmin" class="row">
+                                        <a href="#" id="Application" data-partial-view-url="/Admin/Admin/_Applicationadmin" class="row">
+
                                             <i class="bi bi-folder symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Missions&nbsp;Applications</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" data-partial-view-url="/Admin/Admin/_StoryAdmin" class="row">
+                                        <a href="#" id="Story" data-partial-view-url="/Admin/Admin/_StoryAdmin" class="row">
+
                                             <i class="bi bi-bookmark-star symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Story</span>
                                         </a>
                                     </li>
 
                                     <li class="list-group-item row ms-3 me-3 back row">
-                                        <a href="#" class="row">
+                                        <a href="#" id="banner" data-partial-view-url="/Admin/Admin/_BannerAdmin" class="row">
+
                                             <i class="bi bi-border-style symbol fs-4 col-1 text-end "></i>
                                             <span class="ms-3 d-lg-block  col-10 ">Banner&nbsp;Management</span>
                                         </a>
@@ -181,7 +190,9 @@
 
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" asp-area="Employee" asp-action="LandingPage" asp-controller="Home">Dashboard</a></li>
+                                @*<li><a class="dropdown-item" asp-area="Employee" asp-action="LandingPage" asp-controller="Home">Dashboard</a></li>*@
+                                <li><a class="dropdown-item" asp-action="LandingPage" asp-controller="Home">Dashboard</a></li>
+
                                 <hr>
                                 <li><a class="dropdown-item" asp-area="Employee" asp-action="Login" asp-controller="Home"> Logout</a></li>
 
@@ -216,33 +227,33 @@
 
 
     <script>
-            var table = new DataTable('#myTable');
+        var table = new DataTable('#myTable');
 
-             $(function() {
-                 $("li").click(function(e) {
-                     e.preventDefault();
-                     $("li").removeClass("active");
-                     $(this).addClass("active");
+         $(function() {
+             $("li").click(function(e) {
+                 e.preventDefault();
+                 $("li").removeClass("active");
+                 $(this).addClass("active");
+             });
+         });
+
+         $(document).ready(function () {
+             $(".side-nav a").click(function (e) {
+                 e.preventDefault(); // prevent default link behavior
+                 var url = $(this).data("partial-view-url");
+                 $.ajax({
+                     url: url,
+                     type: "GET",
+                     success: function (result) {
+                         $("#PartialView").html(result);
+                         var table = new DataTable('#myTable');
+                         $('#myInputTextField').keyup(function () {
+                             table.search($(this).val()).draw();
+                         });
+                     }
                  });
              });
-
-             $(document).ready(function () {
-                 $(".side-nav a").click(function (e) {
-                     e.preventDefault(); // prevent default link behavior
-                     var url = $(this).data("partial-view-url");
-                     $.ajax({
-                         url: url,
-                         type: "GET",
-                         success: function (result) {
-                             $("#PartialView").html(result);
-                             var table = new DataTable('#myTable');
-                             $('#myInputTextField').keyup(function () {
-                                 table.search($(this).val()).draw();
-                             });
-                         }
-                     });
-                 });
-             });
+         });
     </script>
 
     <script>

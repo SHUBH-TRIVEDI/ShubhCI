@@ -47,8 +47,8 @@
                 <input type="hidden" id="SkillId" />
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn oran" data-bs-dismiss="modal" onclick="SkillAddEdit()">Save</button>
+                <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn oran shadow-none" data-bs-dismiss="modal" onclick="SkillAddEdit()">Save</button>
             </div>
         </div>
     </div>
@@ -99,7 +99,6 @@
 <script>
     function SkillAddEdit()
     {
-        debugger;
         var title=$("#title").val();
         var status=$("#status").val();
         var SkillId=$("#SkillId").val();

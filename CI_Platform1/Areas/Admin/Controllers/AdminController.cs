@@ -487,23 +487,48 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return PartialView("_BannerAdmin", adminVM);
         }
 
-        public IActionResult BannerAddEdit(long BANNERID, string bannertext, int order, IFormFile fileInput)
+        [HttpPost]
+        public async Task<IActionResult> _BannerAdminAsync(AdminVM adminVM)
         {
-            if(BANNERID ==0)
-            {
-                Banner banner = new Banner()
-                { 
-                    //Image= fileInput,
-                    Text =bannertext,
-                    SortOrder = order,
-                };
+            Banner banner = new Banner();
 
-                _CiPlatformContext.Banners.Add(banner);
-                _CiPlatformContext.SaveChanges();
+            banner.Text = adminVM.Text;
+            banner.SortOrder = adminVM.SortOrder;
+
+            var FileName = "";
+            using (var ms = new MemoryStream())
+            {
+                await adminVM.Image.CopyToAsync(ms);
+                var imageBytes = ms.ToArray();
+                var base64String = Convert.ToBase64String(imageBytes);
+                FileName = "data:image/png;base64," + base64String;
             }
 
-            return Json("_BannerAdmin");
+            banner.Image= FileName;
+
+            _CiPlatformContext.Banners.Add(banner);
+            _CiPlatformContext.SaveChanges();
+
+            return View("Index");
         }
+
+        //public IActionResult BannerAddEdit(long BANNERID, string bannertext, int order, IFormFile fileInput)
+        //{
+        //    if(BANNERID ==0)
+        //    {
+        //        Banner banner = new Banner()
+        //        { 
+        //            //Image= fileInput,
+        //            Text =bannertext,
+        //            SortOrder = order,
+        //        };
+
+        //        _CiPlatformContext.Banners.Add(banner);
+        //        _CiPlatformContext.SaveChanges();
+        //    }
+
+        //    return Json("_BannerAdmin");
+        //}
 
     }
 }

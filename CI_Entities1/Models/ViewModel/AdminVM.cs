@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,14 @@ namespace CI_Entities1.Models.ViewModel
 {
     public class AdminVM
     {
+
+        public long BannerId { get; set; }
+
+        public IFormFile Image { get; set; }
+
+        public string? Text { get; set; }
+
+        public int? SortOrder { get; set; }
         public List<Banner> banners { get; set; }
 
         public List<Admin> admins { get; set; }
