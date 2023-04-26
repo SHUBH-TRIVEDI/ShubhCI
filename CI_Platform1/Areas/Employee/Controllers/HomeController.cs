@@ -406,7 +406,7 @@ namespace CI_Platform1.Controllers
             //IEnumerable<Comment> objComm = _CiPlatformContext.Comments.ToList();
             IEnumerable<Mission> selected = lp.missions.Where(m => m.MissionId == missionid).ToList();
 
-            var volmission = lp.missions.FirstOrDefault(m => m.MissionId == missionid);
+            var volmission = lp.missions.FirstOrDefault(m => m.MissionId == Convert.ToInt32(missionid));
             var theme = lp.missionThemes.FirstOrDefault(m => m.MissionThemeId == volmission.ThemeId);
             var City = lp.cities.FirstOrDefault(m => m.CityId == volmission.CityId);
             var prevRating = lp.missionRatings.Where(e => e.MissionId == missionid && e.UserId == id).FirstOrDefault();
@@ -428,6 +428,7 @@ namespace CI_Platform1.Controllers
             }
 
             volunteeringVM.MissionId = missionid;
+            volunteeringVM.users = _Landing.users();
             volunteeringVM.Title = volmission.Title;
             volunteeringVM.ShortDescription = volmission.ShortDescription;
             volunteeringVM.OrganizationName = volmission.OrganizationName;
@@ -586,7 +587,7 @@ namespace CI_Platform1.Controllers
         }
 
         //Storyshare
-        public IActionResult Storyshare(long StoryId)
+        public async Task<IActionResult> StoryshareAsync(long StoryId, long id)
         {
             
             var userid = HttpContext.Session.GetString("userID");
@@ -594,7 +595,14 @@ namespace CI_Platform1.Controllers
             sl.missions = _Landing.missions();
             sl.missionApplications = _CiPlatformContext.MissionApplications.ToList();
 
+            if(id != 0)
+            {
+                var story = _CiPlatformContext.Stories.FirstOrDefault(u => u.StoryId == id);
 
+                sl.mission_id =Convert.ToInt32(story.MissionId);
+                sl.Title = story.Title;
+                sl.editor1 = story.Description;
+            }
 
             return View(sl);
         }
@@ -613,7 +621,7 @@ namespace CI_Platform1.Controllers
                 stories.MissionId = ss.MissionId;
                 stories.Title = ss.Title;
                 stories.Description = ss.editor1;
-                stories.Status = "1";
+                stories.Status = "Pending";
                 stories.CreatedAt = DateTime.Now;
                 _CiPlatformContext.Stories.Add(stories);
                 _CiPlatformContext.SaveChanges();

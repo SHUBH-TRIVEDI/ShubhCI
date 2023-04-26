@@ -108,12 +108,12 @@
                         </div>
                     </div>
 
-                    @*<a asp-action="volunteering" asp-controller="Home" class="col">*@
+                    <a asp-action="volunteering" asp-controller="Home" asp-route-missionid="@Model.singleStory.MissionId" class="col">
                     <button class="btn col me-3  ms-2  oran  shadow-none" style="height:3rem;" >
                         <label class="ms-2" id="favmissiondiv">Open Mission</label>
                         <img class="ms-1" src="/Images/right-arrow.png">
                     </button>
-                    @*</a>*@
+                    </a>
                 </div>
 
                 @*over*@

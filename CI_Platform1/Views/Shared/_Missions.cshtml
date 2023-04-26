@@ -515,7 +515,7 @@
                             </div>
 
                             <div class="text-center ">
-                                <a asp-controller="Home" asp-action="volunteering" asp-route-missionid="@category.MissionId" class="btn shadow-none cardbtn mx-auto ">
+                                <a asp-controller="Home" asp-area="Employee" asp-action="volunteering" asp-route-missionid="@category.MissionId" class="btn shadow-none cardbtn mx-auto ">
                                     <span>Apply</span> <img class="ms-1"
                                                         src="/Images/right-arrow.png">
                                 </a>
@@ -555,7 +555,7 @@
                                     isClosed = 1;
                                 }
                             }
-                             @{
+                            @{
                                 var applies = Model.missionApplications.FirstOrDefault(e => e.MissionId == i.MissionId && e.UserId == Convert.ToInt32(userId));
                                 var closed = Model.missions.FirstOrDefault(e => e.MissionId == i.MissionId);
 
@@ -571,11 +571,11 @@
                                 <div class="bg-danger text-white p-1" style="position:absolute;top:5px;left:0;border-radius: 0px 15px 15px 0px; ">Closed</div>
                             }
 
-                           @* @if (applied != null)
-                            {
+                            @* @if (applied != null)
+                                {
                                 <div class="applied-div">Applied</div>
 
-                            }*@
+                                }*@
                             <div class="top-right">
                                 <img src="~/images/pin.png" />@i.City.Name
                             </div>
@@ -747,10 +747,10 @@
                                             </div>
                                             <div class="">
                                                 <h6 class="pt-3 mb-0">Skill</h6>
-                                                @*                                                @foreach (var j in Model.skills)
-                                                    {
+@*                                                @foreach (var j in Model.skills)
+                                                {
                                                     <small>@j.SkillName </small>
-                                                    }*@
+                                                }*@
                                                 <small>SkillName </small>
 
                                             </div>

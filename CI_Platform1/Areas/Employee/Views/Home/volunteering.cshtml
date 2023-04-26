@@ -354,7 +354,7 @@
                                 <div class="panel-body">
                                     <ul class="list-group">
 
-                                        @foreach (var i in @Model.comments)
+                                        @foreach (var i in Model.comments)
                                         {
                                             <div class="comment d-flex">
                                                 <div class="">
@@ -362,7 +362,10 @@
                                                      width="52" alt="">
                                                 </div>
                                                 <div class="ms-3">
-                                                    <p class="mt-2">@i.User.FirstName @i.User.LastName</p>
+                                                    @if(i.User != null)
+                                                    {
+                                                        <p class="mt-2">@i.User.FirstName @i.User.LastName</p>
+                                                    }
                                                     <p>
                                                         @i.Comment1
                                                     </p>
@@ -457,7 +460,11 @@
                                         {
                                             <div class="col column2">
                                                 <img src="/images/volunteer7.png" class="rounded-circle"
-                                             style="height:60px;width:60px" />@i.User.FirstName @i.User.LastName
+                                             style="height:60px;width:60px" />
+                                                @if (i.User != null)
+                                                {
+                                                    @i.User.FirstName @i.User.LastName
+                                                }
                                             </div>
 
                                         }
