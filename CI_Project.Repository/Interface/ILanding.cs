@@ -9,6 +9,8 @@ namespace CI_Project.Repository.Interface
 {
     public interface ILanding
     {
+        public List<MissionSkill> missionSkills();
+
         public List<User> users();
 
         public List<Mission> missions();

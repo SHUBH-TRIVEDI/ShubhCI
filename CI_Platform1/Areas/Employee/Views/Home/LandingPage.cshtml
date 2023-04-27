@@ -20,7 +20,7 @@
                     <option class="dropdown-item" value="1" >Title</option>
                     <option class="dropdown-item" value="2" >Start Date</option>
                     <option class="dropdown-item" value="3">Start Date Desc</option>
-                    <option class="dropdown-item" value="4">Availbility</option>
+                    <option class="dropdown-item" value="4">Seats Left</option>
                     <option class="dropdown-item" value="5">Theme</option>
                     @*<option class="dropdown-item" value="6">Favrouite</option>*@
                 </select>
@@ -69,11 +69,16 @@
                 theme.push($(this).val());
             });
 
+            var skill = [];
+            $("input[type='checkbox'][name='skill']:checked").each(function () {
+                skill.push($(this).val());
+            });
+
 
             $.ajax({
                 url: '/Employee/Home/_Missions',
                 type: 'GET',    
-                data: { 'SearchingMission': search,'sort':sort ,'jpg':jpg,'country': country.toString(), 'city': city.toString(), 'theme': theme.toString() },
+                data: { 'SearchingMission': search,'sort':sort, 'skill' :skill ,'jpg':jpg,'country': country.toString(), 'city': city.toString(), 'theme': theme.toString() },
                 success: function (res) {
                     $("#missiondetails").html(res);
                     $("#count1").html('')

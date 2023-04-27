@@ -482,53 +482,88 @@ namespace CI_Platform1.Areas.Admin.Controllers
         public IActionResult _BannerAdmin()
         {
             AdminVM adminVM = new AdminVM();
-            adminVM.banners = _CiPlatformContext.Banners.ToList();
+            adminVM.banners = _CiPlatformContext.Banners.Where(u=> u.DeletedAt == null).ToList();
 
             return PartialView("_BannerAdmin", adminVM);
         }
 
         [HttpPost]
-        public async Task<IActionResult> _BannerAdminAsync(AdminVM adminVM)
+        public IActionResult _BannerAdmin(AdminVM adminVM)
         {
-            Banner banner = new Banner();
-
-            banner.Text = adminVM.Text;
-            banner.SortOrder = adminVM.SortOrder;
-
-            var FileName = "";
-            using (var ms = new MemoryStream())
+            if (adminVM.BannerId == 0)
             {
-                await adminVM.Image.CopyToAsync(ms);
-                var imageBytes = ms.ToArray();
-                var base64String = Convert.ToBase64String(imageBytes);
-                FileName = "data:image/png;base64," + base64String;
+                Banner banner = new Banner();
+
+                banner.Text = adminVM.Text;
+                banner.SortOrder = adminVM.SortOrder;
+
+                var FileName = "";
+                using (var ms = new MemoryStream())
+                {
+                    adminVM.Image.CopyToAsync(ms);
+                    var imageBytes = ms.ToArray();
+                    var base64String = Convert.ToBase64String(imageBytes);
+                    FileName = "data:image/png;base64," + base64String;
+                }
+
+                banner.Image = FileName;
+
+                _CiPlatformContext.Banners.Add(banner);
+                _CiPlatformContext.SaveChanges();
             }
 
-            banner.Image= FileName;
+            else
+            {
+                var banner = _CiPlatformContext.Banners.FirstOrDefault(u => u.BannerId == adminVM.BannerId);
+                banner.Text = adminVM.Text;
+                banner.SortOrder = adminVM.SortOrder;
 
-            _CiPlatformContext.Banners.Add(banner);
-            _CiPlatformContext.SaveChanges();
+
+                if (adminVM.Image != null)
+                {
+                    var FileName = "";
+                    using (var ms = new MemoryStream())
+                    {
+                        adminVM.Image.CopyToAsync(ms);
+                        var imageBytes = ms.ToArray();
+                        var base64String = Convert.ToBase64String(imageBytes);
+                        FileName = "data:image/png;base64," + base64String;
+                    }
+
+                    banner.Image = FileName;
+                }
+                _CiPlatformContext.Banners.Update(banner);
+                _CiPlatformContext.SaveChanges();
+
+            }
 
             return View("Index");
         }
 
-        //public IActionResult BannerAddEdit(long BANNERID, string bannertext, int order, IFormFile fileInput)
-        //{
-        //    if(BANNERID ==0)
-        //    {
-        //        Banner banner = new Banner()
-        //        { 
-        //            //Image= fileInput,
-        //            Text =bannertext,
-        //            SortOrder = order,
-        //        };
+        public IActionResult BannerEdit(long id)
+        {
+            AdminVM adminVM = new AdminVM();
+            adminVM.banners = _CiPlatformContext.Banners.ToList();
+            var banner = _CiPlatformContext.Banners.FirstOrDefault(u => u.BannerId == id);
 
-        //        _CiPlatformContext.Banners.Add(banner);
-        //        _CiPlatformContext.SaveChanges();
-        //    }
+            adminVM.Text = banner.Text;
+            adminVM.SortOrder = banner.SortOrder;
+            adminVM.getimage = banner.Image;
+            adminVM.BannerId = id;
 
-        //    return Json("_BannerAdmin");
-        //}
+            return View("_BannerAdmin", adminVM);
 
+        }
+
+        public IActionResult BannerDelete(long id)
+        {
+            var banner = _CiPlatformContext.Banners.FirstOrDefault(ban => ban.BannerId == id);
+            banner.DeletedAt = DateTime.Now;
+
+            _CiPlatformContext.Banners.Update(banner);
+            _CiPlatformContext.SaveChanges();
+
+            return View("Index");
+        }
     }
 }

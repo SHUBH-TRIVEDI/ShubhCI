@@ -23,5 +23,7 @@ namespace CI_Entities1.Models.ViewModel
         public List<Comment> comments { get; set; }
 
         public List<Story> stories { get; set; }
+
+        public List<MissionSkill> MissionSkills { get; set; }
     }
 }

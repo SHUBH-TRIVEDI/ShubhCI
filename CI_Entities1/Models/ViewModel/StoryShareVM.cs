@@ -9,6 +9,7 @@ namespace CI_Entities1.Models.ViewModel
 {
     public class StoryShareVM
     {
+        public List<StoryMedium> StoryMediums { get; set;}
         public List<IFormFile> attachment { get; set; }
         public long StoryId { get; set; }
         public int? StoryViews { get; set; }

@@ -41,18 +41,7 @@
     }
 
 
-    .applied-div {
-        position: absolute;
-        left: 0px;
-        top: 8px;
-        padding: 5px 10px;
-        color: white;
-        /*background-color: rgba(0, 255, 97, 0.6);*/
-        background-color: rgba(0, 220, 90, 0.6);
-        border: 1px solid rgba(0, 220, 90, 0.6);
-        border-radius: 22px 22px 22px 0px;
-        font-size: 14px;
-    }
+
 
     .top-right {
         position: absolute;
@@ -328,7 +317,9 @@
             @foreach (var category in Model.missions)
             {
                 var userid = Context.Session.GetString("userID");
-                var seat = Convert.ToInt32(category.Availability) - Convert.ToInt32(Model.missionApplications.Where(e => e.MissionId == category.MissionId).ToList().Count());
+                var seat = Convert.ToInt32(category.Seatleft) - Convert.ToInt32(Model.missionApplications.Where(e => e.MissionId == category.MissionId).ToList().Count());
+                var applied = Model.missionApplications.FirstOrDefault(e => e.MissionId == category.MissionId && e.UserId == Convert.ToInt32(userid));
+                var closed = Model.missions.FirstOrDefault(e => e.MissionId == category.MissionId);
 
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card shadow">
@@ -336,18 +327,13 @@
                             @*<img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />*@
                             <img class="card-img-top h-100 wid" src="@category.Imagepath" style="" />
 
-                            @{
-                                var applied = Model.missionApplications.FirstOrDefault(e => e.MissionId == category.MissionId && e.UserId == Convert.ToInt32(userid));
-                                var closed = Model.missions.FirstOrDefault(e => e.MissionId == category.MissionId);
-
-                            }
                             @if (applied != null)
                             {
                                 <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Applied</div>
                             }
 
 
-                            @if (closed.EndDate < DateTime.Now)
+                            @if (closed.Deadline < DateTime.Now)
                             {
                                 <div class="bg-danger text-white p-1" style="position:absolute;top:5px;left:0;border-radius: 0px 15px 15px 0px; ">Closed</div>
                             }
@@ -513,14 +499,56 @@
 
 
                             </div>
-
-                            <div class="text-center ">
+                            @*
+                                <div class="text-center ">
                                 <a asp-controller="Home" asp-area="Employee" asp-action="volunteering" asp-route-missionid="@category.MissionId" class="btn shadow-none cardbtn mx-auto ">
-                                    <span>Apply</span> <img class="ms-1"
-                                                        src="/Images/right-arrow.png">
+                                <span>Apply</span> <img class="ms-1"
+                                src="/Images/right-arrow.png">
                                 </a>
-                            </div>
+                                </div>*@
+                            @if (userid != null)
+                            {
+                                @if (applied != null)
+                                {
+                                    <div class="text-center ">
+                                        <a href="/Employee/Home/volunteering?missionid=@category.MissionId" class="btn login-btn shadow-none cardbtn mx-auto ">
+                                            View Details <img src="~/images/right-arrow.png" />
+                                        </a>
+                                    </div>
+                                }
 
+                                else if(closed.Deadline < DateTime.Now)
+                                {
+                                    <div class="text-center ">
+                                        <a href="/Employee/Home/volunteering?missionid=@category.MissionId" class="btn login-btn shadow-none cardbtn mx-auto ">
+                                            View Details <img src="~/images/right-arrow.png" />
+                                        </a>
+                                    </div>
+                                }
+
+                                else
+                                {
+                                    <div class="text-center ">
+                                        <a href="/Employee/Home/volunteering?missionid=@category.MissionId" class="btn login-btn shadow-none cardbtn mx-auto ">
+                                           Apply <img src="~/images/right-arrow.png" />
+                                        </a>
+                                    </div>
+                                }
+
+
+                                
+                            }
+                            else
+                            {
+                                <div class="text-center ">
+                                    <a href="/Employee/Home/volunteering?missionid=@category.MissionId" class="btn login-btn shadow-none cardbtn mx-auto ">
+                                        View Details <img src="~/images/right-arrow.png" />
+                                    </a>
+                                </div>
+                            }
+
+
+                            @*Over*@
                         </div>
 
 
@@ -543,30 +571,23 @@
                             @{
                                 var userId = Context.Session.GetString("userID");
 
+                                var closed = Model.missions.FirstOrDefault(e => e.MissionId == i.MissionId);
                                 var applied = Model.missionApplications.FirstOrDefault(e => e.MissionId == i.MissionId && e.UserId == Convert.ToInt32(userId));
-                                var isClosed = 0;
 
                                 bool isFavrouite = (userId != null) ? Model.favoriteMissions.Any(e => e.MissionId == i.MissionId && e.UserId == Convert.ToInt32(userId)) : false;
                                 var MissionEndDate = i.EndDate.ToString().Split(" ")[0];
                                 DateTime EndDate = DateTime.Parse(MissionEndDate).Date;
                                 DateTime Deadline = EndDate.AddDays(-5);
-                                if (Deadline < DateTime.Now)
-                                {
-                                    isClosed = 1;
-                                }
-                            }
-                            @{
-                                var applies = Model.missionApplications.FirstOrDefault(e => e.MissionId == i.MissionId && e.UserId == Convert.ToInt32(userId));
-                                var closed = Model.missions.FirstOrDefault(e => e.MissionId == i.MissionId);
 
+                                var skill = Model.MissionSkills.FirstOrDefault(u => u.MissionId == i.MissionId);
                             }
+
                             @if (applied != null)
                             {
                                 <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Applied</div>
                             }
 
-
-                            @if (closed.EndDate < DateTime.Now)
+                            @if (closed.Deadline < DateTime.Now)
                             {
                                 <div class="bg-danger text-white p-1" style="position:absolute;top:5px;left:0;border-radius: 0px 15px 15px 0px; ">Closed</div>
                             }
@@ -747,10 +768,10 @@
                                             </div>
                                             <div class="">
                                                 <h6 class="pt-3 mb-0">Skill</h6>
-@*                                                @foreach (var j in Model.skills)
-                                                {
-                                                    <small>@j.SkillName </small>
-                                                }*@
+                                                    @*//Skill*@
+                                
+                                                    @*<small> @skill.Skill.SkillName</small>*@
+                                                    
                                                 <small>SkillName </small>
 
                                             </div>

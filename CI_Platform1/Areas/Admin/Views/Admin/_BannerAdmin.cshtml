@@ -17,13 +17,12 @@
         <input class="form-control me-2" id="myInputTextField" type="search" placeholder="Search" aria-label="Search">
     </div>
 
-    <div class="end-btn">
-        <button data-bs-toggle="modal" data-bs-target="#BannerModal" onclick="nullvalues()" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
-    </div>
+    <button data-bs-toggle="modal" data-bs-target="#BannerModal" onclick="nullvalues()" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
+</div>
 </div>
 
 <!-- Modal -->
-<form asp-action="_BannerAdmin" asp-controller="Admin" asp-area="Admin" method="post" >
+<form asp-action="_BannerAdmin" asp-controller="Admin" asp-area="Admin" asp-route-banid="@Model.BannerId" method="post" enctype="multipart/form-data">
     <div class="modal fade" id="BannerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
@@ -46,11 +45,15 @@
                     <div>
                         <input asp-for="Image" type="file" id="InputImg" style="display:none;" />
                         <div onclick="ClickImage()" class="border-4 p-2 col-3">Upload Image</div>
+                        @if (Model.getimage != null)
+                        {
+                            <img src="@Model.getimage" style="height:130px;width:130px;" />
+                        }
                     </div>
 
                 </div>
 
-                <input asp-for="BannerId" type="hidden" id="BANNERID" value="0" name="CMSId" />
+                <input asp-for="BannerId" type="hidden" />
 
                 <div class="modal-footer">
                     <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
@@ -61,46 +64,45 @@
     </div>
 </form>
 @*End of Modal*@
-
-<table id="myTable" class="display">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>Description</th>
-            <th>Sort Order</th>
-            <th>Action</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var banner in Model.banners)
-        {
+<div style="height:80vh; overflow-y: auto;">
+    <table id="myTable" class="display">
+        <thead>
             <tr>
-                <td>
-                    <img src="@banner.Image" style="height:130px;width:130px;">
-                </td>
-                <td>@banner.Text</td>
-                <td>@banner.SortOrder</td>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Sort Order</th>
+                <th>Action</th>
 
-                <td>
-                    <span>
-                        <button data-bs-toggle="modal" data-bs-target="#AddModal" class="btn shadow-none" onclick="GetCmsData(@banner.BannerId)">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-
-                    </span>
-                    <span>
-                        <button class="btn shadow-none" >
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </span>
-                </td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var banner in Model.banners)
+            {
+                <tr>
+                    <td>
+                        <img src="@banner.Image" style="height:130px;width:130px;">
+                    </td>
+                    <td>@banner.Text</td>
+                    <td>@banner.SortOrder</td>
 
+                    <td>
+                        <span>
+                            <button data-bs-toggle="modal" data-bs-target="#BannerModal" class="btn shadow-none" onclick="BannerEdit(@banner.BannerId)">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
 
+                        </span>
+                        <span>
+                            <button onclick="BannerDelete(@banner.BannerId)" class="btn shadow-none">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 <script>
     function ClickImage(){
         $('#InputImg').click();
@@ -114,6 +116,37 @@
     }
     reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
     });
+
+    function BannerEdit(id)
+    {
+        $.ajax({
+            url: '/Admin/Admin/BannerEdit',
+            type: 'GET',
+            data: {'id':id },
+            success: function (res) {
+                $("#BannerModal").html($(res).find("#BannerModal").html());
+            },
+            error: function (res) {
+                alert("banner error");
+            }
+        });
+    }
+
+    function BannerDelete(id)
+    {
+        $.ajax({
+            url: '/Admin/Admin/BannerDelete',
+            type: 'GET',
+            data: {'id':id },
+            success: function (res) {
+                //$("#BannerModal").html($(res).find("#BannerModal").html());
+                $("#banner").click();
+            },
+            error: function (res) {
+                alert("banner error");
+            }
+        });
+    }
 </script>
 
 @*<script>

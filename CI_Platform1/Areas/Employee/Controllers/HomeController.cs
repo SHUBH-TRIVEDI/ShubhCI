@@ -39,7 +39,7 @@ namespace CI_Platform1.Controllers
         public IActionResult Login()
         {
             HttpContext.Session.Clear();
-            LoginModel lm= new LoginModel();
+            LoginModel lm = new LoginModel();
             lm.banners = _CiPlatformContext.Banners.ToList();
 
             return View(lm);
@@ -47,7 +47,7 @@ namespace CI_Platform1.Controllers
 
         public IActionResult Carousel()
         {
-            var banner = _CiPlatformContext.Banners.ToList();
+            var banner = _CiPlatformContext.Banners.Where(ban => ban.DeletedAt == null).ToList();
             return PartialView("Carousel", banner);
         }
 
@@ -57,13 +57,13 @@ namespace CI_Platform1.Controllers
             if (ModelState.IsValid)
             {
 
-                var Admin=_CiPlatformContext.Admins.FirstOrDefault(u=> u.Email== model.Email);
-                if (Admin!=null)
+                var Admin = _CiPlatformContext.Admins.FirstOrDefault(u => u.Email == model.Email);
+                if (Admin != null)
                 {
-                    if(Admin.Password== model.Password)
+                    if (Admin.Password == model.Password)
                     {
                         HttpContext.Session.SetString("Firstname", Admin.FirstName);
-                        return RedirectToAction("Index", "Admin", new {Area="Admin"});
+                        return RedirectToAction("Index", "Admin", new { Area = "Admin" });
 
                     }
                 }
@@ -237,12 +237,13 @@ namespace CI_Platform1.Controllers
             lp.goalMissions = _Landing.goalMissions();
             lp.favoriteMissions = _Landing.favoriteMissions();
             lp.missionApplications = _Landing.missionApplications();
-            lp.skills= _Landing.skills();
+            lp.skills = _Landing.skills();
+            lp.MissionSkills = _Landing.missionSkills();
 
             return View(lp);
         }
         [HttpGet]
-        public IActionResult _Missions(int jpg, string SearchingMission,string sort, string country, string city, string theme, long missionId)
+        public IActionResult _Missions(int jpg, string SearchingMission, string sort, string skill, string country, string city, string theme, long missionId)
         {
             LandingPageVM lp = new LandingPageVM();
 
@@ -272,10 +273,8 @@ namespace CI_Platform1.Controllers
             lp.goalMissions = _Landing.goalMissions();
             lp.favoriteMissions = _Landing.favoriteMissions();
             lp.missionApplications = _Landing.missionApplications();
-            //lp.skills = _CiPlatformContext.Skills.ToList();
             lp.skills = _Landing.skills();
-
-
+            lp.MissionSkills = _Landing.missionSkills();
 
 
             //Search Mission
@@ -311,10 +310,20 @@ namespace CI_Platform1.Controllers
             }
 
 
+            if (skill != null)
+            {
+                string[] skillText = skill.Split(',');
+                //lp.missions = lp.missions.Where(m => skillText.Contains(m.MissionSkills)).ToList();
+                var tempFill = lp.MissionSkills.Where(x => skillText.Contains(x.Skill.SkillName)).Select(x => x.MissionId).ToList();
+                lp.missions = lp.missions.Where(e => tempFill.Contains(e.MissionId)).ToList();
+            }
+
+
+
 
             if (lp.missions.Count() == 0)
             {
-                return RedirectToAction("nomissionfound", "Home", new {Areas="Employee"});
+                return RedirectToAction("nomissionfound", "Home", new { Areas = "Employee" });
             }
 
             //Add to favrouite
@@ -339,7 +348,7 @@ namespace CI_Platform1.Controllers
                     break;
 
                 case "4":
-                    lp.missions = lp.missions.OrderBy(e => Convert.ToInt32(e.Availability)).ToList();
+                    lp.missions = lp.missions.OrderBy(e => e.Seatleft).ToList();
                     break;
 
                 case "5":
@@ -396,8 +405,6 @@ namespace CI_Platform1.Controllers
 
             var userid = HttpContext.Session.GetString("userID");
             //ViewBag.UserId = int.Parse(userid);
-
-
 
             ViewBag.user = lp.users.FirstOrDefault(e => e.UserId == id);
             List<VolunteeringVM> relatedlist = new List<VolunteeringVM>();
@@ -536,22 +543,6 @@ namespace CI_Platform1.Controllers
             storylist.missions = _CiPlatformContext.Missions.ToList();
             storylist.storymedia = _CiPlatformContext.StoryMedia.ToList();
 
-            //Pagination
-            ViewBag.missionCount = storylist.Stories.Count();
-            const int pageSize = 6;
-            if (jpg < 1)
-            {
-                jpg = 1;
-            }
-            int recsCount = storylist.Stories.Count();
-            var pager = new Pager(recsCount, jpg, pageSize);
-            int recSkip = (jpg - 1) * pageSize;
-            var data = storylist.Stories.Skip(recSkip).Take(pager.PageSize).ToList();
-            this.ViewBag.pager = pager;
-            ViewBag.missionTempDate = data;
-            storylist.Stories = data.ToList();
-            ViewBag.TotalMission = recsCount;
-
             return View(storylist);
         }
 
@@ -561,11 +552,11 @@ namespace CI_Platform1.Controllers
         {
             StoryShareVM storylist = new StoryShareVM();
 
-            storylist.Stories = _CiPlatformContext.Stories.Where(u=> u.Status == "Approved").ToList();
-
+            storylist.Stories = _CiPlatformContext.Stories.Where(u => u.Status == "Approved").ToList();
             storylist.missionThemes = _CiPlatformContext.MissionThemes.ToList();
             storylist.storymedia = _CiPlatformContext.StoryMedia.ToList();
 
+            //Pagination
             ViewBag.missionCount = storylist.Stories.Count();
             const int pageSize = 6;
             if (jpg < 1)
@@ -589,97 +580,185 @@ namespace CI_Platform1.Controllers
         //Storyshare
         public async Task<IActionResult> StoryshareAsync(long StoryId, long id)
         {
-            
+
             var userid = HttpContext.Session.GetString("userID");
             StoryShareVM sl = new StoryShareVM();
             sl.missions = _Landing.missions();
             sl.missionApplications = _CiPlatformContext.MissionApplications.ToList();
 
-            if(id != 0)
+            if (id != 0)
             {
                 var story = _CiPlatformContext.Stories.FirstOrDefault(u => u.StoryId == id);
-
-                sl.mission_id =Convert.ToInt32(story.MissionId);
+                sl.StoryId = id;
+                sl.mission_id = Convert.ToInt32(story.MissionId);
                 sl.Title = story.Title;
                 sl.editor1 = story.Description;
+                sl.PublishedAt = story.PublishedAt;
+
+                sl.storymedia = _CiPlatformContext.StoryMedia.Where(t => t.StoryId == id && t.StoryType == "image").ToList();
             }
 
             return View(sl);
         }
-
+        //Post
         [HttpPost]
-        public async Task<IActionResult> Storyshare(StoryShareVM ss, string action, IFormFileCollection? dragdrop)
+        public async Task<IActionResult> Storyshare(StoryShareVM ss, string action, IFormFileCollection? dragdrop, long storyid)
         {
+
             if (action == "submit")
             {
-                var userid = HttpContext.Session.GetString("userID");
-                ss.missions = _Landing.missions();
-                ss.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
-
-                Story stories = new Story();
-                stories.UserId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
-                stories.MissionId = ss.MissionId;
-                stories.Title = ss.Title;
-                stories.Description = ss.editor1;
-                stories.Status = "Pending";
-                stories.CreatedAt = DateTime.Now;
-                _CiPlatformContext.Stories.Add(stories);
-                _CiPlatformContext.SaveChanges();
-                var sId = stories.StoryId;
-
-                if (ss.attachment != null)
+                if (storyid == 0)
                 {
-                    foreach (var i in ss.attachment)
+                    var userid = HttpContext.Session.GetString("userID");
+                    ss.missions = _Landing.missions();
+                    ss.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
+
+                    Story stories = new Story();
+                    stories.UserId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
+                    stories.MissionId = ss.MissionId;
+                    stories.Title = ss.Title;
+                    stories.Description = ss.editor1;
+                    stories.Status = "Pending";
+                    stories.PublishedAt = ss.PublishedAt;
+                    stories.CreatedAt = DateTime.Now;
+
+                    var sId = stories.StoryId;
+
+                    if (ss.attachment != null)
                     {
-                        var FileName = "";
-                        using (var ms = new MemoryStream())
+                        foreach (var i in ss.attachment)
                         {
-                            await i.CopyToAsync(ms);
-                            var imageBytes = ms.ToArray();
-                            var base64String = Convert.ToBase64String(imageBytes);
-                            FileName = "data:image/png;base64," + base64String;
+                            var FileName = "";
+                            using (var ms = new MemoryStream())
+                            {
+                                await i.CopyToAsync(ms);
+                                var imageBytes = ms.ToArray();
+                                var base64String = Convert.ToBase64String(imageBytes);
+                                FileName = "data:image/png;base64," + base64String;
+                            }
+                            _Interface.AddStoryMedia(i.ContentType.Split("/")[0], FileName, ss.mission_id, Convert.ToInt32(userid), ss.StoryId, sId);
                         }
-                        _Interface.AddStoryMedia(i.ContentType.Split("/")[0], FileName, ss.mission_id, Convert.ToInt32(userid), ss.StoryId, sId);
                     }
+                    _CiPlatformContext.Stories.Add(stories);
+                    _CiPlatformContext.SaveChanges();
+                    return View(ss);
                 }
 
-                return View(ss);
+                else
+                {
+                    var userid = HttpContext.Session.GetString("userID");
+                    ss.missions = _Landing.missions();
+                    ss.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
+
+                    var stories = _CiPlatformContext.Stories.FirstOrDefault(u => u.StoryId == storyid);
+                    stories.UserId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
+                    stories.MissionId = ss.MissionId;
+                    stories.Title = ss.Title;
+                    stories.Description = ss.editor1;
+                    stories.Status = "Pending";
+                    stories.PublishedAt = ss.PublishedAt;
+                    stories.CreatedAt = DateTime.Now;
+
+                    var sId = stories.StoryId;
+
+                    if (ss.attachment != null)
+                    {
+                        foreach (var i in ss.attachment)
+                        {
+                            var FileName = "";
+                            using (var ms = new MemoryStream())
+                            {
+                                await i.CopyToAsync(ms);
+                                var imageBytes = ms.ToArray();
+                                var base64String = Convert.ToBase64String(imageBytes);
+                                FileName = "data:image/png;base64," + base64String;
+                            }
+                            _Interface.AddStoryMedia(i.ContentType.Split("/")[0], FileName, ss.mission_id, Convert.ToInt32(userid), ss.StoryId, sId);
+                        }
+                    }
+                    _CiPlatformContext.Stories.Update(stories);
+                    _CiPlatformContext.SaveChanges();
+                    return View(ss);
+
+                }
             }
 
             else if (action == "save")
             {
-                var userid = HttpContext.Session.GetString("userID");
-                ss.missions = _Landing.missions();
-                ss.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
-
-                Story stories = new Story();
-                stories.UserId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
-                stories.MissionId = ss.MissionId;
-                stories.Title = ss.Title;
-                stories.Description = ss.editor1;
-                stories.Status = "Draft";
-                stories.CreatedAt = DateTime.Now;
-                _CiPlatformContext.Stories.Add(stories);
-                _CiPlatformContext.SaveChanges();
-
-                var sId = stories.StoryId;
-
-                if (ss.attachment != null)
+                if (storyid == 0)
                 {
-                    foreach (var i in ss.attachment)
+                    var userid = HttpContext.Session.GetString("userID");
+                    ss.missions = _Landing.missions();
+                    ss.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
+
+                    Story stories = new Story();
+                    stories.UserId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
+                    stories.MissionId = ss.MissionId;
+                    stories.Title = ss.Title;
+                    stories.Description = ss.editor1;
+                    stories.Status = "Draft";
+                    stories.PublishedAt = ss.PublishedAt;
+                    stories.CreatedAt = DateTime.Now;
+                    _CiPlatformContext.Stories.Add(stories);
+                    _CiPlatformContext.SaveChanges();
+
+                    var sId = stories.StoryId;
+
+                    if (ss.attachment != null)
                     {
-                        var FileName = "";
-                        using (var ms = new MemoryStream())
+                        foreach (var i in ss.attachment)
                         {
-                            await i.CopyToAsync(ms);
-                            var imageBytes = ms.ToArray();
-                            var base64String = Convert.ToBase64String(imageBytes);
-                            FileName = "data:image/png;base64," + base64String;
+                            var FileName = "";
+                            using (var ms = new MemoryStream())
+                            {
+                                await i.CopyToAsync(ms);
+                                var imageBytes = ms.ToArray();
+                                var base64String = Convert.ToBase64String(imageBytes);
+                                FileName = "data:image/png;base64," + base64String;
+                            }
+                            _Interface.AddStoryMedia(i.ContentType.Split("/")[0], FileName, ss.mission_id, Convert.ToInt32(userid), ss.StoryId, sId);
                         }
-                        _Interface.AddStoryMedia(i.ContentType.Split("/")[0], FileName, ss.mission_id, Convert.ToInt32(userid), ss.StoryId, sId);
                     }
+                    return View(ss);
                 }
-                return View(ss);
+
+                else
+                {
+                    var userid = HttpContext.Session.GetString("userID");
+                    ss.missions = _Landing.missions();
+                    ss.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
+
+                    var stories = _CiPlatformContext.Stories.FirstOrDefault(u => u.StoryId == storyid);
+                    stories.UserId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
+                    stories.MissionId = ss.MissionId;
+                    stories.Title = ss.Title;
+                    stories.Description = ss.editor1;
+                    stories.Status = "Draft";
+                    stories.PublishedAt = ss.PublishedAt;
+                    stories.CreatedAt = DateTime.Now;
+
+                    var sId = stories.StoryId;
+
+                    if (ss.attachment != null)
+                    {
+                        foreach (var i in ss.attachment)
+                        {
+                            var FileName = "";
+                            using (var ms = new MemoryStream())
+                            {
+                                await i.CopyToAsync(ms);
+                                var imageBytes = ms.ToArray();
+                                var base64String = Convert.ToBase64String(imageBytes);
+                                FileName = "data:image/png;base64," + base64String;
+                            }
+                            _Interface.AddStoryMedia(i.ContentType.Split("/")[0], FileName, ss.mission_id, Convert.ToInt32(userid), ss.StoryId, sId);
+                        }
+                    }
+
+                    _CiPlatformContext.Stories.Update(stories);
+                    _CiPlatformContext.SaveChanges();
+                    return View(ss);
+                }
             }
             else
             {
@@ -748,7 +827,7 @@ namespace CI_Platform1.Controllers
         {
             var userid = HttpContext.Session.GetString("userID");
             UserVM user = new UserVM();
-           // user.Singleuser = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
+            // user.Singleuser = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
             var u = _CiPlatformContext.Users.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid));
 
             user.Countries = _CiPlatformContext.Countries.ToList();
@@ -768,7 +847,7 @@ namespace CI_Platform1.Controllers
             user.LinkedInUrl = u.LinkedInUrl;
             if (u.Avatar != null)
             {
-              user.UserAvatar = u.Avatar;
+                user.UserAvatar = u.Avatar;
             }
 
 
@@ -862,7 +941,7 @@ namespace CI_Platform1.Controllers
             var userid = HttpContext.Session.GetString("userID");
             ss.missions = _CiPlatformContext.Missions.ToList();
             ss.missionApplications = _CiPlatformContext.MissionApplications.Where(e => e.UserId == Convert.ToInt64(userid)).ToList();
-            ss.timesheets = _CiPlatformContext.Timesheets.ToList(); 
+            ss.timesheets = _CiPlatformContext.Timesheets.ToList();
 
             return View(ss);
         }
@@ -953,7 +1032,7 @@ namespace CI_Platform1.Controllers
             ss.Notes = sheet.Notes;
 
             //if (ss.hour != 0 && ss.minute != 0)
-            if(sheet.TimesheetTime != null)
+            if (sheet.TimesheetTime != null)
             {
                 ss.hour = Convert.ToInt32(sheet.TimesheetTime.Split(":")[0]);
                 ss.minute = Convert.ToInt32(sheet.TimesheetTime.Split(":")[1]);

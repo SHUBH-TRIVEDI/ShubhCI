@@ -12,7 +12,7 @@
 <body>
     <hr />
     <div class="container">
-        <form method="post" asp-action="Storyshare"  asp-controller="Home" enctype="multipart/form-data">
+        <form method="post" asp-action="Storyshare" asp-controller="Home" asp-route-storyid="@Model.StoryId" enctype="multipart/form-data">
             <div class="mt-2 fs-2">
                 Share Your Story
             </div>
@@ -37,7 +37,7 @@
 
                 <div class="col-4">
                     <div>Date</div>
-                    <div><input asp-for="CreatedAt" class="col-11 heigh" type="date" placeholder="Select Date"></div>
+                    <div><input asp-for="PublishedAt" class="col-11 heigh" type="date" placeholder="Select Date"></div>
                 </div>
             </div>
 
@@ -58,7 +58,18 @@
                 <input type="file" asp-for="attachment" class="file-input file" multiple="multiple" accept="image/jpeg, image/PNG, image/jpg">
             </div>
 
-            <output class="d-flex"></output>
+            <output class="d-flex">
+                @if (Model.storymedia != null)
+                {
+                    foreach (var i in Model.storymedia)
+                    {
+                        <div class="image">
+                            <img src="@i.StoryPath" alt="image">
+                            <span onclick="deleteImage(0)" style="color:black;">×</span>
+                        </div>
+                    }
+                }
+            </output>
 
             <div class="d-flex bd-highlight mb-3">
                 <div class="me-auto p-2">

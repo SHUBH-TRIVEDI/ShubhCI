@@ -149,18 +149,20 @@
                             }
                         </ul>
                     </div>
+
                     <div class="btn-group filter-dropdown dropdown col-sm-3 border px-0">
-                        <div type="button" class="btn dropdown-toggle d-inline-flex justify-content-between align-items-center" id="skill" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn dropdown-toggle d-inline-flex justify-content-between align-items-center" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                             <span>Skill</span>
                             <img src="~/images/drop-down.png" />
-                        </div>
-                        <ul class="dropdown-menu" aria-labelledby="skill" id="skill" name="skill">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" onchange="mysearch()" style="height:140px; width:max-content; overflow-y: auto;">
                             @foreach (var i in Model.skills)
                             {
                                 <li>
                                     <a class="dropdown-item" href="#">
                                         <div class="form-check">
-                                            <input class="form-check-input skill" name="skill" type="checkbox" value="@i.SkillId" id="Checkme1" />
+                                            <input class="form-check-input theme" name="skill" type="checkbox" value="@i.SkillName" id="Checkme1" />
                                             <label class="form-check-label" for="Checkme1">@i.SkillName</label>
                                         </div>
                                     </a>
@@ -168,6 +170,7 @@
                             }
                         </ul>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -28,6 +28,11 @@ namespace CI_Project.Repository.Repository
             return _CiPlatformContext.Skills.ToList();
         }
 
+        public List<MissionSkill> missionSkills()
+        {
+            return _CiPlatformContext.MissionSkills.ToList();
+        }
+
         public List<Mission> missions()
         {
             return _CiPlatformContext.Missions.Where(u=> u.DeletedAt == null).ToList();

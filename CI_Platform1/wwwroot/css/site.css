@@ -24,10 +24,6 @@ html {
     color: gray !important;
 }
 
-.form-control:focus {
-    box-shadow: none !important;
-    border-color: black !important;
-}
 
 .btn {
     box-shadow: none !important;

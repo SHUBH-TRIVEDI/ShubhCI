@@ -2,7 +2,9 @@
 @model StoryShareVM
 
 <link rel="stylesheet" type="text/css" href="~/css/draft.css" asp-append-version="true">
+
 <partial name="Navbar1"></partial>
+
 <div class="container grid-container">
     <div class="row mt-3 mb-3">
         @foreach (var item in Model.Stories)
@@ -14,18 +16,17 @@
                     }
                     <div class="d-inline imgdiv position-relative">
                         <div id="change">
-@*                            if(storymedia != null)
+                            @if (storymedia != null)
                             {
-                            <img src="@storymedia.StoryPath"
-                             class="card-img-top missionimg" alt="...">
+                                <img src="@storymedia.StoryPath" class="card-img-top missionimg" alt="...">
                             }
 
                             else
-                            {*@
-                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
+                            {
+                                <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
                              class="card-img-top missionimg" alt="...">
-                            @*}*@
-                            @*href="/Home/Storyshare?storyId=@item.StoryId"*@
+                            }
+
                             <button class="btn cardbtn btn-view" onclick="viewdetails()">
                                 <a asp-action="Storyshare" asp-controller="Home" asp-area="Employee" asp-route-id="@item.StoryId" class="text-decoration-none text-black">Edit </a><i class="bi bi-arrow-right ms-2 mt-3 "></i>
                             </button>
@@ -41,7 +42,6 @@
                     <div class="card-body">
                         <h5 class="card-title" style="overflow: hidden; display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">@item.Title</h5>
                         <p class="card-text text-secondary" style="overflow: hidden; display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">@Html.Raw(@item.Description)</p>
-
 
                         <div class="col column2">
                             <img src="~/images/volunteer7.png" class="rounded-circle me-1"

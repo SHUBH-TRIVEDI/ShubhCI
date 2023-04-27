@@ -14,6 +14,8 @@ namespace CI_Entities1.Models.ViewModel
 
         public IFormFile Image { get; set; }
 
+        public string getimage { get; set; }
+
         public string? Text { get; set; }
 
         public int? SortOrder { get; set; }

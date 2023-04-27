@@ -82,19 +82,6 @@ namespace CI_Project.Repository.Repository
             return pr;
         }
 
-        //public Resetpassword token(string email, string token)
-        //{
-        //    Resetpassword pr = new Resetpassword
-        //    {
-        //        Email = email,
-        //        Token = token
-        //    };
-        //    _CiPlatformContext.Resetpassword.Add(pr);
-        //    _CiPlatformContext.SaveChanges();
-        //    return pr;
-
-        //}
-
         //Favroite mission
         public FavoriteMission FavMission(int  missionId, int userId)
         {

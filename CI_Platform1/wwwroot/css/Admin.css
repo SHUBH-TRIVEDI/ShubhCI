@@ -4,7 +4,12 @@
     height:100vh;
 }
 
-
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #F88634 !important;
+}
+a.paginate_button.current{
+    color:white !important;
+}
 
 .list-group-item.active {
     z-index: 2;
