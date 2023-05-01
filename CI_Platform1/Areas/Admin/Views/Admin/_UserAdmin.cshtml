@@ -37,7 +37,7 @@
                 <div class" col-12">
                     <div class="text-center">
                         <input type="file" id="InputImg" style="display:none;" />
-                        <img  onclick="FileImg()" class="imgDiv rounded-circle mt-5" style="height:100px; width:100px;" />
+                        <img onclick="FileImg()" class="imgDiv rounded-circle mt-5" style="height:100px; width:100px;" />
                     </div>
                 </div>
 
@@ -178,6 +178,20 @@
 </table>
 
 <script>
+
+            function FileImg() {
+            $('#InputImg').click();
+        }
+
+        document.getElementById('InputImg').addEventListener("change", e => {
+            const reader = new FileReader(); 
+            reader.onload = function () {
+                document.getElementById('imgDiv').src = reader.result; 
+            }
+            reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
+        });
+
+
     function UserAddEdit()
     {
         var first=$("#first").val();

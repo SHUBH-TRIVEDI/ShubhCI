@@ -13,48 +13,34 @@
             <div class="col-12 col-lg-6 col-md-12 col-sm-12  p-1">
 
                 <!-- Full-width images with number text -->
-                <div class="mySlides" style="display: none;">
-                    <div class="numbertext">1 / 4</div>
-                    <img src="~/Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-3.png"
+                @{
+                    int a = 1;
+                }
+                @foreach (var media in Model.missionMedia)
+                {
+                    <div class="mySlides" style="display: none;">
+                        <div class="numbertext">@a / 4</div>
+                        <img src="@media.MediaPath"
                          style="width:100%; height: 54vh;">
-                </div>
-
-                <div class="mySlides" style="display: none;">
-                    <div class="numbertext">2 / 4</div>
-                    <img src="~/images/img1.png" style="width:100%; height: 54vh;">
-                </div>
-
-                <div class="mySlides" style="display: none;">
-                    <div class="numbertext">3 / 4</div>
-                    <img src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability-2.png"
-                         style="width:100%; height: 54vh;">
-                </div>
-
-                <div class="mySlides" style="display: block;">
-                    <div class="numbertext">4 / 4</div>
-                    <img src="/Images/img11.png" style="width:100%; height: 54vh;">
-                </div>
+                    </div>
+                    a = a + 1;
+                }
 
                 <!-- Thumbnail images -->
-                <div class="row mt-3">
-                    <div class="column" style="width:25%">
-                        <img class="demo cursor"
-                             src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png" style="width:100%"
-                             onclick="currentSlide(1)" alt="The Woods">
-                    </div>
-                    <div class="column" style="width:25%">
-                        <img class="demo cursor" src="~/images/img1.png" style="width:100%" onclick="currentSlide(2)"
-                             alt="Cinque Terre">
-                    </div>
-                    <div class="column" style="width:25%">
-                        <img class="demo cursor"
-                             src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
-                             style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-                    </div>
-                    <div class="column" style="width:25%">
-                        <img class="demo cursor active" src="~/images/img11.png" style="width:100%"
-                             onclick="currentSlide(4)" alt="Northern Lights">
-                    </div>
+                <div class="row mt-3" style="flex-wrap: inherit;overflow-x: scroll;">
+
+                    @{
+                        int b = 1;
+                    }
+                    @foreach (var i in Model.missionMedia)
+                    {
+                        <div class="column" style="width:25%">
+                            <img class="demo cursor"
+                             src="@i.MediaPath" style="width:100%"
+                             onclick="currentSlide(@b)" alt="The Woods">
+                        </div>
+                        b = b + 1;
+                    }
 
                 </div>
             </div>
@@ -227,17 +213,41 @@
                     </div>
 
                 </div>
+                @{
+                    var misapp = Model.missionApplications.FirstOrDefault(x => x.ApprovalStatus == "Pending");
+                    var misappreject = Model.missionApplications.FirstOrDefault(x => x.ApprovalStatus == "Rejected");
+
+                }
 
                 @if (ViewBag.isapplied == 0)
                 {
                     <div class="text-center mt-3 apply ">
-                        <button class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)">
+                        <button class="btn cardbtn mx-auto shadow-none bgchange" onclick="Apply(@ViewBag.Missiondetail.MissionId)">
                             Apply Now  <img class="ms-1"
                                         src="/Images/right-arrow.png">
                         </button>
                     </div>
                 }
-                else
+                else if (misapp != null)
+                {
+                    <div class="text-center mt-3 apply ">
+                        <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
+                            Pending  <img class="ms-1"
+                                      style="display:none;" src="/Images/right-arrow.png">
+                        </button>
+                    </div>
+                }
+
+                else if (misappreject != null)
+                {
+                    <div class="text-center mt-3 apply ">
+                        <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
+                            Application Rejected  <img class="ms-1"
+                                                   style="display:none;" src="/Images/right-arrow.png">
+                        </button>
+                    </div>
+                }
+                else if (misappreject != null)
                 {
                     <div class="text-center mt-3 apply ">
                         <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
@@ -246,6 +256,7 @@
                         </button>
                     </div>
                 }
+
 
 
             </div>
@@ -347,8 +358,9 @@
                                 <textarea class="form-control shadow-none" aria-label="With textarea" id="commentarea" onkeyup="Entercmt()"
                                           placeholder="Enter your comments..."></textarea>
                             </div>
-                            <span class="d-none text-danger col-12" id="cmtErr">Enter Your Comment</span>
                             <button class="btnApply rounded-pill" onclick="PostComment()">Post Comment</button>
+                            <span class="d-none text-danger col-12" id="cmtErr">Enter Your Comment</span>
+
 
                             <div class="panel mt-3" id="result_panel">
                                 <div class="panel-body">
@@ -362,7 +374,7 @@
                                                      width="52" alt="">
                                                 </div>
                                                 <div class="ms-3">
-                                                    @if(i.User != null)
+                                                    @if (i.User != null)
                                                     {
                                                         <p class="mt-2">@i.User.FirstName @i.User.LastName</p>
                                                     }

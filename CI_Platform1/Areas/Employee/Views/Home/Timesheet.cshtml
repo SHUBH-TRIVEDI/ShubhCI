@@ -15,11 +15,11 @@
     </div>
 
     <div class="row mt-3">
-        <div class="border col-6">
+        <div class="border col-12 col-sm-12 col-md-12 col-lg-6">
             <div class="d-flex ">
                 <div class="mt-4">Volunteering Hours</div>
 
-                <button type="button" class="btn rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal" onclick="nullvalues()"
+                <button type="button" class="bgchange btn rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal" onclick="nullvalues()"
                         data-bs-target="#timesheetADD">
                     <i class="bi bi-plus-lg me-2 "></i>ADD
                 </button>
@@ -49,11 +49,15 @@
                                                 }
                                             }
                                         </select>
+                                        <span asp-validation-for="MissionId" class="text-danger"></span>
+
                                     </div>
 
                                     <label class="mt-4">Date Volunteered</label>
                                     <div>
                                         <input asp-for="DateVolunteered" class="col-12 " type="date" id="dat" placeholder="Enter Date" />
+                                        <span asp-validation-for="DateVolunteered" class="text-danger"></span>
+
                                     </div>
 
                                     <div class="row">
@@ -61,18 +65,24 @@
                                             <label for="Action" class="mt-4">Hours</label>
                                             <div>
                                                 <input asp-for="hour" class="col-12" type="number" id="hour" min="0" max="23" placeholder="Enter Spent Hours" />
+                                                <span asp-validation-for="hour" class="text-danger"></span>
+
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <label for="Action" class="mt-4">Minutes</label>
                                             <div>
                                                 <input asp-for="minute" class="col-12" type="number" id="min" min="0" max="59" placeholder="Enter Spent Minutes" />
+                                                <span asp-validation-for="minute" class="text-danger"></span>
+
                                             </div>
                                         </div>
                                     </div>
                                     <label class="mt-4">Message</label>
                                     <div>
                                         <textarea asp-for="Notes" class="col-12" rows="5" id="note" placeholder="Enter Your Message"></textarea>
+                                        <span asp-validation-for="Notes" class="text-danger"></span>
+
                                     </div>
                                 </div>
 
@@ -83,7 +93,7 @@
                                             data-bs-dismiss="modal">
                                         Cancel
                                     </button>
-                                    <button type="submit" class="btn oran shadow-none">Submit</button>
+                                    <button type="submit" class="btn bgchange oran shadow-none">Submit</button>
                                 </div>
                             </form>
 
@@ -112,7 +122,7 @@
                                 if (sheet.Mission.MissionType == "Time")
                                 {
                                     <tr>
-                                        <td>@sheet.Mission.Title</td>
+                                        <th>@sheet.Mission.Title</th>
                                         <td>@sheet.DateVolunteered</td>
                                         <td>@sheet.TimesheetTime.ToString().Split(":")[0]</td>
                                         <td>@sheet.TimesheetTime.ToString().Split(":")[1]</td>
@@ -137,12 +147,12 @@
             </div>
         </div>
 
-        <div class="border col-6">
+        <div class="border col-12 col-sm-12 col-md-12 col-lg-6">
             <div class="d-flex ">
                 <div class="mt-4">Volunteering Goals</div>
 
                 <!-- <div class="mt-1 text-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Change Password</div> onclick="Modalopen()"  -->
-                <button type="button" class="btn rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal" onclick="nullvalues()"
+                <button type="button" class="btn bgchange rounded-pill ms-auto shadow-none oran mt-3" data-bs-toggle="modal" onclick="nullvalues()"
                         data-bs-target="#exampleModalADDGoal">
                     <i class="bi bi-plus-lg me-2 "></i>ADD
                 </button>
@@ -171,21 +181,29 @@
                                                 }
                                             }
                                         </select>
+                                        <span asp-validation-for="MissionId" class="text-danger"></span>
+
                                     </div>
 
                                     <label for="Action" class="mt-4">Actions</label>
                                     <div>
                                         <input asp-for="Action" class="col-12" id="action" type="text" placeholder="Enter Actions" />
+                                        <span asp-validation-for="Action" class="text-danger"></span>
+
                                     </div>
 
                                     <label class="mt-4">Date Volunteered</label>
                                     <div>
                                         <input asp-for="DateVolunteered" id="dats" class="col-12 " type="date" placeholder="Enter Date" />
+                                        <span asp-validation-for="DateVolunteered" class="text-danger"></span>
+
                                     </div>
 
                                     <label class="mt-4">Message</label>
                                     <div>
                                         <textarea asp-for="Notes" id="notes" class="col-12" rows="5" placeholder="Enter Your Message"></textarea>
+                                        <span asp-validation-for="Notes" class="text-danger"></span>
+
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -193,7 +211,7 @@
                                             data-bs-dismiss="modal">
                                         Cancel
                                     </button>
-                                    <button type="submit" class="btn oran shadow-none">Submit</button>
+                                    <button type="submit" class="btn bgchange oran shadow-none">Submit</button>
                                 </div>
                                 <input type="text" asp-for="TimesheetId" class="form-control shadow-none" id="TimesheetId" aria-describedby="emailHelp" hidden />
                             </form>
@@ -233,8 +251,8 @@
                                             </button>
                                         </td>
                                         <td>
-                                            <button onclick="deletes(@sheet.TimesheetId)" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModalADDGoal" class="btn shadow-none">
+                                            <button onclick="deletes(@sheet.TimesheetId)" class="btn shadow-none">
+                                         
                                                 <img src=~/images/bin.png />
                                             </button>
                                         </td>

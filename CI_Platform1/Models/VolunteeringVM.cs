@@ -4,6 +4,7 @@ namespace CI_Platform1.Models
 {
     public class VolunteeringVM
     {
+        public List<MissionMedium> missionMedia { get; set; }   
         public long MissionId { get; set; }
 
         public long CityId { get; set; }

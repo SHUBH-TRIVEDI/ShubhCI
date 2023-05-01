@@ -1,4 +1,4 @@
-﻿                                                            @using CI_Entities1.Models.ViewModel
+﻿@using CI_Entities1.Models.ViewModel
 @model UserVM
 
 @*To Center A div--- class=" d-flex justify-content-center"*@
@@ -6,20 +6,20 @@
 <div class="container">
     <form asp-action="EditProfile" asp-controller="Home" method="post" enctype="multipart/form-data">
         <div class="row">
-            <div class="col-3 border me-4 text-center" style="height:300px">
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3  border me-4 text-center" style="height:300px">
 
                 <div>
                     <input asp-for="Avatar" type="file" id="InputImg" style="display:none;" />
                     @if (@Model.UserAvatar == null)
                     {
-                        <img src="/Images/volunteer1.png" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
-                         alt="">
+                        <img src="/Images/volunteer1.png" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 150px; width:150px ; "
+                             alt="">
                     }
                     else
                     {
 
-                        <img src="@Model.UserAvatar" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 170px; width:170px ; "
-                         alt="">
+                        <img src="@Model.UserAvatar" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 150px; width:150px ; "
+                             alt="">
                     }
                 </div>
                 <div class="mt-1 fs-4">@Model.FirstName @Model.LastName</div>
@@ -49,7 +49,7 @@
 
                 @*modal*@
             </div>
-            <div class="col-8">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                 <div class="fs-4">Basic Information</div>
                 <div class="row mt-3">
                     <hr class="col-3 " style="border: 2px solid black;">
@@ -61,6 +61,7 @@
                         <div>Name* </div>
                         <div class="col-11">
                             <input asp-for="FirstName" class="col-12 p-1 form-control" placeholder="Enter Your Name" type="text">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
 
                     </div>
@@ -69,8 +70,9 @@
                         <div>Surname*</div>
                         <div>
                             <input asp-for="LastName" class="col-12 p-1 form-control" placeholder="Enter Your Surname" type="text">
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+
                         </div>
-                        <span asp-validation-for="LastName" class="text-danger"></span>
 
                     </div>
                 </div>
@@ -80,6 +82,8 @@
                         <div>Employee Id* </div>
                         <div class="col-11">
                             <input asp-for="EmployeeId" class="col-12 p-1 form-control" placeholder="Enter Your Employee Id" type="text">
+                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
+
                         </div>
                     </div>
 
@@ -87,6 +91,7 @@
                         <div>Manager*</div>
                         <div>
                             <input class="col-12 p-1 form-control" placeholder="Enter Your Manager Details" type="text">
+
                         </div>
                     </div>
                 </div>
@@ -96,6 +101,8 @@
                         <div>Title* </div>
                         <div class="col-11">
                             <input asp-for="Title" class="col-12 p-1 form-control" placeholder="Enter Your Title" type="text">
+                            <span asp-validation-for="Title" class="text-danger"></span>
+
                         </div>
                     </div>
 
@@ -103,15 +110,19 @@
                         <div>Department*</div>
                         <div class="mt-1">
                             <input asp-for="Department" class="col-12 p-1 form-control" placeholder="Enter Your Department Details" type="text">
+                            <span asp-validation-for="Department" class="text-danger"></span>
+
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-4">My Profile*</div>
                 <textarea asp-for="ProfileText" class="col-12  form-control" rows="5" placeholder="Enter Your Comments"></textarea>
+                <span asp-validation-for="ProfileText" class="text-danger"></span>
 
                 <div class="mt-4">Why I volunteer?</div>
                 <textarea asp-for="WhyIVolunteer" class="col-12  form-control" rows="5" placeholder="Why You Volunteered"></textarea>
+                <span asp-validation-for="WhyIVolunteer" class="text-danger"></span>
 
                 <div class="fs-4"> Address Information</div>
                 <div class="row mt-3">
@@ -129,6 +140,8 @@
                                     <option value="@i.CityId">@i.Name</option>
                                 }
                             </select>
+                            <span asp-validation-for="CityId" class="text-danger"></span>
+
                         </div>
                     </div>
                     @*present*@
@@ -141,6 +154,8 @@
                                     <option value="@i.CountryId">@i.Name</option>
                                 }
                             </select>
+                            <span asp-validation-for="CountryId" class="text-danger"></span>
+
                         </div>
                     </div>
                 </div>
@@ -166,6 +181,8 @@
                         <div>Linkedin </div>
                         <div class="col-11">
                             <input class="col-12 p-1" asp-for="LinkedInUrl" placeholder="Enter Your Linkedin URL" type="text">
+                            <span asp-validation-for="LinkedInUrl" class="text-danger"></span>
+
                         </div>
                     </div>
                 </div>
@@ -188,9 +205,7 @@
                         }
                     </ul>
                 </div>
-                @*                <div>
-                    <button class="mt-2 p-2 text-secondary brd btn shadow-none">Add Skills</button>
-                    </div>*@
+
                 <button class="user-add-skills-btn rounded-pill btn-outline-secondary " data-bs-toggle="modal" type="button" data-bs-target="#addskillmodal">
                     Add Skills
                 </button>
@@ -288,66 +303,67 @@
         </div>
     </form>
 
-@*    <div class="row mt-5">
-        <div class="col-2">Privacy Policy</div>
-        <div class="col-2">Contact Us</div>
+    @*    <div class="row mt-5">
+    <div class="col-2">Privacy Policy</div>
+    <div class="col-2">Contact Us</div>
     </div>
-</div>*@
+    </div>*@
 
-<hr />
-<div class="container ">
-    <div class="text-secondary ">
-        <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+    <hr />
+    <div class="container ">
+        <div class="text-secondary ">
+            <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+        </div>
+
+
     </div>
-</div>
+   
 
-
-
-<script>
-        function FileImg(){
+    <script>
+        function FileImg() {
             $('#InputImg').click();
         }
 
         document.getElementById('InputImg').addEventListener("change", e => {
-    const reader = new FileReader(); // Create a new FileReader object
-    reader.onload = function () {
-    document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image
-    }
-    reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
-    });
+            const reader = new FileReader(); // Create a new FileReader object
+            reader.onload = function () {
+                document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image
+            }
+            reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
+        });
 
 
-    //Change Password
-        function ChangePsw(){
-              var old = document.getElementById('old').value;
-              var newp = document.getElementById('new').value;
-              var cnf = document.getElementById('cnf').value;
-              if(old == ""){
-                  alert("Old password Required");
-              }
-              else if(newp!= cnf){
-                  alert("Confirm Password Dosen't Match");
-              }
-              else{
-                   $.ajax({
-                url: '/Employee/Home/ChangePassword',
-                type: 'POST',
-                data: { old: old,newp:newp,cnf:cnf },
-                success: function (response) {
-                        if(response==true){
+        //Change Password
+        function ChangePsw() {
+            var old = document.getElementById('old').value;
+            var newp = document.getElementById('new').value;
+            var cnf = document.getElementById('cnf').value;
+            if (old == "") {
+                alert("Old password Required");
+            }
+            else if (newp != cnf) {
+                alert("Confirm Password Dosen't Match");
+            }
+            else {
+                $.ajax({
+                    url: '/Employee/Home/ChangePassword',
+                    type: 'POST',
+                    data: { old: old, newp: newp, cnf: cnf },
+                    success: function (response) {
+                        if (response == true) {
                             alert("password change successfully");
 
                         }
-                        else{
+                        else {
                             alert("Password Don't Get Change Due to Some Issues");
                         }
 
-                },
-                error: function () {
-                    alert("could not comment");
-                }
-            });
-              }
+                    },
+                    error: function () {
+                        alert("could not comment");
+                    }
+                });
+            }
         }
 
 
@@ -390,7 +406,7 @@
             }
         }
 
-            //Skills
+        //Skills
         document.getElementById('skillSave').addEventListener("click", e => {
             var selectedSkills = [];
             const skillsSelected = $('#s2 option');
@@ -412,4 +428,4 @@
                 }
             });
         });
-</script>
+    </script>

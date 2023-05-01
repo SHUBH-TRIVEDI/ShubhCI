@@ -95,3 +95,31 @@ C:\Users\tatva\Desktop\TempCI\CI_Entities1\obj\Debug\net6.0\ref\CI_Entities1.dll
 C:\Users\tatva\Desktop\TempCI\CI_Entities1\obj\Debug\net6.0\CI_Entities1.pdb
 C:\Users\tatva\Desktop\TempCI\CI_Entities1\obj\Debug\net6.0\CI_Entities1.genruntimeconfig.cache
 C:\Users\tatva\Desktop\TempCI\CI_Entities1\obj\Debug\net6.0\CI_Entities1.csproj.AssemblyReference.cache
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\bin\Debug\net6.0\CI_Entities1.deps.json
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\bin\Debug\net6.0\CI_Entities1.runtimeconfig.json
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\bin\Debug\net6.0\CI_Entities1.dll
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\bin\Debug\net6.0\CI_Entities1.pdb
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.csproj.AssemblyReference.cache
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.AssemblyInfoInputs.cache
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.AssemblyInfo.cs
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.csproj.CoreCompileInputs.cache
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.dll
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\refint\CI_Entities1.dll
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.pdb
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.genruntimeconfig.cache
+C:\Users\JAY SHUBH\OneDrive\Desktop\Final\CI_Entities1\obj\Debug\net6.0\ref\CI_Entities1.dll
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\bin\Debug\net6.0\CI_Entities1.deps.json
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\bin\Debug\net6.0\CI_Entities1.runtimeconfig.json
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\bin\Debug\net6.0\CI_Entities1.dll
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\bin\Debug\net6.0\ref\CI_Entities1.dll
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\bin\Debug\net6.0\CI_Entities1.pdb
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.csproj.AssemblyReference.cache
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.AssemblyInfoInputs.cache
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.AssemblyInfo.cs
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.csproj.CoreCompileInputs.cache
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.dll
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\ref\CI_Entities1.dll
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.pdb
+C:\Users\tatva\Desktop\Laptop Updation\Final\CI_Entities1\obj\Debug\net6.0\CI_Entities1.genruntimeconfig.cache

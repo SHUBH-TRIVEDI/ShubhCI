@@ -50,3 +50,295 @@
 .sortby {
     margin-left: auto;
 }
+
+/*Mission page css*/
+
+/*For List view*/
+.landing-page-top-right {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    padding: 5px 10px;
+    border-radius: 30px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+}
+
+.landing-page-bottom-right {
+    position: absolute;
+    bottom: 25px;
+    right: 21px;
+}
+
+.landing-page-btn-img {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    -moz-border-radiusder-radiusradius: 30px;
+    padding: 6px;
+}
+
+
+
+
+.top-right {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFFFFF;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.card-img-container {
+    position: relative;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 20px;
+    right: 15px;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFFFFF;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.bottom-up {
+    position: absolute;
+    bottom: 65px;
+    right: 15px;
+}
+
+.top-right {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFFFFF;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.login-btn {
+    border-radius: 24px;
+    color: #F88634;
+    background-color: white;
+}
+
+    .login-btn:hover {
+        color: #FFFFFF;
+        background-color: #F88634;
+    }
+
+#theme-btn {
+    position: absolute;
+    left: 100px;
+    bottom: -12px;
+    background: white;
+    border-radius: 50px;
+}
+
+#aply-btn {
+    border: 1px solid orange;
+    padding: 8px;
+    border-radius: 20px
+}
+
+}
+
+.top-left-applied {
+    position: absolute;
+    top: 15px;
+    left: 0px;
+    background-color: forestgreen;
+    color: #FFFFFF;
+    border-radius: 0px 15px 15px 0px;
+    padding: 5px 10px;
+}
+
+.top-left {
+    position: absolute;
+    top: 15px;
+    left: 0px;
+    background-color: #F88634;
+    color: #FFFFFF;
+    border-radius: 0px 15px 15px 0px;
+    padding: 5px 12px;
+}
+
+/*card*/
+
+.wid {
+    height: 253px !important;
+    /*width:414px;*/
+}
+
+.card-img {
+    position: relative;
+}
+
+.pin {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.514);
+    border-radius: 50px;
+    top: 15px;
+    right: 10px;
+}
+
+.heart {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.514);
+    border-radius: 50%;
+    top: 100px;
+    right: 12px;
+}
+
+.share {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.514);
+    border-radius: 50%;
+    top: 150px;
+    right: 12px;
+    height: 40px;
+    width: 40px;
+}
+
+.env {
+    position: absolute;
+    color: #7d7d7d;
+    background-color: white;
+    border-radius: 40px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    bottom: -16px;
+}
+/*card*/
+
+.sort {
+    width: 11rem;
+    margin-left: auto;
+}
+
+.sortby {
+    margin-left: auto;
+}
+
+/*card*/
+.krunal {
+    background: transparent;
+    border: 0px;
+    z-index: 1;
+}
+
+.card-img {
+    position: relative;
+}
+
+.pin {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.514);
+    border-radius: 50px;
+    top: 15px;
+    right: 10px;
+}
+
+.heart {
+    position: absolute;
+    /*background-color: rgba(0, 0, 0, 0.514);*/
+    border-radius: 50%;
+    /*top: 100px;*/
+    top: 4rem;
+    right: 12px;
+}
+
+.share {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.514);
+    border-radius: 45%;
+    top: 7rem;
+    right: 12px;
+}
+
+.env {
+    position: absolute;
+    color: #7d7d7d;
+    background-color: white;
+    border-radius: 40px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    bottom: -16px;
+}
+
+/*For List view*/
+
+.card-img-container {
+    position: relative;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 20px;
+    right: 15px;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFFFFF;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.bottom-up {
+    position: absolute;
+    bottom: 65px;
+    right: 15px;
+}
+
+.top-right {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFFFFF;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.login-btn {
+    border-radius: 24px;
+    color: #F88634;
+    background-color: white;
+}
+
+    .login-btn:hover {
+        color: #FFFFFF;
+        background-color: #F88634;
+    }
+
+#theme-btn {
+    position: absolute;
+    left: 100px;
+    bottom: -12px;
+    background: white;
+    border-radius: 50px;
+}
+
+#aply-btn {
+    border: 1px solid orange;
+    padding: 8px;
+    border-radius: 20px
+}
+
+.top-left-closed {
+    position: absolute;
+    top: 15px;
+    left: 0px;
+    background-color: #F88634;
+    color: #FFFFFF;
+    border-radius: 0px 15px 15px 0px;
+    padding: 5px 12px;
+}
+

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+﻿using CI_Entities1.Models;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
@@ -34,5 +35,7 @@ namespace CI_Platform1.Models
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public List<Banner>? banners { get; set; }
     }
 }

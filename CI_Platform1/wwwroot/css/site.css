@@ -12,6 +12,19 @@ html {
     border-color: black !important;
 }
 
+.bgchange {
+    border-radius: 24px;
+    color: #F88634;
+    border-color: #F88634;
+    background-color: white;
+}
+
+.bgchange:hover {
+        color: #FFFFFF;
+        border-color: #F88634;
+        background-color: #F88634;
+
+}
 .page-item.active .page-link {
     background-color: #F88634 !important;
     border-color: #F88634 !important;
@@ -159,12 +172,10 @@ hr {
     font-size: 0.7rem;
 }
 
-
 .hrbtn {
     background-color: white !important;
     border: 0.1rem solid rgb(184, 184, 184);
     border-radius: 22px;
-    /* color: grey; */
 }
 
 
@@ -249,8 +260,6 @@ hr {
     margin-left: -3rem;
     margin-top: 13rem !important;
 }
-
-
 
 /*      full card css     */
 

@@ -31,9 +31,14 @@
     font-size: xx-large;
 }
 
+body {
+    overflow: hidden; /* Hide scrollbars */
+}
+
 .email-span {
     font-size: 14px;
 }
+
 
 
 @media screen and (max-width:991px) {

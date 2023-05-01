@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CI_Entities1.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace CI_Platform1.Models
 {
@@ -11,5 +12,6 @@ namespace CI_Platform1.Models
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,3}$", ErrorMessage = "Please Provide Valid Email")]
         public string? Email { get; set; } = null!;
 
+        public List<Banner>? banners { get; set; }
     }
 }

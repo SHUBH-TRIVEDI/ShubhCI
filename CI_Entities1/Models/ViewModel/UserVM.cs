@@ -35,20 +35,29 @@ namespace CI_Entities1.Models.ViewModel
 
         public IFormFile Avatar { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide necessary details")]
         public string? WhyIVolunteer { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Employee Id")]
         public string? EmployeeId { get; set; }
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Department Name")]
         public string? Department { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide City ")]
+
         public long? CityId { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide country")]
 
         public long? CountryId { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide necessary details")]
         public string? ProfileText { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide necessary details")]
         public string? LinkedInUrl { get; set; }
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Title")]
         public string? Title { get; set; }
 
         public string Status { get; set; } = null!;

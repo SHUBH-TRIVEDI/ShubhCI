@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace CI_Entities1.Models.ViewModel
         public User Singleuser { get; set; }
         public Timesheet Singlesheet { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide the mission in which YOU volunteered")]
 
         public long MissionId { get; set; }
 
@@ -94,15 +96,17 @@ namespace CI_Entities1.Models.ViewModel
 
         public string TimesheetTime { get; set; }
 
-
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide necessary Details")]
         public int? Action { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide date Volunteered")]
         public DateTime DateVolunteered { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide any specific Message")]
         public string? Notes { get; set; }
-
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide working hours")]
         public int hour { get; set; }
-
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide working minutes")]
         public int minute { get; set; }
 
         public virtual Mission? Mission { get; set; }

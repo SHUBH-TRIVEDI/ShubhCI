@@ -9,6 +9,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CiPlatformContext>();
 builder.Services.AddScoped<IUser, UserRepository>();
 builder.Services.AddScoped<ILanding, LandingRepository>();
+builder.Services.AddScoped<IStory, StoryRepository>();
+builder.Services.AddScoped<IAdmin, AdminRepository>();
 
 builder.Services.AddSession();
 var app = builder.Build();
