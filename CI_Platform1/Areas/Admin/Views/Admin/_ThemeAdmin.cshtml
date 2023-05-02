@@ -17,7 +17,7 @@
     </div>
 
     <div class="end-btn">
-        <button data-bs-toggle="modal" data-bs-target="#ThemeModal" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2 shadow-none"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
+        <button onclick="nullvalues()" data-bs-toggle="modal" data-bs-target="#ThemeModal" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2 shadow-none"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
 
     </div>
 </div>
@@ -36,11 +36,18 @@
                     <label>Theme Title</label>
                     <div>
                         <input class="col-11" type="text" id="title" />
+                        <div id="title-validation" class="text-danger d-none">Please Provide Description </div>
+
                     </div>
 
                     <label class="mt-2">Theme Status</label>
                     <div>
-                        <input class="col-11" placeholder="Type 1 for Active and 0 for Inactive" type="text" id="status" />
+
+                        @*<input class="col-11" placeholder="Type 1 for Active and 0 for Inactive" type="text" id="status" />*@
+                        <select class="col-11" id="status">
+                            <option value="1">Active</option>
+                            <option value="0">InActive</option>
+                        </select>
                     </div>
                 </div>
 
@@ -97,56 +104,80 @@
 </table>
 
 <script>
-    function ThemeAddEdit()
-    {
-        var title=$("#title").val();
-        var status=$("#status").val();
-        var Themeid=$("#Themeid").val();
-
-        $.ajax({
-            url: '/Admin/Admin/ThemeAddEdit',
-            type: 'GET',
-            data: {'title':title, 'status':status,'Themeid': Themeid},
-            success: function (res) {
-                console.log(res);
-                $("#theme").click();
-            },
-            error: function (res) {
-                alert("Theme Modal error");
-            }
-        });
-    }
-
-        function GetThemeData(Themeid)
+        function ThemeAddEdit()
         {
-               $.ajax({
-               url: '/Admin/Admin/GetThemeData',
-               type: 'GET',
-               data: {'Themeid':Themeid},
-               success: function (res) {
-                   console.log(res);
-                   $("#title").val(res.title);
-                   $("#status").val(res.status);
-                   $("#Themeid").val(res.missionThemeId);
-                    },
-               error: function (res) {
-                   console.log(res);
-                   alert("get Theme Modal error");
-               }
-           });
+            var title=$("#title").val();
+            var status=$("#status").val();
+            var Themeid=$("#Themeid").val();
 
-    }
-
-    function ThemeDelete(id)
-    {
-        $.ajax({
-            url: '/Admin/Admin/ThemeDelete',
-            type: 'GET',
-            data: {'id':id },
-            success: function (res) {
-                console.log(res);
-                $("#theme").click();
+            if (title == "" || title == null) {
+                $("#title-validation").removeClass("d-none");
             }
-        });
-    }
+
+            else{
+            $.ajax({
+                url: '/Admin/Admin/ThemeAddEdit',
+                type: 'GET',
+                data: {'title':title, 'status':status,'Themeid': Themeid},
+                success: function (res) {
+                    console.log(res);
+                    $(".btn-close").click();
+                    $("#theme").click();
+                },
+                error: function (res) {
+                    alert("Theme Modal error");
+                }
+            });
+        }
+
+            function GetThemeData(Themeid)
+            {
+                   $.ajax({
+                   url: '/Admin/Admin/GetThemeData',
+                   type: 'GET',
+                   data: {'Themeid':Themeid},
+                   success: function (res) {
+                       console.log(res);
+                       $("#title").val(res.title);
+                       $("#status").val(res.status);
+                       $("#Themeid").val(res.missionThemeId);
+                        },
+                   error: function (res) {
+                       console.log(res);
+                       alert("get Theme Modal error");
+                   }
+               });
+
+        }
+
+        function ThemeDelete(id)
+        {
+            alert(id);
+            $.ajax({
+                url: '/Admin/Admin/ThemeDelete',
+                type: 'GET',
+                data: {'id':id },
+                success: function (res) {
+
+    Swal.fire({
+      title: 'Theme Gets Deleted',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
+                    console.log(res);
+                    $("#theme").click();
+                }
+            });
+        }
+
+        function nullvalues()
+        {
+            title =document.getElementById("title");
+            title.value="";
+            status=document.getElementById("status");
+
 </script>

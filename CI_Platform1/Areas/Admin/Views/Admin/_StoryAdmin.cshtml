@@ -76,6 +76,7 @@
             type: 'GET',
             data: {'storyid':storyid },
             success: function (res) {
+                   Swal.fire('The Story Gets Approved')
                    $("#Story").click();
             },
             error: function (res) {
@@ -91,6 +92,7 @@
             type: 'GET',
             data: {'storyid':storyid },
             success: function (res) {
+                   Swal.fire('The Story Gets Rejected')
                    $("#Story").click();
             },
             error: function (res) {
@@ -106,6 +108,16 @@
             type: 'GET',
             data: {'id':id },
              success: function (res) {
+                  
+Swal.fire({
+  title: 'Story Gets Deleted',
+  showClass: {
+    popup: 'animate__animated animate__fadeInDown'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutUp'
+  }
+})
                 //$("#application").html($(res).find("#application").html());
                    $("#Story").click();
 

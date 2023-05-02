@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +12,16 @@ namespace CI_Entities1.Models.ViewModel
     {
 
         public long BannerId { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Image")]
 
         public IFormFile Image { get; set; }
 
         public string getimage { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Text")]
 
         public string? Text { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Sort Order")]
 
         public int? SortOrder { get; set; }
         public List<Banner> banners { get; set; }

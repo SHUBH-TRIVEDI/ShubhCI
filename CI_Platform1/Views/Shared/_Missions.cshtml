@@ -26,19 +26,20 @@
                 var applied = Model.missionApplications.FirstOrDefault(e => e.MissionId == category.MissionId && e.UserId == Convert.ToInt32(userid));
                 var closed = Model.missions.FirstOrDefault(e => e.MissionId == category.MissionId);
                 var missionimg = Model.missionMedia.FirstOrDefault(e => e.MissionId == category.MissionId);
-                                               
-@*                                    var done = (int)Model.timesheets.Where(x => x.MissionId == category.MissionId && x.DeletedAt == null).Select(x => x.Action).ToList().Sum();
-                                    var total = Model.goalMissions.Where(x => x.MissionId == category.MissionId && x.DeletedAt == null).Select(x => x.GoalValue).FirstOrDefault();
-                                    var rangeofprogres=  (int)((float)done / Convert.ToInt64(total) * 100);*@
-
-                                
 
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card shadow">
                         <div class="card-img ">
-                            @*<img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />*@
-                            <img class="card-img-top h-100 wid" src="@missionimg.MediaPath">
+                            @if(missionimg !=null)
+                            {
+                                <img class="card-img-top h-100 wid" src="@missionimg.MediaPath">
 
+                            }
+                            else
+                            {
+                            <img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />
+                                
+                            }
                             @if (applied != null)
                             {
                                 <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Applied</div>
@@ -484,10 +485,13 @@
                                             <div class="">
                                                 <h6 class="pt-3 mb-0">Skill</h6>
                                                 @*//Skill*@
+@*                                                @{
+                                                    var skillhave = Model.MissionSkills.FirstOrDefault(s => s.MissionId == i.MissionId);
+                                                    var skillx = skillhave.Skill.SkillName;
+                                                }
+                                                <small>@skillx</small>*@
 
-                                                @*<small> @skill.Skill.SkillName</small>*@
-
-                                                <small>SkillName </small>
+                                                <small>Content Writing </small>
 
                                             </div>
                                         </div>

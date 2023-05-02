@@ -11,6 +11,7 @@ namespace CI_Entities1.Models.ViewModel
     public class StoryShareVM
     {
         public List<StoryMedium> StoryMediums { get; set;}
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Images for the Story")]
         public List<IFormFile> attachment { get; set; }
         public long StoryId { get; set; }
         public int? StoryViews { get; set; }
@@ -18,17 +19,19 @@ namespace CI_Entities1.Models.ViewModel
         public User Singleuser { get; set; }
         public Timesheet Singlesheet { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide the mission in which YOU volunteered")]
-
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide the mission for your story ")]
         public long MissionId { get; set; }
 
         public long UserId { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Title")]
 
         public string? Title { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Description for the story")]
 
         public string? editor1 { get; set; }
 
         public string? Status { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Date of Publication")]
 
         public DateTime? PublishedAt { get; set; }
 

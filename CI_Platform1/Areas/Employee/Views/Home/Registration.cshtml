@@ -4,14 +4,24 @@
 <head>
     <link rel="stylesheet" href="~/css/registration.css" asp-append-version="true">
     <style>
-        html{
-            max-height:100vh;
+        html {
+            max-height: 100vh;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .example::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .example {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
         }
     </style>
 
     <title>Registration Page</title>
 </head>
-<body>
+<body class="example">
     <div class="container-fluid pl-0">
         <div class="row ">
             <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 g-0" data-bs-ride="carousel" data-bs-interval="2000">

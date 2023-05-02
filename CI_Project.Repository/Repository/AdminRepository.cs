@@ -420,7 +420,7 @@ namespace CI_Project.Repository.Repository
         public AdminVM GetSkillData()
         {
             AdminVM adminVM = new AdminVM();
-            adminVM.skills = _CiPlatformContext.Skills.ToList();
+            adminVM.skills = _CiPlatformContext.Skills.Where(u=> u.DeletedAt == null).ToList();
 
             return adminVM;
         }
@@ -463,8 +463,10 @@ namespace CI_Project.Repository.Repository
         public void SkillDelete(long SkillId)
         {
             var skill = _CiPlatformContext.Skills.FirstOrDefault(u => u.SkillId == SkillId);
+            skill.DeletedAt = DateTime.Now;
 
-            _CiPlatformContext.Skills.Remove(skill);
+            _CiPlatformContext.Skills.Remove(skill);        
+            //_CiPlatformContext.Skills.Update(skill);
             _CiPlatformContext.SaveChanges();
         }
 
@@ -551,10 +553,6 @@ namespace CI_Project.Repository.Repository
             _CiPlatformContext.Banners.Update(banner);
             _CiPlatformContext.SaveChanges();
         }
-
-
-
-
 
     }
 }

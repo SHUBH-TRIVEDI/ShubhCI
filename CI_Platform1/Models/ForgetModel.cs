@@ -13,5 +13,7 @@ namespace CI_Platform1.Models
         public string? Email { get; set; } = null!;
 
         public List<Banner>? banners { get; set; }
+
+
     }
 }

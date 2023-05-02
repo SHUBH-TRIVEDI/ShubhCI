@@ -69,6 +69,7 @@
             data: {'Missionapplicationid':Missionapplicationid },
             success: function (res) {
                 //$("#application").html($(res).find("#application").html());
+                   Swal.fire('The Application Gets Approved')
                    $("#Application").click();
 
             },
@@ -86,8 +87,8 @@
             data: {'Missionapplicationid':Missionapplicationid },
             success: function (res) {
                 //$("#application").html($(res).find("#application").html());
+                   Swal.fire('The Application Gets Rejected')
                    $("#Application").click();
-
             },
             error: function (res) {
                 alert("error");

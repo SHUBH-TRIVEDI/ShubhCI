@@ -38,22 +38,30 @@
                     <label class="mt-3">Title</label>
                     <div>
                         <input class="col-12 " type="text" id="Title" />
+                        <div id="title-validation" class="text-danger d-none">Please Provide title </div>
+
                     </div>
 
                     <label class="mt-2">Description</label>
                     <div class="col-12 mt-2">
                         @*<textarea class="col-12" name="editor1" id="Desc"></textarea>*@
                         <textarea class="col-12" name="editor1" id="Desc"></textarea>
+                        <div id="desc-validation" class="text-danger d-none">Please Provide Description </div>
+
                     </div>
 
                     <label class="mt-2">Slug</label>
                     <div>
                         <input class="col-12 " type="text" id="Slug" />
+                        <div id="slug-validation" class="text-danger d-none">Please Provide Slug </div>
+
                     </div>
 
                     <label class="mt-2">Status</label>
                     <div>
-                        <input class="col-12 " type="text" id="Status" />
+                        @*By default inactive*@
+                        <input class="col-12 " type="text" id="Status" placeholder="Active OR Inactive" />
+                        <div id="status-validation" class="text-danger d-none">Please Provide Status </div>
                     </div>
                 </div>
 
@@ -62,7 +70,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn oran" onclick="AddEdit()" data-bs-dismiss="modal">Save</button>
+                <button type="button" class="btn oran" onclick="AddEdit()">Save</button>
             </div>
         </div>
     </div>
@@ -113,78 +121,110 @@
     </tbody>
 </table>
 
+@*SweetAlert*@
+
 
 <script>
-    function AddEdit()
-    {
-        var Title = document.getElementById("Title").value;
-        var Desc = document.getElementById("Desc").value;
-        var Slug = document.getElementById("Slug").value;
-        var Status = document.getElementById("Status").value;
-        var CMSId = document.getElementById("CMSId").value;
+        function AddEdit()
+        {
+            var Title = document.getElementById("Title").value;
+            var Desc = document.getElementById("Desc").value;
+            var Slug = document.getElementById("Slug").value;
+            var Status = document.getElementById("Status").value;
+            var CMSId = document.getElementById("CMSId").value;
 
-        $.ajax({
-            url: '/Admin/Admin/CMSAdd',
-            type: 'POST',
-            data: {'CMSId':CMSId , 'Title':Title, 'Desc': Desc, 'Slug': Slug, 'Status': Status  },
-            success: function (res) {
-                //console.log(res);
-                //$("#UserModal").html($(res).find("#UserModal").html());
-                $("#cms").click();
-            },
-            error: function (res) {
-                console.log(res);
-                alert("Modal error");
+
+            if (Status == null) {
+                $("#status-validation").removeClass("d-none");
             }
-        });
-    }
 
-    function GetCmsData(CMSId){
-        $.ajax({
-            url: '/Admin/Admin/GetCMSData',
-            type: 'GET',
-            data: {'CMSId':CMSId},
-            success: function (res) {
-                //console.log(res);
-                //$("#UserModal").html($(res).find("#UserModal").html());
-                $("#Title").val(res.title);
-                $("#Desc").val(res.description);
-                $("#Slug").val(res.slug);
-                $("#Status").val(res.status);
-                $("#CMSId").val(res.cmsPageId);
-            },
-            error: function (res) {
-                console.log(res);
-                alert("Modal error");
+            else if (Title == "" || Title == null) {
+                $("#title-validation").removeClass("d-none");
             }
-        });
-    }
+            else if (Desc == "" || Desc == null) {
+                $("#desc-validation").removeClass("d-none");
 
-    function DeleteCMS(CMSId)
-    {
-        $.ajax({
-            url: '/Admin/Admin/CMSDelete',
-            type: 'GET',
-            data: {'CMSId':CMSId},
-            success: function (res) {
-                $("#cms").click();
-            },
-            error: function (res) {
-                console.log(res);
-                alert("Modal error");
             }
-        });
-    }
+            else if (Slug == "" || Slug == null) {
+                $("#slug-validation").removeClass("d-none");
 
-    function nullvalues()
-    {
-         document.getElementById("Title").value ="";
-         document.getElementById("Desc").value ="";
-         document.getElementById("Slug").value ="";
-         document.getElementById("Status").value ="";
-         document.getElementById("CMSId").value ="";
-    }
+            }
+            else{
 
-       CKEDITOR.replace('editor1');
+            $.ajax({
+                url: '/Admin/Admin/CMSAdd',
+                type: 'POST',
+                data: {'CMSId':CMSId , 'Title':Title, 'Desc': Desc, 'Slug': Slug, 'Status': Status  },
+                success: function (res) {
+                    //console.log(res);
+                    //$("#UserModal").html($(res).find("#UserModal").html());
+                    $(".btn-close").click();
+                    $("#cms").click();
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert("Modal error");
+                }
+            });
+            }
+        }
+
+        function GetCmsData(CMSId){
+            $.ajax({
+                url: '/Admin/Admin/GetCMSData',
+                type: 'GET',
+                data: {'CMSId':CMSId},
+                success: function (res) {
+                    //console.log(res);
+                    //$("#UserModal").html($(res).find("#UserModal").html());
+                    $("#Title").val(res.title);
+                    $("#Desc").val(res.description);
+                    $("#Slug").val(res.slug);
+                    $("#Status").val(res.status);
+                    $("#CMSId").val(res.cmsPageId);
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert("Modal error");
+                }
+            });
+        }
+
+        function DeleteCMS(CMSId)
+        {
+            $.ajax({
+                url: '/Admin/Admin/CMSDelete',
+                type: 'GET',
+                data: {'CMSId':CMSId},
+                success: function (res) {
+
+    Swal.fire({
+      title: 'Your CMS Get Deleted',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
+                    $("#cms").click();
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert("Modal error");
+                }
+            });
+        }
+
+        function nullvalues()
+        {
+             document.getElementById("Title").value ="";
+             document.getElementById("Desc").value ="";
+             document.getElementById("Slug").value ="";
+             document.getElementById("Status").value ="";
+             document.getElementById("CMSId").value ="";
+        }
+
+           CKEDITOR.replace('editor1');
 
 </script>

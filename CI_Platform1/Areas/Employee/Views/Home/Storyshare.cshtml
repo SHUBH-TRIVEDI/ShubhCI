@@ -24,26 +24,30 @@
                         <select asp-for="MissionId" class="form-select col-11 heigh shadow-none">
                             @foreach (var mission in Model.missionApplications)
                             {
-                                <option value="@mission.MissionId">@mission.MissionId@mission.Mission.Title</option>
+                                <option value="@mission.MissionId">@mission.Mission.Title</option>
                             }
                         </select>
+                        <span asp-validation-for="MissionId" class="alert-danger"></span>
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div>My Story Title</div>
                     <div><input asp-for="Title" class="col-11 heigh" type="text" placeholder="Enter Story Title"></div>
+                    <span asp-validation-for="Title" class="alert-danger"></span>
                 </div>
 
                 <div class="col-4">
                     <div>Date</div>
                     <div><input asp-for="PublishedAt" class="col-11 heigh" type="date" placeholder="Select Date"></div>
+                    <span asp-validation-for="PublishedAt" class="alert-danger"></span>
                 </div>
             </div>
 
             <div>My Story</div>
             <div class="col-12 mt-2">
                 <textarea asp-for="editor1" class="col-12" name="editor1"></textarea>
+                <span asp-validation-for="editor1" class="alert-danger"></span>
             </div>
 
             <div class="mt-3">Enter Video Url</div>
@@ -57,6 +61,7 @@
                 <p>Drag & drop photos here or <strong>Browse</strong></p>
                 <input type="file" asp-for="attachment" class="file-input file" multiple="multiple" accept="image/jpeg, image/PNG, image/jpg">
             </div>
+            <span asp-validation-for="attachment" class="alert-danger"></span>
 
             <output class="d-flex">
                 @if (Model.storymedia != null)

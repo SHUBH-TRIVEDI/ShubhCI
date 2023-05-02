@@ -46,12 +46,16 @@
                         <label for="Action" class="mt-4">First Name</label>
                         <div>
                             <input class="col-12" type="text" id="first" placeholder="Enter First Name" />
+                            <div id="first-validation" class="text-danger d-none">Please Provide First Name </div>
+
                         </div>
                     </div>
                     <div class="col-6">
                         <label for="Action" class="mt-4">Last Name</label>
                         <div>
                             <input class="col-12" type="text" id="last" placeholder="Enter Last Name" />
+                            <div id="last-validation" class="text-danger d-none">Please Provide Last Name </div>
+
                         </div>
                     </div>
                 </div>
@@ -61,12 +65,16 @@
                         <label for="Action" class="mt-4">Email</label>
                         <div>
                             <input class="col-12" type="text" id="mail" placeholder="Enter Email" />
+                            <div id="mail-validation" class="text-danger d-none">Please Provide Email </div>
+
                         </div>
                     </div>
                     <div class="col-6">
                         <label for="Action" class="mt-4">Password</label>
                         <div>
                             <input class="col-12" type="text" id="password" placeholder="Enter Password" />
+                            <div id="password-validation" class="text-danger d-none">Please Provide Password </div>
+
                         </div>
                     </div>
                 </div>
@@ -76,17 +84,21 @@
                         <label for="Action" class="mt-4">Employee Id</label>
                         <div>
                             <input class="col-12" type="text" id="employeeid" placeholder="Enter Employee Id" />
+                            <div id="employeeid-validation" class="text-danger d-none">Please Provide Employee Id </div>
+
                         </div>
                     </div>
                     <div class="col-6">
                         <label for="Action" class="mt-4">Department</label>
                         <div>
                             <input class="col-12" type="text" id="department" placeholder="Enter Department" />
+                            <div id="department-validation" class="text-danger d-none">Please Provide Department </div>
+
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-6">
                         <label for="mission">Country</label>
                         <select class="col-12" id="country">
@@ -96,6 +108,8 @@
 
                             }
                         </select>
+                        <div id="country-validation" class="text-danger d-none">Please Provide country </div>
+
                     </div>
                     <div class="col-6">
                         <label for="mission">City</label>
@@ -105,6 +119,8 @@
                                 <option value="@city.CityId">@city.Name</option>
                             }
                         </select>
+                        <div id="city-validation" class="text-danger d-none">Please Provide city </div>
+
                     </div>
                 </div>
 
@@ -113,12 +129,18 @@
                         <label for="Action" class="mt-4">Profile Text</label>
                         <div>
                             <input class="col-12" type="text" id="profile" placeholder="Enter Profile Text" />
+                            <div id="profile-validation" class="text-danger d-none">Please Provide Description </div>
+
                         </div>
                     </div>
                     <div class="col-6">
                         <label for="Action" class="mt-4">Status</label>
                         <div>
-                            <input class="col-12" type="text" id="status" placeholder="Enter Status" />
+                            @*<input class="col-12" type="text" id="status" placeholder="Enter Status" />*@
+                            <select class="col-12" id="status">
+                                <option value="1">Active</option>
+                                <option value="0">InActive</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -129,7 +151,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn oran" onclick="UserAddEdit()" data-bs-dismiss="modal">Submit</button>
+                <button type="submit" class="btn oran" onclick="UserAddEdit()">Submit</button>
             </div>
         </div>
     </div>
@@ -158,7 +180,16 @@
                 <td>@user.Email</td>
                 <td>@user.EmployeeId</td>
                 <td>@user.Department</td>
-                <td>@user.Status</td>
+                <td>
+                    @if (Convert.ToInt16(@user.Status) != 0)
+                    {
+                        <span style="color:green">Active</span>
+                    }
+                    else
+                    {
+                        <span style="color:red">Inactive</span>
+                    }
+                </td>
 
                 <td>
                     <span>
@@ -179,100 +210,144 @@
 
 <script>
 
-            function FileImg() {
-            $('#InputImg').click();
+                function FileImg() {
+                $('#InputImg').click();
+            }
+
+            document.getElementById('InputImg').addEventListener("change", e => {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    document.getElementById('imgDiv').src = reader.result;
+                }
+                reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
+            });
+
+
+        function UserAddEdit()
+        {
+            var first=$("#first").val();
+            var last=$("#last").val();
+            var mail=$("#mail").val();
+            var password=$("#password").val();
+            var employeeid=$("#employeeid").val();
+            var department=$("#department").val();
+            var country=$("#country").val();
+            var city=$("#city").val();
+            var profile=$("#profile").val();
+            var status=$("#status").val();
+            var USERID=$("#USERID").val();
+
+                       
+            if (first == "" || first == null) {
+                $("#first-validation").removeClass("d-none");
+            }
+
+            else if (last == "" || last == null) {
+                $("#last-validation").removeClass("d-none");
+            }
+            else if (mail == "" || mail == null) {
+                $("#mail-validation").removeClass("d-none");
+            }
+            else if (password == "" || password == null) {
+                $("#password-validation").removeClass("d-none");
+            }
+            else if (employeeid == "" || employeeid == null) {
+                $("#employeeid-validation").removeClass("d-none");
+            }
+            else if (department == "" || department == null) {
+                $("#department-validation").removeClass("d-none");
+            }
+            else if (country == "" || country == null) {
+                $("#country-validation").removeClass("d-none");
+            }
+            else if (city == "" || city == null) {
+                $("#city-validation").removeClass("d-none");
+            }
+            else if (profile == "" || profile == null) {
+                $("#profile-validation").removeClass("d-none");
+            }
+            else{
+
+            $.ajax({
+                url: '/Admin/Admin/UserAddEdit',
+                type: 'POST',
+                data: {'first':first,'last':last, 'mail':mail,'password':password, 'employeeid':employeeid, 'department':department, 'country':country, 'city':city, 'profile':profile,'status':status,'USERID':USERID },
+                success: function (res) {
+                    console.log(res);
+                    $(".btn-close").click();
+                    $("#User").click();
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert("Modal error");
+                }
+            });
+            }
+        }
+        function GetUserData(USERID)
+        {
+                   $.ajax({
+                   url: '/Admin/Admin/GetUserData',
+                   type: 'GET',
+                   data: {'USERID':USERID},
+                   success: function (res) {
+                       console.log(res);
+                       $("#first").val(res.firstName);
+                       $("#last").val(res.lastName);
+                       $("#mail").val(res.email);
+                       $("#password").val(res.password);
+                       $("#employeeid").val(res.employeeId);
+                       $("#department").val(res.department);
+                       $("#country").val(res.countryId);
+                       $("#city").val(res.cityId);
+                       $("#profile").val(res.profileText);
+                       $("#status").val(res.status);
+                       $("#USERID").val(res.userId);
+                       },
+                   error: function (res) {
+                       console.log(res);
+                       alert("get Modal error");
+                   }
+               });
+
+        }
+        function UserDelete(USERID)
+        {
+            $.ajax({
+                url: '/Admin/Admin/UserDelete',
+                type: 'GET',
+                data: {'USERID':USERID },
+                 success: function (res) {
+
+    Swal.fire({
+      title: 'User Gets Deleted',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
+
+                    console.log(res);
+                    $("#User").click();
+                }
+            });
         }
 
-        document.getElementById('InputImg').addEventListener("change", e => {
-            const reader = new FileReader(); 
-            reader.onload = function () {
-                document.getElementById('imgDiv').src = reader.result; 
-            }
-            reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
-        });
-
-
-    function UserAddEdit()
-    {
-        var first=$("#first").val();
-        var last=$("#last").val();
-        var mail=$("#mail").val();
-        var password=$("#password").val();
-        var employeeid=$("#employeeid").val();
-        var department=$("#department").val();
-        var country=$("#country").val();
-        var city=$("#city").val();
-        var profile=$("#profile").val();
-        var status=$("#status").val();
-        var USERID=$("#USERID").val();
-
-        $.ajax({
-            url: '/Admin/Admin/UserAddEdit',
-            type: 'POST',
-            data: {'first':first,'last':last, 'mail':mail,'password':password, 'employeeid':employeeid, 'department':department, 'country':country, 'city':city, 'profile':profile,'status':status,'USERID':USERID },
-            success: function (res) {
-                console.log(res);
-                $("#User").click();
-            },
-            error: function (res) {
-                console.log(res);
-                alert("Modal error");
-            }
-        });
-    }
-    function GetUserData(USERID)
-    {
-               $.ajax({
-               url: '/Admin/Admin/GetUserData',
-               type: 'GET',
-               data: {'USERID':USERID},
-               success: function (res) {
-                   console.log(res);
-                   $("#first").val(res.firstName);
-                   $("#last").val(res.lastName);
-                   $("#mail").val(res.email);
-                   $("#password").val(res.password);
-                   $("#employeeid").val(res.employeeId);
-                   $("#department").val(res.department);
-                   $("#country").val(res.countryId);
-                   $("#city").val(res.cityId);
-                   $("#profile").val(res.profileText);
-                   $("#status").val(res.status);
-                   $("#USERID").val(res.userId);
-                   },
-               error: function (res) {
-                   console.log(res);
-                   alert("get Modal error");
-               }
-           });
-
-    }
-    function UserDelete(USERID)
-    {
-        $.ajax({
-            url: '/Admin/Admin/UserDelete',
-            type: 'GET',
-            data: {'USERID':USERID },
-             success: function (res) {
-                console.log(res);
-                $("#User").click();
-            }
-        });
-    }
-
-    function nullvalues()
-    {
-        $("#first").val('');
-        $("#last").val('');
-        $("#mail").val('');
-        $("#password").val('');
-        $("#employeeid").val('');
-        $("#department").val('');
-        $("#country").val('');
-        $("#city").val('');
-        $("#profile").val('');
-        $("#status").val('');
-        $("#USERID").val('');
-    }
+        function nullvalues()
+        {
+            $("#first").val('');
+            $("#last").val('');
+            $("#mail").val('');
+            $("#password").val('');
+            $("#employeeid").val('');
+            $("#department").val('');
+            $("#country").val('');
+            $("#city").val('');
+            $("#profile").val('');
+            $("#status").val('');
+            $("#USERID").val('');
+        }
 
 </script>

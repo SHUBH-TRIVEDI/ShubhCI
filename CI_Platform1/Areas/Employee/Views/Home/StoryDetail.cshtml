@@ -22,11 +22,11 @@
                 }
                 @foreach (var media in Model.storymedia)
                 {
-                        <div class="mySlides" style="display: none;">
-                            <div class="numbertext">@a / 4</div>
-                            <img src="@media.StoryPath"
-                             style="width:100%; height: 54vh;">
-                        </div>
+                    <div class="mySlides" style="display: none;">
+                        <div class="numbertext">@a / 4</div>
+                        <img src="@media.StoryPath"
+                         style="width:100%; height: 54vh;">
+                    </div>
                     a = a + 1;
                 }
 
@@ -38,11 +38,11 @@
                     }
                     @foreach (var i in Model.storymedia)
                     {
-                            <div class="column" style="width:25%">
-                                <img class="demo cursor"
-                                 src="@i.StoryPath" style="width:100%"
-                                 onclick="currentSlide(@b)" alt="The Woods">
-                            </div>
+                        <div class="column" style="width:25%">
+                            <img class="demo cursor"
+                             src="@i.StoryPath" style="width:100%"
+                             onclick="currentSlide(@b)" alt="The Woods">
+                        </div>
                         b = b + 1;
                     }
 
@@ -53,17 +53,18 @@
                 <div class="ms-5">
                     <div class="mt-5 "><img src="/Images/volunteer3.png" class="rounded-circle" alt=""></div>
                     @{
-                        //var user = Model.users.Where(e => e.UserId == Model.singleStory.UserId).FirstOrDefault();
                         var user = Model.users.Where(e => e.UserId == Model.singleStory.UserId).FirstOrDefault();
                     }
                     <div class="d-flex justify-content-between">
-                        <div>@user.FirstName @user.LastName</div>
+                        @if (user.DeletedAt == null)
+                        {
+                            <div class="mt-2">@user.FirstName @user.LastName</div>
+                        }
                         <div class="btn border eye"><i class="bi bi-eye"></i>@Model.StoryViews Views</div>
                     </div>
                 </div>
 
                 <div class="ms-5">
-
                     @Html.Raw(@Model.ShortDescription)
                 </div>
 
@@ -77,43 +78,71 @@
                 @*Reccomend To CO-Worker*@
                 <div class="row ms-5">
 
-                    <button class="btn col ton Addfavourite shadow-none oran" style="height:3rem;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button class="btn col ton Addfavourite shadow-none oran bgchange" style="height:3rem;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class="bi bi-square-fill"></i>
                         <span class="font-si">Recommend to a Co-Worker</span>
                     </button>
 
+                    @*                    <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Send Recommend TO</h1>
+                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body overflow-y-auto" style="height:200px;">
+                        @foreach (var u in @Model.users)
+                        {
+
+                        <div class="d-flex my-3 bg-light ">
+                        <img src="~/images/volunteer1.png" class="rounded-5 me-5" style="border-radius:50%;width:50px;height:50px">
+                        @if (user.DeletedAt == null)
+                        {
+                        <label class=" ms-4 mt-2 me-auto"> @u.FirstName @u.LastName </label>
+                        }
+                        <input class="form-check-input me-2 mt-2" type="checkbox" value="" id=@u.UserId name="mail">
+                        </div>
+
+                        }
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class=" border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn oran" id="sendmail" onclick="sendmail(@Model.StoryId)">Send Mission</button>
+                        </div>
+                        </div>
+                        </div>
+                        </div>*@
                     <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Send Recommend TO</h1>
-                                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body overflow-y-auto" style="height:200px;">
-                                    @foreach (var u in @Model.users)
+                                    @foreach (var users in Model.users)
                                     {
+                                        <div class="d-flex my-3 bg-light ">
+                                            <img src="~/images/volunteer1.png" class="rounded-5 me-5" style="border-radius:50%;width:50px;height:50px">
 
-                                            <div class="d-flex my-3 bg-light ">
-                                                <img src="~/images/volunteer1.png" class="rounded-5 me-5" style="border-radius:50%;width:50px;height:50px">
-                                                <label class=" ms-4 mt-2 me-auto"> @u.FirstName @u.LastName </label>
-                                                <input class="form-check-input me-2 mt-2" type="checkbox" value="" id=@u.UserId name="mail">
-                                            </div>
-
+                                            <label class=" ms-4 mt-2 me-auto"> @users.FirstName @users.LastName </label>
+                                            <input class="form-check-input me-2 mt-2" type="checkbox" value="" id=@user.UserId name="mail">
+                                        </div>
                                     }
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary shadow-none" id="sendmail" onclick="sendmail(@Model.StoryId)">Send Mission</button>
+                                    <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn bgchange2 oran shadow-none" id="sendmail" onclick="sendmail(@Model.MissionId)">Send Mission</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <a asp-action="volunteering" asp-controller="Home" asp-route-missionid="@Model.singleStory.MissionId" class="col">
-                    <button class="btn col me-3  ms-2  oran  shadow-none" style="height:3rem;" >
-                        <label class="ms-2" id="favmissiondiv">Open Mission</label>
-                        <img class="ms-1" src="/Images/right-arrow.png">
-                    </button>
+                        <button class="btn col me-3  ms-2  oran  shadow-none bgchange" style="height:3rem;">
+                            <label class="ms-2" id="favmissiondiv">Open Mission</label>
+                            <img class="ms-1" src="/Images/right-arrow.png">
+                        </button>
                     </a>
                 </div>
 
@@ -180,11 +209,11 @@
     </div>
 
     <hr />
-<div class="container ">
-    <div class="text-secondary ">
-        <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+    <div class="container ">
+        <div class="text-secondary ">
+            <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+        </div>
     </div>
-</div>
     <script src="~/js/Storydetail.js" asp-append-version="true"></script>
 
 </body>

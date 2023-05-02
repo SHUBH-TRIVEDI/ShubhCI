@@ -10,7 +10,12 @@
       "ProjectGuid": "f29fa42e-956e-4524-a158-69f7d3b90f88",
       "DisplayName": "CI_Project.Repository",
       "ColorIndex": 1
+    },
+    "116ac5b4-d9bf-4838-af52-5386683e5477": {
+      "ProjectGuid": "116ac5b4-d9bf-4838-af52-5386683e5477",
+      "DisplayName": "CI_Entities1",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }

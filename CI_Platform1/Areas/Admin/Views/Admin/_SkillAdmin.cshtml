@@ -12,12 +12,11 @@
 
 <div class="button-row mb-3">
     <div class=" start-btn">
-
         <input class="form-control me-2" id="myInputTextField" type="search" placeholder="Search" aria-label="Search">
     </div>
 
     <div class="end-btn">
-        <button data-bs-toggle="modal" data-bs-target="#SkillModal" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
+        <button onclick="nullvalues()" data-bs-toggle="modal" data-bs-target="#SkillModal" class="btn btn-outline-warning rounded-pill px-3 py-0 me-2"><i class="bi bi-plus-lg "></i> <span class="btn-label">Add</span></button>
 
     </div>
 </div>
@@ -36,11 +35,17 @@
                     <label>Skill Title</label>
                     <div>
                         <input class="col-11" type="text" id="title" />
+                        <div id="title-validation" class="text-danger d-none">Please Provide Description </div>
+
                     </div>
 
                     <label>Skill Status</label>
                     <div>
-                        <input class="col-11" placeholder="Type 1 for Active and 0 for Inactive" type="text" id="status" />
+                        @*<input class="col-11" placeholder="Type 1 for Active and 0 for Inactive" type="text" id="status" />*@
+                        <select class="col-11" id="status">
+                            <option value="1">Active</option>
+                            <option value="0">InActive</option>
+                        </select>
                     </div>
                 </div>
 
@@ -48,7 +53,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn oran shadow-none" data-bs-dismiss="modal" onclick="SkillAddEdit()">Save</button>
+                <button type="button" class="btn oran shadow-none" onclick="SkillAddEdit()">Save</button>
             </div>
         </div>
     </div>
@@ -70,7 +75,7 @@
                 <td>@skill.SkillName</td>
                 @*<td>@skill.Status</td>*@
                 <td>
-                 @if (Convert.ToInt16(@skill.Status) != 0)
+                    @if (Convert.ToInt16(@skill.Status) != 0)
                     {
                         <span style="color:green">Active</span>
                     }
@@ -78,7 +83,7 @@
                     {
                         <span style="color:red">Inactive</span>
                     }
-                    </td>
+                </td>
                 <td>
                     <span>
                         <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#SkillModal" onclick="GetSkillData(@skill.SkillId)">
@@ -97,56 +102,81 @@
 </table>
 
 <script>
-    function SkillAddEdit()
-    {
-        var title=$("#title").val();
-        var status=$("#status").val();
-        var SkillId=$("#SkillId").val();
-
-        $.ajax({
-            url: '/Admin/Admin/SkillAddEdit',
-            type: 'GET',
-            data: {'title':title, 'status':status,'SkillId': SkillId},
-            success: function (res) {
-                console.log(res);
-                $("#skill").click();
-            },
-            error: function (res) {
-                alert("Theme Modal error");
-            }
-        });
-    }
-
-        function GetSkillData(SkillId)
+        function SkillAddEdit()
         {
-               $.ajax({
-               url: '/Admin/Admin/GetSkillData',
-               type: 'GET',
-               data: {'SkillId':SkillId},
-               success: function (res) {
-                   console.log(res);
-                   $("#title").val(res.skillName);
-                   $("#status").val(res.status);
-                   $("#SkillId").val(res.skillId);
-                    },
-               error: function (res) {
-                   console.log(res);
-                   alert("get Theme Modal error");
-               }
-           });
+            var title=$("#title").val();
+            var status=$("#status").val();
+            var SkillId=$("#SkillId").val();
 
-    }
-
-    function SkillDelete(SkillId)
-    {
-        $.ajax({
-            url: '/Admin/Admin/SkillDelete',
-            type: 'GET',
-            data: {'SkillId':SkillId },
-            success: function (res) {
-                console.log(res);
-                $("#skill").click();
+            if (title == "" || title == null) {
+                $("#title-validation").removeClass("d-none");
             }
-        });
-    }
+
+            else{
+
+            $.ajax({
+                url: '/Admin/Admin/SkillAddEdit',
+                type: 'GET',
+                data: {'title':title, 'status':status,'SkillId': SkillId},
+                success: function (res) {
+                    console.log(res);
+                    $(".btn-close").click();
+                    $("#skill").click();
+                },
+                error: function (res) {
+                    alert("Theme Modal error");
+                }
+            });
+            }
+        }
+
+            function GetSkillData(SkillId)
+            {
+                   $.ajax({
+                   url: '/Admin/Admin/GetSkillData',
+                   type: 'GET',
+                   data: {'SkillId':SkillId},
+                   success: function (res) {
+                       console.log(res);
+                       $("#title").val(res.skillName);
+                       $("#status").val(res.status);
+                       $("#SkillId").val(res.skillId);
+                        },
+                   error: function (res) {
+                       console.log(res);
+                       alert("get Theme Modal error");
+                   }
+               });
+
+        }
+
+        function SkillDelete(SkillId)
+        {
+            $.ajax({
+                url: '/Admin/Admin/SkillDelete',
+                type: 'GET',
+                data: {'SkillId':SkillId },
+                success: function (res) {
+
+    Swal.fire({
+      title: 'Skill Get Deleted',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
+                    console.log(res);
+                    $("#skill").click();
+                }
+            });
+        }
+        function nullvalues()
+        {
+            title =document.getElementById("title");
+            title.value="";
+            status=document.getElementById("status");
+            status.value="";
+        }
 </script>

@@ -33,17 +33,23 @@
                     <label class="mt-2">Banner Text</label>
                     <div class="col-12 mt-2">
                         <textarea asp-for="Text" class="col-12" id="bannertext"></textarea>
+                        <span asp-validation-for="Text" class="text-danger"></span>
+
                     </div>
 
                     <label class="mt-2">Sort Order</label>
                     <div>
                         <input asp-for="SortOrder" class="col-12 " type="number" id="order" />
+                        <span asp-validation-for="SortOrder" class="text-danger"></span>
+
                     </div>
 
                     <label class="mt-2 mb-1">Image</label>
                     <div>
                         <input asp-for="Image" type="file" id="InputImg" style="display:none;" />
-                        <div onclick="ClickImage()" class="border-4 p-2 col-3">Upload Image</div>
+                        <span asp-validation-for="Image" class="text-danger"></span>
+
+                        <div onclick="ClickImage()" id="imag" class="border-4 p-2 col-3">Upload Image</div>
                         @if (Model.getimage != null)
                         {
                             <img src="@Model.getimage" style="height:130px;width:130px;" />
@@ -56,7 +62,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn border-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn oran" data-bs-dismiss="modal">Submit</button>
+                    <button type="submit" class="btn oran">Submit</button>
                 </div>
             </div>
         </div>
@@ -103,134 +109,68 @@
     </table>
 </div>
 <script>
-    function ClickImage(){
-        $('#InputImg').click();
-    }
+        function ClickImage(){
+            $('#InputImg').click();
+        }
 
 
-        document.getElementById('InputImg').addEventListener("change", e => {
-    const reader = new FileReader(); // Create a new FileReader object
-    reader.onload = function () {
-    document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image
-    }
-    reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
-    });
-
-    function BannerEdit(id)
-    {
-        $.ajax({
-            url: '/Admin/Admin/BannerEdit',
-            type: 'GET',
-            data: {'id':id },
-            success: function (res) {
-                $("#BannerModal").html($(res).find("#BannerModal").html());
-            },
-            error: function (res) {
-                alert("banner error");
-            }
+            document.getElementById('InputImg').addEventListener("change", e => {
+        const reader = new FileReader(); // Create a new FileReader object
+        reader.onload = function () {
+        document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image
+        }
+        reader.readAsDataURL(e.target.files[0]); // Read the selected file as a data URL
         });
-    }
 
-    function BannerDelete(id)
-    {
-        $.ajax({
-            url: '/Admin/Admin/BannerDelete',
-            type: 'GET',
-            data: {'id':id },
-            success: function (res) {
-                //$("#BannerModal").html($(res).find("#BannerModal").html());
-                $("#banner").click();
-            },
-            error: function (res) {
-                alert("banner error");
-            }
-        });
-    }
+        function BannerEdit(id)
+        {
+            $.ajax({
+                url: '/Admin/Admin/BannerEdit',
+                type: 'GET',
+                data: {'id':id },
+                success: function (res) {
+                    $("#BannerModal").html($(res).find("#BannerModal").html());
+                },
+                error: function (res) {
+                    alert("banner error");
+                }
+            });
+        }
+
+        function BannerDelete(id)
+        {
+            $.ajax({
+                url: '/Admin/Admin/BannerDelete',
+                type: 'GET',
+                data: {'id':id },
+                success: function (res) {
+                    //$("#BannerModal").html($(res).find("#BannerModal").html());
+
+    Swal.fire({
+      title: 'Banner Get Deleted',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
+                    $("#banner").click();
+                },
+                error: function (res) {
+                    alert("banner error");
+                }
+            });
+        }
+
+        function nullvalues()
+        {
+            bannertext =document.getElementById("bannertext");
+            bannertext.value="";
+            date=document.getElementById("order");
+            date.value="";
+            InputImg=document.getElementById("imag");
+            InputImg.value="";
+        }
 </script>
 
-@*<script>
-    function BannerAddEdit()
-    {
-    var bannertext=$("#bannertext").val();
-    var order=$("#order").val();
-    //var InputImg=$("#InputImg").val();
-    var BANNERID=$("#BANNERID").val();
-
-    //var fileInput = document.getElementById('InputImg');
-    //var file = fileInput.files[0];
-    //var formData = new FormData();
-    //formData.append('file', file);
-    var myfile= document.getElementById("InputImg");
-    var formData = new FormData();
-    console.log(formData);
-    console.log(myfile.files);
-    if (myfile.files.length > 0) {
-    for (var i = 0; i < myfile.files.length; i++) {
-    formData.append('file-' + i, myfile.files[i]);
-    }
-    }
-
-
-    $.ajax({
-    url: '/Admin/Admin/BannerAddEdit',
-    type: 'POST',
-    data: {'BANNERID':BANNERID,'formData':formData , 'bannertext':bannertext, 'order': order, 'InputImg': InputImg  },
-    success: function (res) {
-    $("#banner").click();
-    },
-    error: function (res) {
-    console.log(res);
-    alert("Banner Modal error");
-    }
-    });
-    }
-
-    function GetCmsData(CMSId){
-    $.ajax({
-    url: '/Admin/Admin/GetCMSData',
-    type: 'GET',
-    data: {'CMSId':CMSId},
-    success: function (res) {
-    //console.log(res);
-    //$("#UserModal").html($(res).find("#UserModal").html());
-    $("#Title").val(res.title);
-    $("#Desc").val(res.description);
-    $("#Slug").val(res.slug);
-    $("#Status").val(res.status);
-    $("#CMSId").val(res.cmsPageId);
-    },
-    error: function (res) {
-    console.log(res);
-    alert("Modal error");
-    }
-    });
-    }
-
-    function DeleteCMS(CMSId)
-    {
-    $.ajax({
-    url: '/Admin/Admin/CMSDelete',
-    type: 'GET',
-    data: {'CMSId':CMSId},
-    success: function (res) {
-    $("#cms").click();
-    },
-    error: function (res) {
-    console.log(res);
-    alert("Modal error");
-    }
-    });
-    }
-
-    function nullvalues()
-    {
-    document.getElementById("Title").value ="";
-    document.getElementById("Desc").value ="";
-    document.getElementById("Slug").value ="";
-    document.getElementById("Status").value ="";
-    document.getElementById("CMSId").value ="";
-    }
-
-    CKEDITOR.replace('editor1');
-
-    </script>*@

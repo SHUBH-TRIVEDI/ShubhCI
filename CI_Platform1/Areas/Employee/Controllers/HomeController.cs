@@ -310,6 +310,7 @@ namespace CI_Platform1.Controllers
             lp.skills = _Landing.skills();
             lp.MissionSkills = _Landing.missionSkills();
             lp.missionMedia = _CiPlatformContext.MissionMedia.ToList();
+            //lp.MissionSkills= _CiPlatformContext.MissionSkills.FirstOrDefault(m=> m.MissionId ==Convert.ToInt32(missionId));
 
 
 
@@ -441,11 +442,11 @@ namespace CI_Platform1.Controllers
             ViewBag.alluser = lp.users;
 
             var userid = HttpContext.Session.GetString("userID");
-            if (userid == null)
-            {
-                return RedirectToAction("Login", "Home", new { Area = "Employee" });
+            //if (userid == null)
+            //{
+            //    return RedirectToAction("Login", "Home", new { Area = "Employee" });
 
-            }
+            //}
             //ViewBag.UserId = int.Parse(userid);
 
             ViewBag.user = lp.users.FirstOrDefault(e => e.UserId == id);
@@ -455,14 +456,15 @@ namespace CI_Platform1.Controllers
             //IEnumerable<Comment> objComm = _CiPlatformContext.Comments.ToList();
             //IEnumerable<Mission> selected = lp.missions.Where(m => m.MissionId == missionid).ToList();
 
-            var volmission = lp.missions.FirstOrDefault(m => m.MissionId == Convert.ToInt32(missionid));
-            var theme = lp.missionThemes.FirstOrDefault(m => m.MissionThemeId == volmission.ThemeId);
-            var City = lp.cities.FirstOrDefault(m => m.CityId == volmission.CityId);
+            //var volmission = lp.missions.FirstOrDefault(m => m.MissionId == Convert.ToInt32(missionid));
+            var miss= _CiPlatformContext.Missions.FirstOrDefault(m=> m.MissionId ==Convert.ToInt16(missionid));
+            var theme = lp.missionThemes.FirstOrDefault(m => m.MissionThemeId == miss.ThemeId);
+            var City = lp.cities.FirstOrDefault(m => m.CityId == miss.CityId);
             var prevRating = lp.missionRatings.FirstOrDefault(e => e.MissionId == missionid && e.UserId == id);
             var themeobjective = lp.goalMissions.FirstOrDefault(m => m.MissionId == missionid);
 
-            string[] Startdate = volmission.StartDate.ToString().Split(" ");
-            string[] Enddate = volmission.EndDate.ToString().Split(" ");
+            string[] Startdate = miss.StartDate.ToString().Split(" ");
+            string[] Enddate = miss.EndDate.ToString().Split(" ");
 
             VolunteeringVM volunteeringVM = new VolunteeringVM();
             if (userid == null)
@@ -477,13 +479,13 @@ namespace CI_Platform1.Controllers
             volunteeringVM.missionMedia = _CiPlatformContext.MissionMedia.Where(u => u.MissionId == missionId).ToList();
             volunteeringVM.MissionId = missionid;
             volunteeringVM.users = _Landing.users();
-            volunteeringVM.Title = volmission.Title;
-            volunteeringVM.ShortDescription = volmission.ShortDescription;
-            volunteeringVM.OrganizationName = volmission.OrganizationName;
-            volunteeringVM.Description = volmission.Description;
-            volunteeringVM.OrganizationDetail = volmission.OrganizationDetail;
-            volunteeringVM.Availability = volmission.Availability;
-            volunteeringVM.MissionType = volmission.MissionType;
+            volunteeringVM.Title = miss.Title;
+            volunteeringVM.ShortDescription = miss.ShortDescription;
+            volunteeringVM.OrganizationName = miss.OrganizationName;
+            volunteeringVM.Description = miss.Description;
+            volunteeringVM.OrganizationDetail = miss.OrganizationDetail;
+            volunteeringVM.Availability = miss.Availability;
+            volunteeringVM.MissionType = miss.MissionType;
             volunteeringVM.Cityname = City.Name;
             volunteeringVM.Themename = theme.Title;
             volunteeringVM.EndDate = Enddate[0];
@@ -510,11 +512,11 @@ namespace CI_Platform1.Controllers
 
             }
             volunteeringVM.GoalObjectiveText = themeobjective.GoalObjectiveText;
-            volunteeringVM.comments = _CiPlatformContext.Comments.Where(m => m.MissionId == missionid).ToList();
+            volunteeringVM.comments = _CiPlatformContext.Comments.OrderByDescending(x=> x.CreatedAt).Where(m => m.MissionId == missionid && m.DeletedAt==null && m.UserId == Convert.ToInt32(userid)).ToList();
 
             //Average Rating
             int finalrating = 0;
-            var ratinglist = _Interface.missionRatings().Where(m => m.MissionId == volmission.MissionId).ToList();
+            var ratinglist = _Interface.missionRatings().Where(m => m.MissionId == miss.MissionId).ToList();
             if (ratinglist.Count() > 0)
             {
                 int rat = 0;
@@ -529,7 +531,7 @@ namespace CI_Platform1.Controllers
             ViewBag.Missiondetail = volunteeringVM;
 
             //Related Missions
-            var relatedmission = lp.missions.Where(m => m.ThemeId == volmission.ThemeId && m.MissionId != missionid).ToList();
+            var relatedmission = lp.missions.Where(m => m.ThemeId == miss.ThemeId && m.MissionId != missionid).ToList();
             foreach (var item in relatedmission.Take(3))
             {
 
@@ -564,6 +566,10 @@ namespace CI_Platform1.Controllers
         public IActionResult Applied(int missonid)
         {
             var userid = HttpContext.Session.GetString("userID");
+            if (userid == null)
+            {
+                return RedirectToAction("Login", "Home", new { Area = "Employee" });
+            }
 
             _Interface.ApplyMission(missonid, Convert.ToInt32(userid));
             return RedirectToAction("volunteering", new { id = Convert.ToInt64(HttpContext.Session.GetString("userID")), missionid = missonid });
@@ -762,17 +768,17 @@ namespace CI_Platform1.Controllers
         //Story Detail
         public IActionResult StoryDetail(int missionid)
         {
-            var userid = HttpContext.Session.GetString("userID");
-            if (userid == null)
-            {
-                return RedirectToAction("Login", "Home", new { Area = "Employee" });
-            }
+            //var userid = HttpContext.Session.GetString("userID");
+            //if (userid == null)
+            //{
+            //    return RedirectToAction("Login", "Home", new { Area = "Employee" });
+            //}
             StoryShareVM st = new StoryShareVM();
 
             var Story = _CiPlatformContext.Stories.Where(w => w.StoryId == missionid).FirstOrDefault();
             st.singleStory = Story;
             st.users = _CiPlatformContext.Users.ToList();
-            st.missions = _CiPlatformContext.Missions.ToList();
+            st.missions = _CiPlatformContext.Missions.Where(u => u.DeletedAt == null).ToList();
             st.ShortDescription = HttpUtility.HtmlDecode(Story.Description);
             st.Title = Story.Title;
             st.storymedia = _CiPlatformContext.StoryMedia.Where(x => x.StoryId == missionid).ToList();

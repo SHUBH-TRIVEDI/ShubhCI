@@ -118,16 +118,66 @@ namespace CI_Platform1.Areas.Admin.Controllers
         public IActionResult MissionAddEdit(string title, string shortdesc, string description,string orgname, int country, int city,string orgdetail,
             string misstype,int themeid, DateTime start , DateTime end, string avail,  int MISSIONID,int skill)
         {
-            var data = _Admin.PostMissionData(title, shortdesc, description, orgname, country, city, orgdetail, misstype, themeid, start, end, avail, MISSIONID, skill);
-
             if (MISSIONID == 0)
             {
-                var skills = _Admin.PostSkillData(skill);
+                Mission mission = new Mission()
+                {
+                    Title = title,
+                    ShortDescription = shortdesc,
+                    Description = description,
+                    OrganizationName = orgname,
+                    OrganizationDetail = orgdetail,
+                    CountryId = country,
+                    CityId = city,
+                    MissionType = misstype,
+                    ThemeId = themeid,
+                    StartDate = start,
+                    EndDate = end,
+                    Availability = avail,
+                };
+                _CiPlatformContext.Missions.Add(mission);
+                _CiPlatformContext.SaveChanges();
+
+                MissionSkill missionSkill = new MissionSkill()
+                {
+                    SkillId = skill,
+                    MissionId = mission.MissionId,
+                };
+                _CiPlatformContext.MissionSkills.Add(missionSkill);
+                _CiPlatformContext.SaveChanges();
             }
+
             else
             {
-                var skills = _Admin.PostSkillEditData(skill);
+                var mission = _CiPlatformContext.Missions.FirstOrDefault(miss => miss.MissionId == MISSIONID);
+                //var skills= _CiPlatformContext.MissionSkills.FirstOrDefault(skill=> skill.SkillId==)
+
+                mission.Title = title;
+                mission.ShortDescription = shortdesc;
+                mission.Description = description;
+                mission.OrganizationName = orgname;
+                mission.OrganizationDetail = orgdetail;
+                mission.CountryId = country;
+                mission.CityId = city;
+                mission.MissionType = misstype;
+                mission.ThemeId = themeid;
+                mission.StartDate = start;
+                mission.EndDate = end;
+                mission.Availability = avail;
+                mission.UpdatedAt = DateTime.Now;
+
+                _CiPlatformContext.Missions.Update(mission);
+                _CiPlatformContext.SaveChanges();
+
+                MissionSkill missionSkill = new MissionSkill()
+                {
+                    SkillId = skill,
+                    MissionId = mission.MissionId,
+                };
+                _CiPlatformContext.MissionSkills.Add(missionSkill);
+                _CiPlatformContext.SaveChanges();
             }
+
             return Json("_MissionAdmin");
         }
 
@@ -240,7 +290,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
         public IActionResult SkillDelete(long SkillId)
         {
             _Admin.SkillDelete(SkillId);
-            return Json("_SkillAdmin");
+            return RedirectToAction("Index", "Admin");
         }
 
         //Banner Management

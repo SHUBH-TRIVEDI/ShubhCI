@@ -1,6 +1,19 @@
 ﻿@using CI_Entities1.Models.ViewModel
 @model StoryShareVM
 
+<style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+</style>
+
 @{
     Pager pager = new Pager();
     int pageNo = 0;
@@ -15,7 +28,7 @@
     <div class="row mt-3 mb-3">
         @foreach (var item in Model.Stories)
         {
-            <div class="col-12 col-md-6 col-lg-4 mb-5" style="height:417px; overflow-y: auto;">
+            <div class="col-12 col-md-6 col-lg-4 mb-5 example" style="height:417px; overflow-y: auto;">
                 <div class="card">
                     <div class="d-inline imgdiv position-relative">
 
