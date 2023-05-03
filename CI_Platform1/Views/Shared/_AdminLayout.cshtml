@@ -191,11 +191,9 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 @*<li><a class="dropdown-item" asp-area="Employee" asp-action="LandingPage" asp-controller="Home">Dashboard</a></li>*@
-                                <li><a class="dropdown-item" asp-action="LandingPage" asp-controller="Home">Dashboard</a></li>
-
-                                <hr>
-                                <li><a class="dropdown-item" asp-area="Employee" asp-action="Login" asp-controller="Home"> Logout</a></li>
-
+                                <li><a class="dropdown-item" href="/Employee/Home/LandingPage" >Dashboard</a></li>
+                                
+                                <li><a onclick="Log()" asp-area="Employee"  asp-controller="Home" asp-action="Logout" class="dropdown-item" > Logout</a></li>
                             </ul>
                         </div>
 
@@ -204,7 +202,7 @@
                 </nav>
 
                 <div id="PartialView">
-                        
+                      @*<partial name="_UserAdmin" />*@
                 </div>
 
                 <div class="mt-5">
@@ -254,10 +252,21 @@
                  });
              });
          });
-    </script>
-
-    <script>
-        function updateDateTime() {
+        // function Log(){
+        //     console.log("hlgajshfguahrug");
+        //      $.ajax({
+        //    url: '/Employee/Home/Logout',
+        //    type: 'GET',
+        //    data: { },
+        //    success: function (res) {
+        //        location.reload();
+        //    },
+        //    error: function (res) {
+        //        alert("error");
+        //    }
+        //});
+        // }
+                function updateDateTime() {
             var now = new Date();
             var options = {
                 weekday: "long",

@@ -29,10 +29,10 @@ namespace CI_Platform1.Controllers
 
         public dynamic SearchingMission { get; private set; }
 
-        public HomeController(CiPlatformContext CiPlatformContext, IStory _Istories, IUser UserInterface, ILanding landing)
+        public HomeController(CiPlatformContext CiPlatformContext, IStory _Istories, IUser UserInterface, ILanding landing, ILogger<HomeController> logger)
         {
             _CiPlatformContext = CiPlatformContext;
-            //_logger = logger     ILogger<HomeController> logger,;
+            _logger = logger ;
             _Interface = UserInterface;
             _Landing = landing;
             _Story = _Istories;
@@ -43,9 +43,16 @@ namespace CI_Platform1.Controllers
         {
             HttpContext.Session.Clear();
             LoginModel lm = new LoginModel();
-            lm.banners = _CiPlatformContext.Banners.ToList();
+            lm.banners = _CiPlatformContext.Banners.OrderBy(u => u.SortOrder).Where(ban => ban.DeletedAt == null).ToList();
 
             return View(lm);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            TempData["logout"] = "Logged Out Successfully";
+            return RedirectToAction("LandingPage", "Home", new { Area = "Employee" });
         }
 
         public IActionResult Carousel()
@@ -54,11 +61,29 @@ namespace CI_Platform1.Controllers
             return PartialView("Carousel");
         }
 
+        public IActionResult contact(LandingPageVM lvm)
+        {
+            var userid = HttpContext.Session.GetString("userID");
+            var use = Convert.ToInt32(userid);
+
+            ContactU cont = new ContactU()
+            {
+                Subject = lvm.Subject,
+                Message = lvm.Message,
+                UserId= use,
+            };
+
+            _CiPlatformContext.ContactUs.Add(cont);
+            _CiPlatformContext.SaveChanges();
+
+            return RedirectToAction("LandingPage", "Home", new { Area = "Employee" });
+        }
+
         [HttpPost]
         public IActionResult Login(LoginModel model)
         {
             LoginModel LM= new LoginModel();
-            LM.banners= _CiPlatformContext.Banners.Where(ban => ban.DeletedAt == null).ToList();
+            LM.banners= _CiPlatformContext.Banners.OrderBy(u=> u.SortOrder).Where(ban => ban.DeletedAt == null).ToList();
 
             if (ModelState.IsValid)
             {
@@ -95,7 +120,7 @@ namespace CI_Platform1.Controllers
         public IActionResult Registration()
         {
             RegistrationViewModel rvm = new RegistrationViewModel();
-            rvm.banners = _CiPlatformContext.Banners.Where(ban => ban.DeletedAt == null).ToList();
+            rvm.banners = _CiPlatformContext.Banners.OrderBy(u => u.SortOrder).Where(ban => ban.DeletedAt == null).ToList();
             //var banner = _CiPlatformContext.Banners.Where(ban => ban.DeletedAt == null).ToList();
             return View(rvm);
         }
@@ -134,7 +159,7 @@ namespace CI_Platform1.Controllers
         public IActionResult Forget()
         {
             ForgetModel FM = new ForgetModel();
-            FM.banners = _CiPlatformContext.Banners.Where(ban => ban.DeletedAt == null).ToList();
+            FM.banners = _CiPlatformContext.Banners.OrderBy(u => u.SortOrder).Where(ban => ban.DeletedAt == null).ToList();
             return View(FM);
         }
 
@@ -144,7 +169,7 @@ namespace CI_Platform1.Controllers
         public IActionResult Forget(ForgetModel model)
         {
             ForgetModel FM = new ForgetModel();
-            FM.banners = _CiPlatformContext.Banners.Where(ban => ban.DeletedAt == null).ToList();
+            FM.banners = _CiPlatformContext.Banners.OrderBy(u => u.SortOrder).Where(ban => ban.DeletedAt == null).ToList();
 
             if (ModelState.IsValid)
             {
@@ -354,8 +379,6 @@ namespace CI_Platform1.Controllers
                 var tempFill = lp.MissionSkills.Where(x => skillText.Contains(x.Skill.SkillName)).Select(x => x.MissionId).ToList();
                 lp.missions = lp.missions.Where(e => tempFill.Contains(e.MissionId)).ToList();
             }
-
-
 
 
             if (lp.missions.Count() == 0)
@@ -808,7 +831,9 @@ namespace CI_Platform1.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            AdminVM adminVM = new AdminVM();
+            adminVM.Pages = _CiPlatformContext.CmsPages.Where(u=> u.Status== "Active").ToList();
+            return View(adminVM);
         }
 
         //Edit Profile

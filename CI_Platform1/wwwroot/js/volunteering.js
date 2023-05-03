@@ -67,7 +67,7 @@ function addToFav(missonid) {
 
         },
         error: function () {
-            alert("please login first.");
+            Swal.fire('please login first.');
         }
 
     });
@@ -80,10 +80,9 @@ function Apply(missonid) {
         data: { 'missonid': missonid },
         success: function (res) {
             $('.apply').html($(res).find('.apply').html());
-            console.log("Mission Applied");
         },
         error: function () {
-            alert("please login first.");
+            Swal.fire('please login first.');
         }
 
     });
@@ -104,7 +103,7 @@ function addRating(starId, missionId, Id) {
 
         },
         error: function () {
-            alert("could not add rating");
+            Swal.fire('please login first.');
         }
     });
 }
@@ -128,7 +127,7 @@ function PostComment() {
                 $('.commentdiv').html($(result).find('.commentdiv').html());
             },
             error: function () {
-                alert("Error : Comment has not been posted");
+                Swal.fire('Error : Comment has not been posted');
             }
         });
     }
@@ -147,7 +146,8 @@ function sendmail(id) {
         type: 'POST',
         data: { userid: mail, id: id },
         success: function (result) {
-            alert("Recomendations sent successfully!");
+            Swal.fire('Recomendations sent successfully');
+
             const checkboxes = document.querySelectorAll('input[name="mail"]:checked');
             checkboxes.forEach((checkbox) => {
                 checkbox.checked = false;
@@ -156,7 +156,8 @@ function sendmail(id) {
         },
         error: function () {
             // Handle error response from the server, e.g. show an error message to the user
-            alert('Error: Could not recommend mission.');
+            Swal.fire('Error: Could not recommend mission.');
+
         }
     });
 

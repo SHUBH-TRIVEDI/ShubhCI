@@ -13,13 +13,13 @@
                     @if (@Model.UserAvatar == null)
                     {
                         <img src="/Images/volunteer1.png" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 150px; width:150px ; "
-                             alt="">
+                         alt="">
                     }
                     else
                     {
 
                         <img src="@Model.UserAvatar" id="imgDiv" onclick="FileImg()" class="rounded-circle mt-5" style="height: 150px; width:150px ; "
-                             alt="">
+                         alt="">
                     }
                 </div>
                 <div class="mt-1 fs-4">@Model.FirstName @Model.LastName</div>
@@ -206,7 +206,7 @@
                     </ul>
                 </div>
 
-                <button class="user-add-skills-btn rounded-pill btn-outline-secondary " data-bs-toggle="modal" type="button" data-bs-target="#addskillmodal">
+                <button class=" btn border-secondary rounded-pill shadow-none" data-bs-toggle="modal" type="button" data-bs-target="#addskillmodal">
                     Add Skills
                 </button>
 
@@ -286,38 +286,72 @@
 
                             </div>
                             <div class="modal-footer d-flex justify-content-start">
-                                <button type="button" class="user-add-skill-cancel-btn rounded-pill border-secondary" id="close" data-bs-dismiss="modal">
+                                <button type="button" class=" btn border-secondary rounded-pill shadow-none" id="close" data-bs-dismiss="modal">
                                     Cancel
                                 </button>
-                                <button type="button" id="skillSave" class="user-add-skill-save-btn oran">Save</button>
+                                <button type="button" id="skillSave" class=" shadow-none oran px-3 p-1">Save</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex">
                     <div class="ms-auto">
-                        <button type="submit" value="login" class="mt-3 oran px-3 p-1 rounded-pill ">Save</button>
+                        <button type="submit" value="login" class="mt-3 oran px-3 p-1 shadow-none">Save</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 
-    @*    <div class="row mt-5">
-    <div class="col-2">Privacy Policy</div>
-    <div class="col-2">Contact Us</div>
-    </div>
-    </div>*@
 
     <hr />
     <div class="container ">
-        <div class="text-secondary ">
-            <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+        <div class="row">
+            <div class="text-secondary col-2 mt-1">
+                <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+            </div>
+
+            <div class="text-secondary col-4">
+                <button type="button" class="btn border-0 text-secondary" data-bs-toggle="modal" data-bs-target="#ContactModal">
+                    Contact US
+                </button>
+            </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="ContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form asp-action="contact" asp-controller="Home" asp-area="Employee">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class=" col-11">
+                                <div>Subject </div>
+                                <div class="col-12">
+                                    <input asp-for="Subject" class="col-12 p-1 form-control" placeholder="Enter Your  Subject" type="text">
 
+                                </div>
+                            </div>
 
+                            <div class=" col-11">
+                                <div>Message* </div>
+                                <div class="col-12">
+                                    <textarea asp-for="Message" rows="4" class="col-12"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn oran shadow-none">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-   
+
 
     <script>
         function FileImg() {

@@ -53,7 +53,6 @@
             var search = $("#search-addon[name=searchText]").val();
             var sort=$(".sorted").val();
           
-
             var country = [];
             $("input[type='checkbox'][name='country']:checked").each(function () {
                 country.push($(this).val());
@@ -100,8 +99,6 @@
         // Rating
 
         function addRating(starId, missionId, Id) {
-
-
             $.ajax({
                 url: '/Employee/Home/Addrating',
                 type: 'POST',
@@ -133,7 +130,8 @@
                     location.reload()
                 },
                 error: function () {
-                    alert("not fav.");
+                    //alert("not fav.");
+                   Swal.fire('Cant get favorited ');
                 }
 
             });
@@ -150,7 +148,9 @@
                 type: 'POST',
                 data: { userid: mail, id: id },
                 success: function (result) {
-                    alert("Recomendations sent successfully!");
+                    //alert("Recomendations sent successfully!");
+                   Swal.fire('Recomendations sent successfully!');
+
                     const checkboxes = document.querySelectorAll('input[name="mail"]:checked');
                     checkboxes.forEach((checkbox) => {
                         checkbox.checked = false;
@@ -159,7 +159,9 @@
                     setTimeout((send.innerHTML = "Send Mission"), 3000);
                 },
                 error: function () {
-                    alert('Error: Could not recommend mission.');
+                    //alert('Error: Could not recommend mission.');
+                   Swal.fire('Error: Could not recommend mission.');
+
                 }
             });
         }
@@ -177,9 +179,7 @@
         })
     }
 
-    /*this function will add filters*/
-
-
+    /*this function will add filters buttons*/
 
     function addElement(current, value) {
         let filtersSection = document.querySelector("#filters-section");

@@ -213,11 +213,11 @@
                     </div>
 
                 </div>
-                @{
-                    var misapp = Model.missionApplications.FirstOrDefault(x => x.ApprovalStatus == "Pending");
-                    var misappreject = Model.missionApplications.FirstOrDefault(x => x.ApprovalStatus == "Rejected");
 
-                }
+
+                @*                @{
+                    var missionapprove = Model.missionApplications.FirstOrDefault(u => u.MissionId == Model.MissionId);
+                    }*@
 
                 @if (ViewBag.isapplied == 0)
                 {
@@ -228,26 +228,8 @@
                         </button>
                     </div>
                 }
-                else if (misapp != null)
-                {
-                    <div class="text-center mt-3 apply ">
-                        <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
-                            Pending  <img class="ms-1"
-                                      style="display:none;" src="/Images/right-arrow.png">
-                        </button>
-                    </div>
-                }
 
-                else if (misappreject != null)
-                {
-                    <div class="text-center mt-3 apply ">
-                        <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
-                            Application Rejected  <img class="ms-1"
-                                                   style="display:none;" src="/Images/right-arrow.png">
-                        </button>
-                    </div>
-                }
-                else if (misappreject != null)
+                else
                 {
                     <div class="text-center mt-3 apply ">
                         <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
@@ -256,6 +238,36 @@
                         </button>
                     </div>
                 }
+                @* @if ( missionapprove.ApprovalStatus == "Pending")
+                    {
+                    <div class="text-center mt-3 apply ">
+                    <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
+                    Pending  <img class="ms-1"
+                    style="display:none;" src="/Images/right-arrow.png">
+                    </button>
+                    </div>
+                    }
+
+                    @if (missionapprove.ApprovalStatus == "Rejected")
+                    {
+                    <div class="text-center mt-3 apply ">
+                    <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
+                    Application Rejected  <img class="ms-1"
+                    style="display:none;" src="/Images/right-arrow.png">
+                    </button>
+                    </div>
+                    }
+                    @if (missionapprove.ApprovalStatus == "Approved")
+                    {
+                    <div class="text-center mt-3 apply ">
+                    <button style="background-color:green; color:white;" class="btn cardbtn mx-auto shadow-none" onclick="Apply(@ViewBag.Missiondetail.MissionId)" dia>
+                    Applied succesfully  <img class="ms-1"
+                    style="display:none;" src="/Images/right-arrow.png">
+                    </button>
+                    </div>
+                    }
+                *@
+
 
 
 
@@ -464,12 +476,18 @@
                                     </div>
                                     }
                                     </div>*@
+                                @{
+                                    var RecentVo = Model.missionApplications.Where(e => e.MissionId == Model.MissionId).ToList();
+                                    var recentcount = RecentVo.Count();
+                                }
                                 <div class="row">
 
-                                    @if (Model.missionApplications != null)
+                                    @if (RecentVo != null)
                                     {
-                                        @foreach (var i in Model.missionApplications)
+
+                                        @foreach (var i in RecentVo)
                                         {
+
                                             <div class="col column2">
                                                 <img src="/images/volunteer7.png" class="rounded-circle"
                                              style="height:60px;width:60px" />
@@ -478,7 +496,6 @@
                                                     @i.User.FirstName @i.User.LastName
                                                 }
                                             </div>
-
                                         }
                                     }
                                 </div>
@@ -502,7 +519,7 @@
                                      alt="">
                             </div>
                             <div class="col-8">
-                                <p class="ms-2 mt-3 text-center">1 Recent Volunteered</p>
+                                <p class="ms-2 mt-3 text-center">@recentcount Recent Volunteered</p>
                             </div>
                             <div class="col-2 border-start">
                                 <img src="~/images/right-arrow1.png"
@@ -638,7 +655,7 @@
                             <div class="text-center">
                                 <a href="/Employee/Home/volunteering?missionid=@category.MissionId" class="btn cardbtn mx-auto shadow-none">
                                     <span>Apply</span> <img class="ms-1"
-                                                                src="/Images/right-arrow.png">
+                                                        src="/Images/right-arrow.png">
                                 </a>
                             </div>
 

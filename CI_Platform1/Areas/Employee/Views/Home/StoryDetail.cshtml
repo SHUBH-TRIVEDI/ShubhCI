@@ -83,35 +83,7 @@
                         <span class="font-si">Recommend to a Co-Worker</span>
                     </button>
 
-                    @*                    <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Send Recommend TO</h1>
-                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body overflow-y-auto" style="height:200px;">
-                        @foreach (var u in @Model.users)
-                        {
 
-                        <div class="d-flex my-3 bg-light ">
-                        <img src="~/images/volunteer1.png" class="rounded-5 me-5" style="border-radius:50%;width:50px;height:50px">
-                        @if (user.DeletedAt == null)
-                        {
-                        <label class=" ms-4 mt-2 me-auto"> @u.FirstName @u.LastName </label>
-                        }
-                        <input class="form-check-input me-2 mt-2" type="checkbox" value="" id=@u.UserId name="mail">
-                        </div>
-
-                        }
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class=" border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn oran" id="sendmail" onclick="sendmail(@Model.StoryId)">Send Mission</button>
-                        </div>
-                        </div>
-                        </div>
-                        </div>*@
                     <div class="modal fade modal-dialog-scrollable" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -122,17 +94,20 @@
                                 <div class="modal-body overflow-y-auto" style="height:200px;">
                                     @foreach (var users in Model.users)
                                     {
-                                        <div class="d-flex my-3 bg-light ">
-                                            <img src="~/images/volunteer1.png" class="rounded-5 me-5" style="border-radius:50%;width:50px;height:50px">
+                                        @if (users.DeletedAt == null)
+                                        {
+                                            <div class="d-flex my-3 bg-light ">
+                                                <img src="~/images/volunteer1.png" class="rounded-5 me-5" style="border-radius:50%;width:50px;height:50px">
 
-                                            <label class=" ms-4 mt-2 me-auto"> @users.FirstName @users.LastName </label>
-                                            <input class="form-check-input me-2 mt-2" type="checkbox" value="" id=@user.UserId name="mail">
-                                        </div>
+                                                <label class=" ms-4 mt-2 me-auto"> @users.FirstName @users.LastName </label>
+                                                <input class="form-check-input me-2 mt-2" type="checkbox" value="" id=@user.UserId name="mail">
+                                            </div>
+                                        }
                                     }
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn bgchange2 oran shadow-none" id="sendmail" onclick="sendmail(@Model.MissionId)">Send Mission</button>
+                                    <button type="button" class="btn bgchange2 oran shadow-none" id="sendmail" onclick="sendmail(@Model.StoryId)">Send Mission</button>
                                 </div>
                             </div>
                         </div>
@@ -218,3 +193,30 @@
 
 </body>
 
+<script>
+    function sendmail(id) {
+    const mail = Array.from(document.querySelectorAll('input[name="mail"]:checked')).map(el => el.id);
+    var send = document.getElementById("sendmail");
+    send.innerHTML = "Sending"
+    $.ajax({
+        url: '/Employee/Home/Sendmail',
+        type: 'POST',
+        data: { userid: mail, id: id },
+        success: function (result) {
+            Swal.fire('Recomendations sent successfully');
+
+            const checkboxes = document.querySelectorAll('input[name="mail"]:checked');
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = false;
+            });
+            send.innerHTML = "sent"
+        },
+        error: function () {
+            // Handle error response from the server, e.g. show an error message to the user
+            Swal.fire('Error: Could not recommend mission.');
+
+        }
+    });
+
+}
+</script>

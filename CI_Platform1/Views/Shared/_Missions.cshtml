@@ -30,15 +30,15 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card shadow">
                         <div class="card-img ">
-                            @if(missionimg !=null)
+                            @if (missionimg != null)
                             {
                                 <img class="card-img-top h-100 wid" src="@missionimg.MediaPath">
 
                             }
                             else
                             {
-                            <img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />
-                                
+                                <img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />
+
                             }
                             @if (applied != null)
                             {
@@ -485,11 +485,11 @@
                                             <div class="">
                                                 <h6 class="pt-3 mb-0">Skill</h6>
                                                 @*//Skill*@
-@*                                                @{
+                                                @*                                                @{
                                                     var skillhave = Model.MissionSkills.FirstOrDefault(s => s.MissionId == i.MissionId);
                                                     var skillx = skillhave.Skill.SkillName;
-                                                }
-                                                <small>@skillx</small>*@
+                                                    }
+                                                    <small>@skillx</small>*@
 
                                                 <small>Content Writing </small>
 
@@ -572,8 +572,49 @@
 
 <hr />
 <div class="container ">
-    <div class="text-secondary ">
-        <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+    <div class="row">
+        <div class="text-secondary col-2 mt-1">
+            <a asp-action="Privacy" asp-controller="Home" class="text-decoration-none text-secondary">Privacy Policy</a>
+        </div>
+
+        <div class="text-secondary col-4">
+            <button type="button" class="btn border-0 text-secondary" data-bs-toggle="modal" data-bs-target="#ContactModal">
+                Contact US
+            </button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="ContactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form asp-action="contact" asp-controller="Home" asp-area="Employee">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class=" col-11">
+                            <div>Subject </div>
+                            <div class="col-12">
+                                <input asp-for="Subject" class="col-12 p-1 form-control" placeholder="Enter Your  Subject" type="text">
+
+                            </div>
+                        </div>
+
+                        <div class=" col-11">
+                            <div>Message* </div>
+                            <div class="col-12">
+                                <textarea asp-for="Message" rows="4" class="col-12"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn oran shadow-none">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <script>

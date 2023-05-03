@@ -12,7 +12,7 @@ namespace CI_Project.Repository.Interface
     {
         public AdminVM GetUserData();
 
-        public User PostUserData(string img, long USERID, string first, string last, string mail, string password, string employeeid, string department, long country, long city, string profile, string status);
+        public User PostUserData(string avatar, string img, long USERID, string first, string last, string mail, string password, string employeeid, string department, long country, long city, string profile, string status);
 
         public User GetUserEditData(long USERID);
 

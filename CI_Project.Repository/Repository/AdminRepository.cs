@@ -30,7 +30,7 @@ namespace CI_Project.Repository.Repository
             return adminVM;
         }
 
-        public User PostUserData(string img, long USERID, string first, string last, string mail, string password, string employeeid, string department, long country, long city, string profile, string status)
+        public User PostUserData(string avatar, string img, long USERID, string first, string last, string mail, string password, string employeeid, string department, long country, long city, string profile, string status)
         {
             if (USERID == 0)
             {
@@ -47,7 +47,7 @@ namespace CI_Project.Repository.Repository
                     Status = status,
                     CountryId = country,
                     CityId = city,
-                    Avatar = img,
+                    Avatar = avatar,
 
                 };
                 _CiPlatformContext.Users.Add(user);
@@ -69,6 +69,7 @@ namespace CI_Project.Repository.Repository
                 user.Status = status;
                 user.CountryId = country;
                 user.CityId = city;
+                user.Avatar = avatar;
                 user.UpdatedAt = DateTime.Now;
                 if (img != null)
                 {

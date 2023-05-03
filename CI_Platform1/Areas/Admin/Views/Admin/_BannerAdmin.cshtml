@@ -47,13 +47,14 @@
                     <label class="mt-2 mb-1">Image</label>
                     <div>
                         <input asp-for="Image" type="file" id="InputImg" style="display:none;" />
-                        <span asp-validation-for="Image" class="text-danger"></span>
 
                         <div onclick="ClickImage()" id="imag" class="border-4 p-2 col-3">Upload Image</div>
                         @if (Model.getimage != null)
                         {
                             <img src="@Model.getimage" style="height:130px;width:130px;" />
                         }
+                        <span asp-validation-for="Image" class="text-danger"></span>
+
                     </div>
 
                 </div>
@@ -114,7 +115,7 @@
         }
 
 
-            document.getElementById('InputImg').addEventListener("change", e => {
+        document.getElementById('InputImg').addEventListener("change", e => {
         const reader = new FileReader(); // Create a new FileReader object
         reader.onload = function () {
         document.getElementById('imgDiv').src = reader.result; // Set the source of the image tag to the selected image

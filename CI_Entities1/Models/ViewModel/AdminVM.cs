@@ -10,6 +10,8 @@ namespace CI_Entities1.Models.ViewModel
 {
     public class AdminVM
     {
+        public List<CmsPage> Pages { get; set; }
+        public string avatar { get; set; }  
 
         public long BannerId { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please Provide Image")]

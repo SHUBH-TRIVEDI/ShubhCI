@@ -18,39 +18,55 @@
     margin-top: 20%;
 }
 
-
-.carousel-caption {
-    width: 100%;
-    left: 0px;
-    bottom: 0px;
-    /* opacity: 1; */
-    background-image: linear-gradient( to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), transparent );
+.carousel-inner {
+    height: 100vh;
 }
 
-.title {
-    font-size: xx-large;
+.carousel-img {
+    height: 100vh;
 }
 
-body {
-    overflow: hidden; /* Hide scrollbars */
+.carouselExampleCaptions {
+    height: 100vh;
 }
-
-.email-span {
-    font-size: 14px;
-}
-
-
 
 @media screen and (max-width:991px) {
-    .img1 {
+    .carousel-img, .carousel-inner, .carouselExampleCaptions {
         height: 50vh;
     }
 
-    .forget {
-        margin-top: 2%;
+    .carousel-caption {
+        width: 100%;
+        left: 0px;
+        bottom: 0px;
+        /* opacity: 1; */
+        background-image: linear-gradient( to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5), transparent );
     }
 
-    .policy {
-        margin-top: 5%;
+    .title {
+        font-size: xx-large;
     }
-}
+
+    body {
+        overflow: hidden; /* Hide scrollbars */
+    }
+
+    .email-span {
+        font-size: 14px;
+    }
+
+
+
+    @media screen and (max-width:991px) {
+        .img1 {
+            height: 50vh;
+        }
+
+        .forget {
+            margin-top: 2%;
+        }
+
+        .policy {
+            margin-top: 5%;
+        }
+    }

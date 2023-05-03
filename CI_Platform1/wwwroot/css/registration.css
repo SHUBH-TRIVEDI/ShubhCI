@@ -55,3 +55,20 @@
 .email-span {
     font-size: 14px;
 }
+
+.carousel-inner {
+    height: 100vh;
+}
+
+.carousel-img {
+    height: 100vh;
+}
+
+.carouselExampleCaptions {
+    height: 100vh;
+}
+
+@media screen and (max-width:991px) {
+    .carousel-img, .carousel-inner, .carouselExampleCaptions {
+        height: 50vh;
+    }

@@ -1,6 +1,29 @@
 ﻿@using CI_Entities1.Models.ViewModel
 @model AdminVM
+<style>
+    .user-profile-img {
+    height: 250px!important;
+    width: 250px !important;
+    /* border-radius: 100px;*/
+}
 
+.user-profile-div {
+    position: relative;
+}
+
+
+.addimgplus {
+position: absolute;
+top: 180px;
+right: 420px;
+/* color: #F88634;*/
+font-size: 26px;
+}
+
+.imdupperdiv {
+border: 1px solid lightgrey !important;
+}
+</style>
 <div class="fs-4">
     User
 </div>
@@ -36,8 +59,20 @@
 
                 <div class" col-12">
                     <div class="text-center">
-                        <input type="file" id="InputImg" style="display:none;" />
-                        <img onclick="FileImg()" class="imgDiv rounded-circle mt-5" style="height:100px; width:100px;" />
+                        <div class="user-profile-div" onclick="CLICK()" id="imgdiv">
+                            <input onchange="CHANGE(event)" type="file" style="display:none" id="imginput" />
+                            @if (@Model.avatar != "")
+                            {
+                                <img src="@Model.avatar" alt="" class="rounded-circle user-profile-img " id="user-profile-img">
+                            }
+                            else
+                            {
+                                <img src="~/images/user1.png" class="rounded-circle user-profile-img" id="user-profile-img">
+                            }
+
+                            <i class="bi bi-plus-circle-fill addimgplus" height="25px" width="25px"></i>
+
+                        </div>
                     </div>
                 </div>
 
@@ -210,6 +245,18 @@
 
 <script>
 
+     function CHANGE(event) {
+            const reader = new FileReader(); // Create a new FileReader object
+            reader.onload = function () {
+                document.getElementById('user-profile-img').src = reader.result; // Set the source of the image tag to the selected image
+            }
+            reader.readAsDataURL(event.target.files[0]); // Read the selected file as a data URL
+        }
+
+        function CLICK() {
+            document.getElementById("imginput").click();
+        }
+
                 function FileImg() {
                 $('#InputImg').click();
             }
@@ -236,8 +283,10 @@
             var profile=$("#profile").val();
             var status=$("#status").val();
             var USERID=$("#USERID").val();
+            //var avatar=$("#user-profile-div").src();
+            var avatar = document.getElementById("user-profile-img").src;
 
-                       
+
             if (first == "" || first == null) {
                 $("#first-validation").removeClass("d-none");
             }
@@ -271,7 +320,7 @@
             $.ajax({
                 url: '/Admin/Admin/UserAddEdit',
                 type: 'POST',
-                data: {'first':first,'last':last, 'mail':mail,'password':password, 'employeeid':employeeid, 'department':department, 'country':country, 'city':city, 'profile':profile,'status':status,'USERID':USERID },
+                data: {'avatar':avatar,'first':first,'last':last, 'mail':mail,'password':password, 'employeeid':employeeid, 'department':department, 'country':country, 'city':city, 'profile':profile,'status':status,'USERID':USERID },
                 success: function (res) {
                     console.log(res);
                     $(".btn-close").click();
@@ -303,6 +352,7 @@
                        $("#profile").val(res.profileText);
                        $("#status").val(res.status);
                        $("#USERID").val(res.userId);
+                       document.getElementById("user-profile-img").src=res.avatar;
                        },
                    error: function (res) {
                        console.log(res);

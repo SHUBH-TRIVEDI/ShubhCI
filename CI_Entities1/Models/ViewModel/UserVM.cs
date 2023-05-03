@@ -10,6 +10,11 @@ namespace CI_Entities1.Models.ViewModel
 {
     public class UserVM
     {
+        public List<ContactU> contact { get; set; }
+
+        public string? Subject { get; set; }
+
+        public string? Message { get; set; }
         public List<User> users { get; set; }
         public long UserId { get; set; }
 

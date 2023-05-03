@@ -49,9 +49,9 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return PartialView("_UserAdmin", data);
         }
         [HttpPost]
-        public IActionResult UserAddEdit(string img, long USERID, string first,string last, string mail, string password, string employeeid, string department, long country, long city, string profile,string status)
+        public IActionResult UserAddEdit(string avatar, string img, long USERID, string first,string last, string mail, string password, string employeeid, string department, long country, long city, string profile,string status)
         {
-            var data = _Admin.PostUserData(img, USERID, first, last, mail, password, employeeid, department, country, city, profile, status);
+            var data = _Admin.PostUserData(avatar, img, USERID, first, last, mail, password, employeeid, department, country, city, profile, status);
             return Json("_UserAdmin");
         }
 
