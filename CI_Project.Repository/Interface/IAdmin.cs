@@ -29,6 +29,7 @@ namespace CI_Project.Repository.Interface
         public void CMSDelete(long CMSId);
 
         //Misssions
+        public IEnumerable<MissionMedium> GetMissionmediumData(long MISSIONID);
 
         public AdminVM GetMissionData();
 

@@ -565,7 +565,7 @@ public partial class CiPlatformContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("media_name");
             entity.Property(e => e.MediaPath)
-                .HasMaxLength(255)
+                .HasColumnType("text")
                 .HasColumnName("media_path");
             entity.Property(e => e.MediaType)
                 .HasMaxLength(255)

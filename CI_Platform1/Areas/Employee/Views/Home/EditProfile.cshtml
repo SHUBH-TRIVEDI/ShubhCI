@@ -41,7 +41,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn border-secondary rounded-pill shadow-none" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" onclick="ChangePsw()" class="btn oran shadow-none">Change Password</button>
+                                <button type="button" onclick="ChangePsw()" class="btn oran shadow-none" data-bs-dismiss="modal">Change Password</button>
                             </div>
                         </div>
                     </div>
@@ -336,7 +336,7 @@
                             </div>
 
                             <div class=" col-11">
-                                <div>Message* </div>
+                                <div>Message </div>
                                 <div class="col-12">
                                     <textarea asp-for="Message" rows="4" class="col-12"></textarea>
                                 </div>
@@ -373,11 +373,22 @@
             var newp = document.getElementById('new').value;
             var cnf = document.getElementById('cnf').value;
             if (old == "") {
-                alert("Old password Required");
+                   Swal.fire('Old password Required');
+
             }
             else if (newp != cnf) {
-                alert("Confirm Password Dosen't Match");
+                   Swal.fire('Confirm Password Dosent Match');
+
             }
+            else if (newp == "") {
+                   Swal.fire('New password Required');
+
+            }
+            else if (cnf == "") {
+                   Swal.fire('Confirm password Required');
+
+            }
+
             else {
                 $.ajax({
                     url: '/Employee/Home/ChangePassword',
@@ -385,16 +396,16 @@
                     data: { old: old, newp: newp, cnf: cnf },
                     success: function (response) {
                         if (response == true) {
-                            alert("password change successfully");
-
+                   Swal.fire('password change successfully');
                         }
                         else {
-                            alert("Password Don't Get Change Due to Some Issues");
+                   Swal.fire('Old Password Dosent match with original credentials');
                         }
 
                     },
                     error: function () {
-                        alert("could not comment");
+                   Swal.fire('Cant Change password');
+
                     }
                 });
             }

@@ -1,18 +1,10 @@
 ﻿using CI_Entities1.Data;
 using CI_Entities1.Models;
 using CI_Entities1.Models.ViewModel;
-using CI_Platform1.Models;
 using CI_Project.Repository.Interface;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Diagnostics;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CI_Platform1.Areas.Admin.Controllers
 {
@@ -49,7 +41,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return PartialView("_UserAdmin", data);
         }
         [HttpPost]
-        public IActionResult UserAddEdit(string avatar, string img, long USERID, string first,string last, string mail, string password, string employeeid, string department, long country, long city, string profile,string status)
+        public IActionResult UserAddEdit( string avatar, string img, long USERID, string first,string last, string mail, string password, string employeeid, string department, long country, long city, string profile,string status)
         {
             var data = _Admin.PostUserData(avatar, img, USERID, first, last, mail, password, employeeid, department, country, city, profile, status);
             return Json("_UserAdmin");
@@ -115,7 +107,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return PartialView("_MissionAdmin", data);
         }
 
-        public IActionResult MissionAddEdit(string title, string shortdesc, string description,string orgname, int country, int city,string orgdetail,
+        public IActionResult MissionAddEdit(string[] images,int seats,DateTime deadline, string title, string shortdesc, string description,string orgname, int country, int city,string orgdetail,
             string misstype,int themeid, DateTime start , DateTime end, string avail,  int MISSIONID,int skill)
         {
             if (MISSIONID == 0)
@@ -134,6 +126,8 @@ namespace CI_Platform1.Areas.Admin.Controllers
                     StartDate = start,
                     EndDate = end,
                     Availability = avail,
+                    Deadline=deadline,
+                    Seatleft = seats,
                 };
                 _CiPlatformContext.Missions.Add(mission);
                 _CiPlatformContext.SaveChanges();
@@ -145,12 +139,27 @@ namespace CI_Platform1.Areas.Admin.Controllers
                 };
                 _CiPlatformContext.MissionSkills.Add(missionSkill);
                 _CiPlatformContext.SaveChanges();
+
+                if (images.Length != 0)
+                {
+
+                    foreach (var i in images)
+                    {
+                        MissionMedium missionMedium = new MissionMedium();
+
+                        missionMedium.MediaPath = i;
+                        missionMedium.MissionId = mission.MissionId;
+
+                        _CiPlatformContext.MissionMedia.Add(missionMedium);
+                        _CiPlatformContext.SaveChanges();
+                    }
+                }
             }
+
 
             else
             {
                 var mission = _CiPlatformContext.Missions.FirstOrDefault(miss => miss.MissionId == MISSIONID);
-                //var skills= _CiPlatformContext.MissionSkills.FirstOrDefault(skill=> skill.SkillId==)
 
                 mission.Title = title;
                 mission.ShortDescription = shortdesc;
@@ -165,8 +174,15 @@ namespace CI_Platform1.Areas.Admin.Controllers
                 mission.EndDate = end;
                 mission.Availability = avail;
                 mission.UpdatedAt = DateTime.Now;
+                mission.Seatleft = seats;
+                mission.Deadline = deadline;
 
                 _CiPlatformContext.Missions.Update(mission);
+                _CiPlatformContext.SaveChanges();
+
+
+                var missskill = _CiPlatformContext.MissionSkills.Where(u => u.MissionId == MISSIONID).ToList();
+                _CiPlatformContext.RemoveRange(missskill);
                 _CiPlatformContext.SaveChanges();
 
                 MissionSkill missionSkill = new MissionSkill()
@@ -176,6 +192,24 @@ namespace CI_Platform1.Areas.Admin.Controllers
                 };
                 _CiPlatformContext.MissionSkills.Add(missionSkill);
                 _CiPlatformContext.SaveChanges();
+
+                if (images.Length != 0)
+                {
+                    var missionMedium = _CiPlatformContext.MissionMedia.Where(u => u.MissionId == MISSIONID).ToList();
+                    _CiPlatformContext.RemoveRange(missionMedium);
+                    _CiPlatformContext.SaveChanges();
+
+                    foreach (var i in images)
+                    {
+                        MissionMedium missionMedium1 = new MissionMedium();
+
+                        missionMedium1.MediaPath = i;
+                        missionMedium1.MissionId = mission.MissionId;
+
+                        _CiPlatformContext.MissionMedia.Add(missionMedium1);
+                        _CiPlatformContext.SaveChanges();
+                    }
+                }
             }
 
             return Json("_MissionAdmin");
@@ -191,7 +225,19 @@ namespace CI_Platform1.Areas.Admin.Controllers
         public IActionResult GetMissionData(long MISSIONID)
         {
             var data= _Admin.GetMissionEditData(MISSIONID);
-            return Json(data);
+            var media = _Admin.GetMissionmediumData(MISSIONID);
+            var missionData = new
+            {
+                data1 = data,
+                media1= media,
+            };
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                MaxDepth = 1024
+            };
+            var json = System.Text.Json.JsonSerializer.Serialize(data, options);
+            return Json(json);
         }
 
         //Story

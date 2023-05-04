@@ -10,6 +10,11 @@ namespace CI_Entities1.Models.ViewModel
 {
     public class AdminVM
     {
+        public List<IFormFile> attachment { get; set; }
+
+
+
+        public List<MissionMedium> missionMedium { get; set; }
         public List<CmsPage> Pages { get; set; }
         public string avatar { get; set; }  
 

@@ -192,28 +192,59 @@
 
 
 
-                                @if (category.MissionType == "Time")
-                                {
-                                    <div class="ms-auto"><img src="/images/deadline.png" class="mt-2"></div>
-                                    <div class="ms-2">
-                                        @*@category.EndDate.ToString().Split(" ")[0]*@
-                                        @category.StartDate.Value.AddDays(-1).ToShortDateString()
-                                        <p>Deadline</p>
-                                    </div>
-                                }
-                                else
-                                {
+
+                                @*                                else
+                                    {
 
                                     <div class="ms-auto me-2"><img src="/images/achieved.png" class="mt-2"></div>
                                     <div class="ms-2 me-5" stye="width:100%">
-                                        <div class="progress mt-2" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar bg-warning" style="width: 25%">25%</div>
-                                        </div>
-                                        <fs-5>Deadline</fs-5>
+                                    <div class="progress mt-2" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar bg-warning" style="width: 25%">25%</div>
                                     </div>
+                                    <fs-5>Deadline</fs-5>
+                                    </div>
+                                    }*@
+
+                                @{
+                                    int? finalVal = 0;
+
+                                    if (category.MissionType == "Goal")
+                                    {
+                                        var MaxGoalVal = Model.goalMissions.Where(s => s.MissionId == category.MissionId).Select(s => s.GoalValue);
+                                        if (Model.timesheets.Where(ts => ts.MissionId == category.MissionId).Select(ts => ts.Action) != null)
+                                        {
+                                            var goalCompleted = Model.timesheets.Where(ts => ts.MissionId == category.MissionId).Select(ts => ts.Action);
+
+                                            foreach (var goal in goalCompleted)
+                                            {
+                                                finalVal = finalVal + goal;
+                                            }
+                                        }
+                                    }
+                                    @if (category.MissionType == "Time")
+                                    {
+                                        <div class="ms-auto"><img src="/images/deadline.png" class="mt-2"></div>
+                                        <div class="ms-2">
+                                            @*@category.EndDate.ToString().Split(" ")[0]*@
+                                            @category.StartDate.Value.AddDays(-1).ToShortDateString()
+                                            <p>Deadline</p>
+                                        </div>
+                                    }
+
+                                    else
+                                    {
+                                        <div class="ms-4">
+                                            @foreach (var goal in Model.goalMissions)
+                                            {
+                                                @if (goal.MissionId == category.MissionId)
+                                                {
+                                                    <progress claas="mt-1" id="file" value="@finalVal" max="@goal.GoalValue" style="height: 14px; width:105px"> 30% </progress>
+                                                    <div>@finalVal Achieved</div>
+                                                }
+                                            }
+                                        </div>
+                                    }
                                 }
-
-
                             </div>
                             @*
                                 <div class="text-center ">
@@ -602,7 +633,7 @@
                         </div>
 
                         <div class=" col-11">
-                            <div>Message* </div>
+                            <div>Message </div>
                             <div class="col-12">
                                 <textarea asp-for="Message" rows="4" class="col-12"></textarea>
                             </div>

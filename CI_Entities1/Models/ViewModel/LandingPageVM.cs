@@ -31,6 +31,7 @@ namespace CI_Entities1.Models.ViewModel
 
         public List<ContactU> contact { get; set; }
 
+
         public string? Subject { get; set; }
 
         public string? Message { get; set; }

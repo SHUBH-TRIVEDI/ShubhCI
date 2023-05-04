@@ -293,6 +293,7 @@ namespace CI_Platform1.Controllers
             lp.skills = _Landing.skills();
             lp.MissionSkills = _Landing.missionSkills();
             lp.missionMedia = _CiPlatformContext.MissionMedia.ToList();
+            lp.timesheets = _CiPlatformContext.Timesheets.ToList();
 
             return View(lp);
         }
@@ -335,6 +336,8 @@ namespace CI_Platform1.Controllers
             lp.skills = _Landing.skills();
             lp.MissionSkills = _Landing.missionSkills();
             lp.missionMedia = _CiPlatformContext.MissionMedia.ToList();
+            lp.timesheets = _CiPlatformContext.Timesheets.ToList();
+
             //lp.MissionSkills= _CiPlatformContext.MissionSkills.FirstOrDefault(m=> m.MissionId ==Convert.ToInt32(missionId));
 
 

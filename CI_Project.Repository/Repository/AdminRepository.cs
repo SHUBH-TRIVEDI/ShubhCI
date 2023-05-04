@@ -196,7 +196,7 @@ namespace CI_Project.Repository.Repository
         {
             MissionSkill missionSkill = _CiPlatformContext.MissionSkills.FirstOrDefault(u => u.SkillId == skill);
             missionSkill.SkillId = skill;
-          
+
             _CiPlatformContext.MissionSkills.Update(missionSkill);
             _CiPlatformContext.SaveChanges();
 
@@ -263,32 +263,53 @@ namespace CI_Project.Repository.Repository
             foreach (var i in goal)
             {
                 i.DeletedAt = DateTime.Now;
+
+                _CiPlatformContext.GoalMissions.Update(i);
+                _CiPlatformContext.SaveChanges();
             }
 
             var favrouite = _CiPlatformContext.FavoriteMissions.Where(miss => miss.MissionId == MISSIONID);
             foreach (var i in favrouite)
             {
                 i.DeletedAt = DateTime.Now;
+                _CiPlatformContext.FavoriteMissions.Update(i);
+                _CiPlatformContext.SaveChanges();
+            }
+
+            var media = _CiPlatformContext.MissionMedia.Where(miss => miss.MissionId == MISSIONID);
+            foreach (var i in media)
+            {
+                i.DeletedAt = DateTime.Now;
+                _CiPlatformContext.MissionMedia.Update(i);
+                _CiPlatformContext.SaveChanges();
             }
 
             var comment = _CiPlatformContext.Comments.Where(miss => miss.MissionId == MISSIONID);
             foreach (var i in comment)
             {
                 i.DeletedAt = DateTime.Now;
+            _CiPlatformContext.Comments.Update(i);
+            _CiPlatformContext.SaveChanges();
             }
+
 
             var rating = _CiPlatformContext.MissionRatings.Where(miss => miss.MissionId == MISSIONID);
             foreach (var i in rating)
             {
                 i.DeletedAt = DateTime.Now;
+                _CiPlatformContext.MissionRatings.Update(i);
+                _CiPlatformContext.SaveChanges();
             }
-            _CiPlatformContext.Missions.Update(mission);
-            _CiPlatformContext.SaveChanges();
         }
 
         public Mission GetMissionEditData(long MISSIONID)
         {
             return _CiPlatformContext.Missions.FirstOrDefault(miss => miss.MissionId == MISSIONID);
+        }
+
+        public IEnumerable<MissionMedium> GetMissionmediumData(long MISSIONID)
+        {
+            return _CiPlatformContext.MissionMedia.Where(u => u.MissionId == MISSIONID).ToList();
         }
 
         //story
@@ -327,7 +348,7 @@ namespace CI_Project.Repository.Repository
             var media = _CiPlatformContext.StoryMedia.FirstOrDefault(u => u.StoryId == id);
 
             story.DeletedAt = DateTime.Now;
-            media.DeletedAt =DateTime.Now;
+            media.DeletedAt = DateTime.Now;
 
             _CiPlatformContext.StoryMedia.Update(media);
             _CiPlatformContext.Stories.Update(story);
@@ -421,7 +442,7 @@ namespace CI_Project.Repository.Repository
         public AdminVM GetSkillData()
         {
             AdminVM adminVM = new AdminVM();
-            adminVM.skills = _CiPlatformContext.Skills.Where(u=> u.DeletedAt == null).ToList();
+            adminVM.skills = _CiPlatformContext.Skills.Where(u => u.DeletedAt == null).ToList();
 
             return adminVM;
         }
@@ -466,7 +487,7 @@ namespace CI_Project.Repository.Repository
             var skill = _CiPlatformContext.Skills.FirstOrDefault(u => u.SkillId == SkillId);
             skill.DeletedAt = DateTime.Now;
 
-            _CiPlatformContext.Skills.Remove(skill);        
+            _CiPlatformContext.Skills.Remove(skill);
             //_CiPlatformContext.Skills.Update(skill);
             _CiPlatformContext.SaveChanges();
         }
