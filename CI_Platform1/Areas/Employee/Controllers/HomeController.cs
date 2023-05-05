@@ -468,12 +468,6 @@ namespace CI_Platform1.Controllers
             ViewBag.alluser = lp.users;
 
             var userid = HttpContext.Session.GetString("userID");
-            //if (userid == null)
-            //{
-            //    return RedirectToAction("Login", "Home", new { Area = "Employee" });
-
-            //}
-            //ViewBag.UserId = int.Parse(userid);
 
             ViewBag.user = lp.users.FirstOrDefault(e => e.UserId == id);
             List<VolunteeringVM> relatedlist = new List<VolunteeringVM>();
@@ -483,7 +477,7 @@ namespace CI_Platform1.Controllers
             //IEnumerable<Mission> selected = lp.missions.Where(m => m.MissionId == missionid).ToList();
 
             //var volmission = lp.missions.FirstOrDefault(m => m.MissionId == Convert.ToInt32(missionid));
-            var miss= _CiPlatformContext.Missions.FirstOrDefault(m=> m.MissionId ==Convert.ToInt16(missionid));
+            var miss= _CiPlatformContext.Missions.FirstOrDefault(m=> m.MissionId ==missionid);
             var theme = lp.missionThemes.FirstOrDefault(m => m.MissionThemeId == miss.ThemeId);
             var City = lp.cities.FirstOrDefault(m => m.CityId == miss.CityId);
             var prevRating = lp.missionRatings.FirstOrDefault(e => e.MissionId == missionid && e.UserId == id);
@@ -537,7 +531,10 @@ namespace CI_Platform1.Controllers
                 ViewBag.fav = fav;
 
             }
-            volunteeringVM.GoalObjectiveText = themeobjective.GoalObjectiveText;
+            if(themeobjective != null)
+            {
+                volunteeringVM.GoalObjectiveText = themeobjective.GoalObjectiveText;
+            }
             volunteeringVM.comments = _CiPlatformContext.Comments.OrderByDescending(x=> x.CreatedAt).Where(m => m.MissionId == missionid && m.DeletedAt==null && m.UserId == Convert.ToInt32(userid)).ToList();
 
             //Average Rating
@@ -578,7 +575,7 @@ namespace CI_Platform1.Controllers
                     EndDate = Enddate2[0],
                     Availability = item.Availability,
                     OrganizationName = item.OrganizationName,
-                    GoalObjectiveText = relgoalobj.GoalObjectiveText,
+                    GoalObjectiveText = relgoalobj!=null? relgoalobj.GoalObjectiveText:null,
                     MissionType = item.MissionType,
                 }
                 );

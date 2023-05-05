@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "t983dWXe+SUNumQe96Z50NQq+4QGYqqFHrP5pw+cf9g=",
+  "Hash": "M1alOZjKv+At3khzTQahPelHHzAYSmqjmEmjdUnq8iQ=",
   "Source": "CI_Platform1",
   "BasePath": "_content/CI_Platform1",
   "Mode": "Default",
@@ -2123,6 +2123,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\StoryShare.js"
+    },
+    {
+      "Identity": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\js\\Theme.js",
+      "SourceId": "CI_Platform1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\",
+      "BasePath": "_content/CI_Platform1",
+      "RelativePath": "js/Theme.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Theme.js"
     },
     {
       "Identity": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\js\\volunteering.js",

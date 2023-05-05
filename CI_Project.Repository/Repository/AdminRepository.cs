@@ -203,103 +203,75 @@ namespace CI_Project.Repository.Repository
             return missionSkill;
         }
 
-        public Mission PostMissionData(string title, string shortdesc, string description, string orgname, int country, int city, string orgdetail, string misstype, int themeid, DateTime start, DateTime end, string avail, int MISSIONID, int skill)
-        {
-            if (MISSIONID == 0)
-            {
-                Mission mission = new Mission()
-                {
-                    Title = title,
-                    ShortDescription = shortdesc,
-                    Description = description,
-                    OrganizationName = orgname,
-                    OrganizationDetail = orgdetail,
-                    CountryId = country,
-                    CityId = city,
-                    MissionType = misstype,
-                    ThemeId = themeid,
-                    StartDate = start,
-                    EndDate = end,
-                    Availability = avail,
-                };
-                _CiPlatformContext.Missions.Add(mission);
-                _CiPlatformContext.SaveChanges();
-
-                return mission;
-            }
-
-            else
-            {
-                var mission = _CiPlatformContext.Missions.FirstOrDefault(miss => miss.MissionId == MISSIONID);
-                //var skills= _CiPlatformContext.MissionSkills.FirstOrDefault(skill=> skill.SkillId==)
-
-                mission.Title = title;
-                mission.ShortDescription = shortdesc;
-                mission.Description = description;
-                mission.OrganizationName = orgname;
-                mission.OrganizationDetail = orgdetail;
-                mission.CountryId = country;
-                mission.CityId = city;
-                mission.MissionType = misstype;
-                mission.ThemeId = themeid;
-                mission.StartDate = start;
-                mission.EndDate = end;
-                mission.Availability = avail;
-                mission.UpdatedAt = DateTime.Now;
-
-                _CiPlatformContext.Missions.Update(mission);
-                _CiPlatformContext.SaveChanges();
-                return mission;
-            }
-        }
+        //public Mission PostMissionData(string[] images, int seats, DateTime deadline, string title, string shortdesc, string description, string orgname, int country, int city, string orgdetail,
+        //    string misstype, int themeid, DateTime start, DateTime end, string avail, int MISSIONID, int skill)
+        //{
+            
+        //}
 
         public void MissionDelete(long MISSIONID)
         {
             var mission = _CiPlatformContext.Missions.FirstOrDefault(miss => miss.MissionId == MISSIONID);
             mission.DeletedAt = DateTime.Now;
-
+            _CiPlatformContext.Missions.Update(mission);
+            _CiPlatformContext.SaveChanges();
 
             var goal = _CiPlatformContext.GoalMissions.Where(miss => miss.MissionId == MISSIONID).ToList();
-            foreach (var i in goal)
+            if (goal != null)
             {
-                i.DeletedAt = DateTime.Now;
+                foreach (var i in goal)
+                {
+                    i.DeletedAt = DateTime.Now;
 
-                _CiPlatformContext.GoalMissions.Update(i);
-                _CiPlatformContext.SaveChanges();
+                    _CiPlatformContext.GoalMissions.Update(i);
+                    _CiPlatformContext.SaveChanges();
+                }
             }
 
             var favrouite = _CiPlatformContext.FavoriteMissions.Where(miss => miss.MissionId == MISSIONID);
-            foreach (var i in favrouite)
+            if (favrouite != null)
             {
-                i.DeletedAt = DateTime.Now;
-                _CiPlatformContext.FavoriteMissions.Update(i);
-                _CiPlatformContext.SaveChanges();
+                foreach (var i in favrouite)
+                {
+                    i.DeletedAt = DateTime.Now;
+                    _CiPlatformContext.FavoriteMissions.Update(i);
+                    _CiPlatformContext.SaveChanges();
+                }
             }
 
             var media = _CiPlatformContext.MissionMedia.Where(miss => miss.MissionId == MISSIONID);
-            foreach (var i in media)
+            if (media != null)
             {
-                i.DeletedAt = DateTime.Now;
-                _CiPlatformContext.MissionMedia.Update(i);
-                _CiPlatformContext.SaveChanges();
+                foreach (var i in media)
+                {
+                    i.DeletedAt = DateTime.Now;
+                    _CiPlatformContext.MissionMedia.Update(i);
+                    _CiPlatformContext.SaveChanges();
+                }
             }
 
             var comment = _CiPlatformContext.Comments.Where(miss => miss.MissionId == MISSIONID);
-            foreach (var i in comment)
+            if (comment != null)
             {
-                i.DeletedAt = DateTime.Now;
-            _CiPlatformContext.Comments.Update(i);
-            _CiPlatformContext.SaveChanges();
+                foreach (var i in comment)
+                {
+                    i.DeletedAt = DateTime.Now;
+                    _CiPlatformContext.Comments.Update(i);
+                    _CiPlatformContext.SaveChanges();
+                }
             }
-
 
             var rating = _CiPlatformContext.MissionRatings.Where(miss => miss.MissionId == MISSIONID);
-            foreach (var i in rating)
+            if (rating != null)
             {
-                i.DeletedAt = DateTime.Now;
-                _CiPlatformContext.MissionRatings.Update(i);
-                _CiPlatformContext.SaveChanges();
+                foreach (var i in rating)
+                {
+                    i.DeletedAt = DateTime.Now;
+                    _CiPlatformContext.MissionRatings.Update(i);
+                    _CiPlatformContext.SaveChanges();
+                }
             }
+
         }
 
         public Mission GetMissionEditData(long MISSIONID)

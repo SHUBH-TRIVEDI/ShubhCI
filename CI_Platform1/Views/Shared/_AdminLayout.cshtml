@@ -202,7 +202,7 @@
                 </nav>
 
                 <div id="PartialView">
-                      @*<partial name="_UserAdmin" />*@
+                      <partial name="_UserAdmin" />
                 </div>
 
                 <div class="mt-5">
@@ -225,17 +225,17 @@
 
 
     <script>
-        var table = new DataTable('#myTable');
+    var table = new DataTable('#myTable');
 
-         $(function() {
+        $(function() {
              $("li").click(function(e) {
                  e.preventDefault();
                  $("li").removeClass("active");
                  $(this).addClass("active");
              });
-         });
+        });
 
-         $(document).ready(function () {
+        $(document).ready(function () {
              $(".side-nav a").click(function (e) {
                  e.preventDefault(); // prevent default link behavior
                  var url = $(this).data("partial-view-url");
@@ -251,7 +251,7 @@
                      }
                  });
              });
-         });
+        });
         // function Log(){
         //     console.log("hlgajshfguahrug");
         //      $.ajax({

@@ -75,7 +75,6 @@
         {
             <tr id="application">
                 <td>@theme.Title</td>
-                @*<td>@theme.Status</td>*@
                 <td>
                     @if (@theme.Status == 1)
                     {
@@ -104,80 +103,76 @@
 </table>
 
 <script>
-        function ThemeAddEdit()
-        {
-            var title=$("#title").val();
-            var status=$("#status").val();
-            var Themeid=$("#Themeid").val();
-
-            if (title == "" || title == null) {
-                $("#title-validation").removeClass("d-none");
-            }
-
-            else{
-            $.ajax({
-                url: '/Admin/Admin/ThemeAddEdit',
-                type: 'GET',
-                data: {'title':title, 'status':status,'Themeid': Themeid},
-                success: function (res) {
-                    console.log(res);
-                    $(".btn-close").click();
-                    $("#theme").click();
-                },
-                error: function (res) {
-                    alert("Theme Modal error");
-                }
-            });
+function ThemeAddEdit() {
+    var title = $("#title").val();
+    var status = $("#status").val();
+    var Themeid = $("#Themeid").val();
+    $.ajax({
+        url: '/Admin/Admin/ThemeAddEdit',
+        type: 'GET',
+        data: { 'title': title, 'status': status, 'Themeid': Themeid },
+        success: function (res) {
+            console.log(res);
+            $("#theme").click();
+        },
+        error: function (res) {
+            alert("Theme Modal error");
         }
+    });
+}
 
-            function GetThemeData(Themeid)
-            {
-                   $.ajax({
-                   url: '/Admin/Admin/GetThemeData',
-                   type: 'GET',
-                   data: {'Themeid':Themeid},
-                   success: function (res) {
-                       console.log(res);
-                       $("#title").val(res.title);
-                       $("#status").val(res.status);
-                       $("#Themeid").val(res.missionThemeId);
-                        },
-                   error: function (res) {
-                       console.log(res);
-                       alert("get Theme Modal error");
-                   }
-               });
-
+function GetThemeData(Themeid) {
+    $.ajax({
+        url: '/Admin/Admin/GetThemeData',
+        type: 'GET',
+        data: { 'Themeid': Themeid },
+        success: function (res) {
+            console.log(res);
+            $("#title").val(res.title);
+            $("#status").val(res.status);
+            $("#Themeid").val(res.missionThemeId);
+        },
+        error: function (res) {
+            console.log(res);
+            alert("get Theme Modal error");
         }
-
-        function ThemeDelete(id)
-        {
-            alert(id);
+    });
+}
+function ThemeDelete(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 url: '/Admin/Admin/ThemeDelete',
                 type: 'GET',
-                data: {'id':id },
+                data: { 'id': id },
                 success: function (res) {
-
-    Swal.fire({
-      title: 'Theme Gets Deleted',
-      showClass: {
-        popup: 'animate__animated animate__fadeInDown'
-      },
-      hideClass: {
-        popup: 'animate__animated animate__fadeOutUp'
-      }
-    })
-                    console.log(res);
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
                     $("#theme").click();
                 }
             });
+            
         }
+    })
 
-        function nullvalues()
-        {
-            title =document.getElementById("title");
-            title.value="";
-            status=document.getElementById("status");
+}
+
+function nullvalues() {
+    title = document.getElementById("title");
+    title.value = "";
+    status = document.getElementById("status");
+    status.value = "";
+}
 
 </script>

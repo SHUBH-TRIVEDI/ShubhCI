@@ -58,7 +58,7 @@ namespace CI_Platform1.Areas.Admin.Controllers
         {
             _Admin.UserDelete(USERID);
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
 

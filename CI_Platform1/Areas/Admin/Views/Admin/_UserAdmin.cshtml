@@ -2,28 +2,27 @@
 @model AdminVM
 <style>
     .user-profile-img {
-    height: 250px!important;
-    width: 250px !important;
-    /* border-radius: 100px;*/
-}
+        height: 250px !important;
+        width: 250px !important;
+    }
 
-.user-profile-div {
-    position: relative;
-}
+    .user-profile-div {
+        position: relative;
+    }
 
 
-.addimgplus {
-position: absolute;
-top: 180px;
-right: 420px;
-/* color: #F88634;*/
-font-size: 26px;
-}
+    .addimgplus {
+        position: absolute;
+        top: 180px;
+        right: 420px;
+        font-size: 26px;
+    }
 
-.imdupperdiv {
-border: 1px solid lightgrey !important;
-}
+    .imdupperdiv {
+        border: 1px solid lightgrey !important;
+    }
 </style>
+
 <div class="fs-4">
     User
 </div>
@@ -61,7 +60,9 @@ border: 1px solid lightgrey !important;
                     <div class="text-center">
                         <div class="user-profile-div" onclick="CLICK()" id="imgdiv">
                             <input onchange="CHANGE(event)" type="file" style="display:none" id="imginput" />
-                            @if (@Model.avatar != "")
+                            <div id="avatar-validation" class="text-danger d-none">Please Provide First Name </div>
+
+                            @if (@Model.avatar != "" || @Model.avatar != null)
                             {
                                 <img src="@Model.avatar" alt="" class="rounded-circle user-profile-img " id="user-profile-img">
                             }
@@ -229,12 +230,12 @@ border: 1px solid lightgrey !important;
                 <td>
                     <span>
                         <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#UserModal" onclick="GetUserData(@user.UserId)">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square" style="color:green;"></i>
                         </button>
                     </span>
                     <span>
                         <button class="btn shadow-none" onclick="UserDelete(@user.UserId)">
-                            <i class="bi bi-trash"></i>
+                            <i class="bi bi-trash" style="color:red;"></i>
                         </button>
                     </span>
                 </td>
@@ -315,6 +316,9 @@ border: 1px solid lightgrey !important;
             else if (profile == "" || profile == null) {
                 $("#profile-validation").removeClass("d-none");
             }
+            else if (avatar == "" || avatar == null) {
+                $("#avatar-validation").removeClass("d-none");
+            }
             else{
 
             $.ajax({
@@ -380,6 +384,7 @@ border: 1px solid lightgrey !important;
     })
 
                     console.log(res);
+                    
                     $("#User").click();
                 }
             });

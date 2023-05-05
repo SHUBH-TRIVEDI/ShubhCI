@@ -2,68 +2,68 @@
 @model AdminVM
 
 <style>
-.input-div {
-    width: 100%;
-    height: 200px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 2px dotted black;
-    background-color: white;
-    position: relative;
-}
-
-.file {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-
-output {
-    width: 100%;
-    min-height: 150px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 15px;
-    position: relative;
-    border-radius: 5px;
-}
-
-    output .image {
-        height: 100px;
+    .input-div {
+        width: 100%;
+        height: 200px;
         border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 2px dotted black;
+        background-color: white;
         position: relative;
     }
 
-        output .image img {
-            height: 100%;
-            width: 100%;
+    .file {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    output {
+        width: 100%;
+        min-height: 150px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 15px;
+        position: relative;
+        border-radius: 5px;
+    }
+
+        output .image {
+            height: 100px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
         }
 
-        output .image span {
-            position: absolute;
-            top: -4px;
-            right: 4px;
-            cursor: pointer;
-            font-size: 22px;
-            color: white;
-        }
-
-            output .image span:hover {
-                opacity: 0.8;
+            output .image img {
+                height: 100%;
+                width: 100%;
             }
 
-    output .span--hidden {
-        visibility: hidden;
-    }
+            output .image span {
+                position: absolute;
+                top: -4px;
+                right: 4px;
+                cursor: pointer;
+                font-size: 22px;
+                color: white;
+            }
+
+                output .image span:hover {
+                    opacity: 0.8;
+                }
+
+        output .span--hidden {
+            visibility: hidden;
+        }
 </style>
 
 <div class="fs-4">
@@ -298,8 +298,6 @@ output {
                     </output>
 
                     <select id="imageselect">
-
-
                     </select>
                     @*hidden Field*@
                     <input type="text" class="form-control shadow-none" id="MISSIONID" aria-describedby="emailHelp" hidden />
@@ -339,12 +337,12 @@ output {
                 <td>
                     <span>
                         <button class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#MissionModal" onclick="GetMissionData(@mission.MissionId) ">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square" style="color:green;"></i>
                         </button>
                     </span>
                     <span>
                         <button class="btn shadow-none" onclick="MissionDelete(@mission.MissionId)">
-                            <i class="bi bi-trash"></i>
+                            <i class="bi bi-trash" style="color:red;"></i>
                         </button>
                     </span>
                 </td>

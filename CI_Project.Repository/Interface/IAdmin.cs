@@ -33,7 +33,8 @@ namespace CI_Project.Repository.Interface
 
         public AdminVM GetMissionData();
 
-        public Mission PostMissionData(string title, string shortdesc, string description, string orgname, int country, int city, string orgdetail, string misstype, int themeid, DateTime start, DateTime end, string avail, int MISSIONID, int skill);
+        //public Mission PostMissionData(string[] images, int seats, DateTime deadline, string title, string shortdesc, string description, string orgname, int country, int city, string orgdetail,
+        //    string misstype, int themeid, DateTime start, DateTime end, string avail, int MISSIONID, int skill);
 
         public void MissionDelete(long MISSIONID);
 
