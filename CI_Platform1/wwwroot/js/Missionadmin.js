@@ -244,3 +244,31 @@ function nullvalues() {
     start = document.getElementById("video");
     date1.value = "";
 }
+
+function filteredCitites() {
+    var missionCityDiv = document.getElementById("city");
+    var missionCountry = document.getElementById("country").value;
+    var missioncity = document.getElementById("city");
+
+    while (missionCityDiv.hasChildNodes()) {
+        missionCityDiv.removeChild(missionCityDiv.firstChild);
+    }
+
+    $.ajax({
+        url: '/Admin/Admin/filterCity',
+        type: 'GET',
+        data: { missionCountry },
+        datatype: "json",
+        success: function (result) {
+            console.log(result)
+            result.map((city, index) => {
+                console.log(city)
+                var newCityOption = document.createElement('option');
+                newCityOption.value = city.cityId;
+                newCityOption.innerText = city.name;
+                console.log(newCityOption)
+                missioncity.appendChild(newCityOption)
+            })
+        }
+    });
+}

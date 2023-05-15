@@ -4,16 +4,17 @@
 
 <partial name="Navbar2" />
 
+
 <div class="container">
     @*sort by and explore mission*@
     <div class="row me-5 d-flex">
-        <div class="col-6 col-md-4 col-sm-4 d-inline">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-6 d-inline">
             <p class="fs-4 ms-5 mt-2">
                <div id="count1"></div>
             </p>
         </div>
 
-        <div class="col-lg-3 col-md-8 col-sm-8 d-flex ms-auto text-end sortby">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-6 d-flex ms-auto text-end sortby">
             <div class="dropdown sort nav-item">
                 <select class="dropdown sorted nav-item p-1 mt-3" onchange="mysearch()" >
                     <option selected>Sort by</option>
@@ -68,16 +69,17 @@
                 theme.push($(this).val());
             });
 
-            var skill = [];
-            $("input[type='checkbox'][name='skill']:checked").each(function () {
-                skill.push($(this).val());
+            var skills = [];
+            $("input[type='checkbox'][name='skill1']:checked").each(function () {
+                skills.push($(this).val());
             });
 
+            console.log(skills);
 
             $.ajax({
                 url: '/Employee/Home/_Missions',
                 type: 'GET',    
-                data: { 'SearchingMission': search,'sort':sort, 'skill' :skill ,'jpg':jpg,'country': country.toString(), 'city': city.toString(), 'theme': theme.toString() },
+                data: { 'SearchingMission': search,'sort':sort, 'skill' :skills.toString() ,'jpg':jpg,'country': country.toString(), 'city': city.toString(), 'theme': theme.toString() },
                 success: function (res) {
                     $("#missiondetails").html(res);
                     $("#count1").html('')
@@ -265,4 +267,6 @@ myButton.click();
 }
 }
 window.addEventListener("resize", detectScreenSize);
+
+
 </script>

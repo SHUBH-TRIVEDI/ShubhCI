@@ -35,5 +35,8 @@ namespace CI_Entities1.Models.ViewModel
         public string? Subject { get; set; }
 
         public string? Message { get; set; }
+
+        public int? isapplied { get; set; }
+
     }
 }

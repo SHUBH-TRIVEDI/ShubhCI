@@ -43,6 +43,14 @@ function deleteImage(index) {
     displayImages()
 }
 
+function nullvalues() {
+    $("#edit").val('');
+    $("#publish").val('');
+    $("#title").val('');
+    $("#miss").val('');
+    $("#url").val('');
+}
+
 
 
 

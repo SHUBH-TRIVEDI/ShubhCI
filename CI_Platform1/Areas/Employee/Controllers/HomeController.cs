@@ -64,6 +64,10 @@ namespace CI_Platform1.Controllers
         public IActionResult contact(LandingPageVM lvm)
         {
             var userid = HttpContext.Session.GetString("userID");
+            if (userid == null)
+            {
+                return RedirectToAction("Login", "Home", new { Area = "Employee" });
+            }
             var use = Convert.ToInt32(userid);
 
             ContactU cont = new ContactU()
@@ -312,15 +316,8 @@ namespace CI_Platform1.Controllers
 
                 ViewBag.UserId = int.Parse(userid);
 
-                if (userid == null)
-                {
-                    return RedirectToAction("Login", "Home");
-                }
-
                 var fav = lp.favoriteMissions.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid) && u.MissionId == missionId);
                 ViewBag.fav = fav;
-
-                //lp.application = _Landing.missionApplications().Where(u => u.UserId == Convert.ToInt32(userid)).ToList();
             }
 
 
@@ -337,10 +334,6 @@ namespace CI_Platform1.Controllers
             lp.MissionSkills = _Landing.missionSkills();
             lp.missionMedia = _CiPlatformContext.MissionMedia.ToList();
             lp.timesheets = _CiPlatformContext.Timesheets.ToList();
-
-            //lp.MissionSkills= _CiPlatformContext.MissionSkills.FirstOrDefault(m=> m.MissionId ==Convert.ToInt32(missionId));
-
-
 
             //Search Mission
             if (SearchingMission != null)
@@ -378,7 +371,6 @@ namespace CI_Platform1.Controllers
             if (skill != null)
             {
                 string[] skillText = skill.Split(',');
-                //lp.missions = lp.missions.Where(m => skillText.Contains(m.MissionSkills)).ToList();
                 var tempFill = lp.MissionSkills.Where(x => skillText.Contains(x.Skill.SkillName)).Select(x => x.MissionId).ToList();
                 lp.missions = lp.missions.Where(e => tempFill.Contains(e.MissionId)).ToList();
             }
@@ -421,13 +413,10 @@ namespace CI_Platform1.Controllers
                 default:
                     lp.missions = lp.missions.OrderBy(e => e.Title).ToList();
                     break;
-                    //case 6:
-                    //    lp.missions = lp.missions.Where(m => m.fav == true).ToList();
-                    //    break;
-                    //    //lp.missions = lp.missions.OrderByDescending(e => e.fav).ToList();
-                    //    //lp.missions = lp.missions.Where(m => m.fav == true).ToList();
 
             }
+
+
 
             //Pagination
             ViewBag.missionCount = lp.missions.Count();
@@ -448,10 +437,15 @@ namespace CI_Platform1.Controllers
             return PartialView("_Missions", lp);
         }
 
+        //Cascading for city and country
+        public JsonResult filterCity(long missionCountry)
+        {
+            IList<City> cities = _CiPlatformContext.Cities.Where(m => m.CountryId == missionCountry).ToList();
+            return Json(cities);
+        }
 
 
-
-        //Volunteering Missions Model
+        //Volunteering Missions Method
         public IActionResult volunteering(long missionid, long id, long missionId)
         {
             LandingPageVM lp = new LandingPageVM();
@@ -495,6 +489,8 @@ namespace CI_Platform1.Controllers
             {
                 volunteeringVM.missionApplications = _CiPlatformContext.MissionApplications.Where(u => u.MissionId == missionId && u.UserId != Convert.ToInt32(userid)).ToList();
             }
+            volunteeringVM.goalMissions = _CiPlatformContext.GoalMissions.Where(u => u.MissionId == missionid).ToList();
+            volunteeringVM.timesheets = _CiPlatformContext.Timesheets.Where(u => u.MissionId == missionid).ToList();
 
             volunteeringVM.missionMedia = _CiPlatformContext.MissionMedia.Where(u => u.MissionId == missionId).ToList();
             volunteeringVM.MissionId = missionid;
@@ -517,16 +513,33 @@ namespace CI_Platform1.Controllers
                 var ratings = _Interface.missionRatings().FirstOrDefault(MR => MR.MissionId == missionId && MR.UserId == int.Parse(userid));
                 volunteeringVM.Rating = ratings != null ? Convert.ToInt64(ratings.Rating) : 0;
 
-                var app = _CiPlatformContext.MissionApplications.Where(u => u.UserId == Convert.ToInt32(userid) && u.MissionId == missionid).ToList();
-                if (app.Count() != 0)
+                //Approval status
+                var app= _CiPlatformContext.MissionApplications.FirstOrDefault(u=> u.UserId == Convert.ToInt32(userid)  && u.MissionId == missionId);
+
+                if(app != null)
                 {
-                    volunteeringVM.isapplied = 1;
+                    if(app.ApprovalStatus == "Approved")
+                    {
+                        volunteeringVM.isapplied = 1;
+                    }
+
+                    else if (app.ApprovalStatus == "Rejected")
+                    {
+                        volunteeringVM.isapplied = 2;
+                    }
+
+                    else
+                    {
+                        volunteeringVM.isapplied = 3;
+                        //Pending
+                    }
                 }
                 else
                 {
                     volunteeringVM.isapplied = 0;
                 }
                 ViewBag.isapplied = volunteeringVM.isapplied;
+
                 var fav = volunteeringVM.favoriteMissions.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid) && u.MissionId == missionId);
                 ViewBag.fav = fav;
 
@@ -1053,8 +1066,6 @@ namespace CI_Platform1.Controllers
                 _CiPlatformContext.SaveChanges();
             }
 
-
-
             return RedirectToAction("Timesheet", "Home");
         }
 
@@ -1092,7 +1103,7 @@ namespace CI_Platform1.Controllers
         }
 
 
-        //Delete
+        //Delete Timesheet
         [HttpPost]
         public IActionResult Delete(int id)
         {
@@ -1234,16 +1245,13 @@ namespace CI_Platform1.Controllers
             if (ratingExists != null)
             {
                 _Interface.updaterating(ratingExists, rating);
-                // return Json(new { success = true, ratingExists, isRated = true });
             }
             else
             {
                 _Interface.addratings(rating, Id, missionId);
-                //return Json(new { success = true, ratingele, isRated = true });
             }
             return RedirectToAction("Volunteering", new { id = Id, missionId = missionId });
         }
-
 
     }
 }

@@ -40,9 +40,43 @@
                                 <img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />
 
                             }
-                            @if (applied != null)
+
+                            @{
+                                //Approval status
+                                var app = Model.missionApplications.FirstOrDefault(u => u.UserId == Convert.ToInt32(userid) && u.MissionId == category.MissionId);
+                                var isapplied = 0;
+                                if (app != null)
+                                {
+                                    if (app.ApprovalStatus == "Approved")
+                                    {
+                                        isapplied = 1;
+                                    }
+
+                                    else if (app.ApprovalStatus == "Rejected")
+                                    {
+                                        isapplied = 2;
+                                    }
+
+                                    else
+                                    {
+                                        isapplied = 3;  //Pending
+                                    }
+                                }
+                            }
+
+                            @if (isapplied == 1)
                             {
                                 <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Applied</div>
+                            }
+
+                            else if (isapplied == 2)
+                            {
+                                <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Rejected</div>
+                            }
+
+                            else if (isapplied == 3)
+                            {
+                                <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Pending</div>
                             }
 
 
@@ -188,23 +222,6 @@
                                 </div>
 
                                 @*Progressbar*@
-
-
-
-
-
-                                @*                                else
-                                    {
-
-                                    <div class="ms-auto me-2"><img src="/images/achieved.png" class="mt-2"></div>
-                                    <div class="ms-2 me-5" stye="width:100%">
-                                    <div class="progress mt-2" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    <div class="progress-bar bg-warning" style="width: 25%">25%</div>
-                                    </div>
-                                    <fs-5>Deadline</fs-5>
-                                    </div>
-                                    }*@
-
                                 @{
                                     int? finalVal = 0;
 
@@ -309,11 +326,22 @@
         <div id="list-products" class="container row view-group d-none">
             @foreach (var i in Model.missions)
             {
+                var missionimg = Model.missionMedia.FirstOrDefault(e => e.MissionId == i.MissionId);
 
                 <div class="row">
                     <div class="d-flex mb-3">
                         <div class="card-img-container col-3">
-                            <img class="card-img-top  wid" src="@i.Imagepath" style="" />
+
+                            @if (missionimg != null)
+                            {
+                                <img class="card-img-top h-100 wid" src="@missionimg.MediaPath">
+
+                            }
+                            else
+                            {
+                                <img class="card-img-top h-100 " src="~/Images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="Card image cap" />
+
+                            }
 
                             @{
                                 var userId = Context.Session.GetString("userID");
@@ -327,11 +355,43 @@
                                 DateTime Deadline = EndDate.AddDays(-5);
 
                                 var skill = Model.MissionSkills.FirstOrDefault(u => u.MissionId == i.MissionId);
+
+                                //Approval status
+                                var app = Model.missionApplications.FirstOrDefault(u => u.UserId == Convert.ToInt32(userId) && u.MissionId == i.MissionId);
+                                var isapplied = 0;
+                                if (app != null)
+                                {
+                                    if (app.ApprovalStatus == "Approved")
+                                    {
+                                        isapplied = 1;
+                                    }
+
+                                    else if (app.ApprovalStatus == "Rejected")
+                                    {
+                                        isapplied = 2;
+                                    }
+
+                                    else
+                                    {
+                                        isapplied = 3;  //Pending
+                                    }
+                                }
                             }
 
-                            @if (applied != null)
+                            @if (isapplied == 1)
                             {
                                 <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Applied</div>
+
+                            }
+
+                            else if (isapplied == 2)
+                            {
+                                <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Rejected</div>
+                            }
+
+                            else if (isapplied == 3)
+                            {
+                                <div class="bg-success p-1 text-white" style="position:absolute;top:40px;left:0;border-radius: 0px 15px 15px 0px;">Pending</div>
                             }
 
                             @if (closed.Deadline < DateTime.Now)
@@ -339,11 +399,7 @@
                                 <div class="bg-danger text-white p-1" style="position:absolute;top:5px;left:0;border-radius: 0px 15px 15px 0px; ">Closed</div>
                             }
 
-                            @* @if (applied != null)
-                                {
-                                <div class="applied-div">Applied</div>
 
-                                }*@
                             <div class="top-right">
                                 <img src="~/images/pin.png" />@i.City.Name
                             </div>
@@ -516,14 +572,11 @@
                                             <div class="">
                                                 <h6 class="pt-3 mb-0">Skill</h6>
                                                 @*//Skill*@
-                                                @*                                                @{
+                                                @{
                                                     var skillhave = Model.MissionSkills.FirstOrDefault(s => s.MissionId == i.MissionId);
                                                     var skillx = skillhave.Skill.SkillName;
-                                                    }
-                                                    <small>@skillx</small>*@
-
-                                                <small>Content Writing </small>
-
+                                                }
+                                                <small>@skillx</small>
                                             </div>
                                         </div>
 

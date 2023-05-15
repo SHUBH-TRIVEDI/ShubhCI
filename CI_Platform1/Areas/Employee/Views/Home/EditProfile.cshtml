@@ -131,30 +131,30 @@
                 </div>
 
                 <div class="row mt-4">
-                    <div class=" col-6">
-                        <div>City </div>
-                        <div class="col-11">
-                            <select asp-for="CityId" placeholder="Select Your Country" class="form-select col-11 p-1 shadow-none">
-                                @foreach (var i in @Model.cities)
-                                {
-                                    <option value="@i.CityId">@i.Name</option>
-                                }
-                            </select>
-                            <span asp-validation-for="CityId" class="text-danger"></span>
-
-                        </div>
-                    </div>
-                    @*present*@
-                    <div class=" col-6">
+                     <div class=" col-6">
                         <div>Country*</div>
                         <div>
-                            <select asp-for="CountryId" va placeholder="Select Your Country" class="form-select col-11 p-1 shadow-none">
+                            <select asp-for="CountryId" id="country" onchange="filteredCitites()" placeholder="Select Your Country" class="form-select col-11 p-1 shadow-none">
                                 @foreach (var i in @Model.Countries)
                                 {
                                     <option value="@i.CountryId">@i.Name</option>
                                 }
                             </select>
                             <span asp-validation-for="CountryId" class="text-danger"></span>
+
+                        </div>
+                    </div>
+
+                    <div class=" col-6">
+                        <div>City </div>
+                        <div class="col-11">
+                            <select asp-for="CityId" placeholder="Select Your Country" id="city" class="form-select col-11 p-1 shadow-none">
+                                @foreach (var i in @Model.cities)
+                                {
+                                    <option value="@i.CityId">@i.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="CityId" class="text-danger"></span>
 
                         </div>
                     </div>
@@ -473,4 +473,32 @@
                 }
             });
         });
+
+        function filteredCitites() {
+    var missionCityDiv = document.getElementById("city");
+    var missionCountry = document.getElementById("country").value;
+    var missioncity = document.getElementById("city");
+
+    while (missionCityDiv.hasChildNodes()) {
+        missionCityDiv.removeChild(missionCityDiv.firstChild);
+    }
+
+    $.ajax({
+        url: '/Employee/Home/filterCity',
+        type: 'GET',
+        data: { missionCountry },
+        datatype: "json",
+        success: function (result) {
+            console.log(result)
+            result.map((city, index) => {
+                console.log(city)
+                var newCityOption = document.createElement('option');
+                newCityOption.value = city.cityId;
+                newCityOption.innerText = city.name;
+                console.log(newCityOption)
+                missioncity.appendChild(newCityOption)
+            })
+        }
+    });
+}
     </script>

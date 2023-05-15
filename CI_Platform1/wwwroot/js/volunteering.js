@@ -10,7 +10,7 @@ function plusSlides(n) {
     showSlides(slideIndex += n);
 }
 function LoginAlert() {
-    alert("login First")
+    Swal.fire('Please login first.');
 }
 // Thumbnail image controls
 function currentSlide(n) {
@@ -67,7 +67,7 @@ function addToFav(missonid) {
 
         },
         error: function () {
-            Swal.fire('please login first.');
+            Swal.fire('Please login first.');
         }
 
     });

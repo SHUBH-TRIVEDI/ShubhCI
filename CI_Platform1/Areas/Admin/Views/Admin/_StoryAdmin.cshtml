@@ -54,11 +54,11 @@
                             <i class="bi bi-x-circle fs-5" style="color:red;"></i>
                         </button>
                     </span>
-                    <span>
+@*                    <span>
                         <button class="btn shadow-none" onclick="StoryDelete(@story.StoryId)">
                             <i class="bi bi-trash fs-5" ></i>
                         </button>
-                    </span>
+                    </span>*@
                 </td>
 
 
@@ -92,7 +92,7 @@
             type: 'GET',
             data: {'storyid':storyid },
             success: function (res) {
-                   Swal.fire('The Story Gets Rejected')
+                   Swal.fire('The Story Gets Rejected');
                    $("#Story").click();
             },
             error: function (res) {

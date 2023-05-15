@@ -137,7 +137,7 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="mission">Country</label>
-                        <select class="col-12" id="country">
+                        <select class="col-12" id="country" onchange="filteredCitites()">
                             @foreach (var country in Model.countries)
                             {
                                 <option value="@country.CountryId">@country.Name</option>
@@ -405,4 +405,33 @@
             $("#USERID").val('');
         }
 
+
+        
+function filteredCitites() {
+    var missionCityDiv = document.getElementById("city");
+    var missionCountry = document.getElementById("country").value;
+    var missioncity = document.getElementById("city");
+
+    while (missionCityDiv.hasChildNodes()) {
+        missionCityDiv.removeChild(missionCityDiv.firstChild);
+    }
+
+    $.ajax({
+        url:'/Admin/Admin/filterCity',
+        type: 'GET',
+        data: { missionCountry },
+        datatype: "json",
+        success: function (result) {
+            console.log(result)
+            result.map((city, index) => {
+                console.log(city)
+                var newCityOption = document.createElement('option');
+                newCityOption.value = city.cityId;
+                newCityOption.innerText = city.name;
+                console.log(newCityOption)
+                missioncity.appendChild(newCityOption)
+            })
+        }
+    });
+}
 </script>

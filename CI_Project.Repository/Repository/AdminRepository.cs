@@ -228,7 +228,7 @@ namespace CI_Project.Repository.Repository
                 }
             }
 
-            var favrouite = _CiPlatformContext.FavoriteMissions.Where(miss => miss.MissionId == MISSIONID);
+            var favrouite = _CiPlatformContext.FavoriteMissions.Where(miss => miss.MissionId == MISSIONID).ToList();
             if (favrouite != null)
             {
                 foreach (var i in favrouite)
@@ -239,7 +239,7 @@ namespace CI_Project.Repository.Repository
                 }
             }
 
-            var media = _CiPlatformContext.MissionMedia.Where(miss => miss.MissionId == MISSIONID);
+            var media = _CiPlatformContext.MissionMedia.Where(miss => miss.MissionId == MISSIONID).ToList();
             if (media != null)
             {
                 foreach (var i in media)
@@ -250,7 +250,7 @@ namespace CI_Project.Repository.Repository
                 }
             }
 
-            var comment = _CiPlatformContext.Comments.Where(miss => miss.MissionId == MISSIONID);
+            var comment = _CiPlatformContext.Comments.Where(miss => miss.MissionId == MISSIONID).ToList();
             if (comment != null)
             {
                 foreach (var i in comment)
@@ -261,7 +261,7 @@ namespace CI_Project.Repository.Repository
                 }
             }
 
-            var rating = _CiPlatformContext.MissionRatings.Where(miss => miss.MissionId == MISSIONID);
+            var rating = _CiPlatformContext.MissionRatings.Where(miss => miss.MissionId == MISSIONID).ToList();
             if (rating != null)
             {
                 foreach (var i in rating)

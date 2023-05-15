@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "M1alOZjKv+At3khzTQahPelHHzAYSmqjmEmjdUnq8iQ=",
+  "Hash": "rEj8bPyWx68sNR+swmQFhwjpmT1UTdr2jwqxG8fYbyk=",
   "Source": "CI_Platform1",
   "BasePath": "_content/CI_Platform1",
   "Mode": "Default",
@@ -2057,6 +2057,23 @@
       "OriginalItemSpec": "wwwroot\\images\\volunteer9.png"
     },
     {
+      "Identity": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\js\\AdminWhole.js",
+      "SourceId": "CI_Platform1",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\",
+      "BasePath": "_content/CI_Platform1",
+      "RelativePath": "js/AdminWhole.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\AdminWhole.js"
+    },
+    {
       "Identity": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\js\\Missionadmin.js",
       "SourceId": "CI_Platform1",
       "SourceType": "Discovered",
@@ -2123,23 +2140,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\StoryShare.js"
-    },
-    {
-      "Identity": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\js\\Theme.js",
-      "SourceId": "CI_Platform1",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\",
-      "BasePath": "_content/CI_Platform1",
-      "RelativePath": "js/Theme.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\Theme.js"
     },
     {
       "Identity": "C:\\Users\\tatva\\Desktop\\Laptop Updation\\Final\\CI_Platform1\\wwwroot\\js\\volunteering.js",

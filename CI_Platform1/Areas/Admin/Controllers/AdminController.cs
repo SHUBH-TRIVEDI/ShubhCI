@@ -33,6 +33,8 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return View(data);
         }
 
+
+
         //Users
         public IActionResult _UserAdmin()
         {
@@ -222,6 +224,13 @@ namespace CI_Platform1.Areas.Admin.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
+        //Cascading for city and country
+        public JsonResult filterCity(long missionCountry)
+        {
+            IList<City> cities = _CiPlatformContext.Cities.Where(m => m.CountryId == missionCountry).ToList();
+            return Json(cities);
+        }
+
         public IActionResult GetMissionData(long MISSIONID)
         {
             var data= _Admin.GetMissionEditData(MISSIONID);
@@ -351,19 +360,21 @@ namespace CI_Platform1.Areas.Admin.Controllers
         {
             var data = _Admin.AddEditAdmin(adminVM);
             //There may be issuue in passing data
-            return View("Index");
+            return RedirectToAction("Index", "Admin");
         }
 
         public IActionResult BannerEdit(long id)
         {
             var data = _Admin.BannerEdit(id);
-            return View("_BannerAdmin", data);
+            return PartialView("_BannerAdmin", data);
         }
 
         public IActionResult BannerDelete(long id)
         {
             _Admin.BannerDelete(id);
-            return View("Index");
+           
+            return RedirectToAction("Index", "Admin");
+
         }
     }
 }
